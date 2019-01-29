@@ -13,7 +13,7 @@ const sendSensorsData = async () => {
         const data = await shell.run(`python ${path.join(__dirname, 'get.py')}`);
         const values = parseJson(data);
 
-        sendToInflux({meas: 'sensors', tags: {weather: 'sensors'}, values});
+        await sendToInflux({meas: 'sensors', values});
     } catch (err) {
         log.print(err);
     }

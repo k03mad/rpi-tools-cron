@@ -15,11 +15,13 @@ module.exports = async () => {
             shell.run('free -m'),
         ]);
 
+        const [cpuLoad1m, cpuLoad5m, cpuLoad15m] = load.split(' ');
+
         const values = {
-            cpuLoad: load,
+            cpuLoad1m, cpuLoad5m, cpuLoad15m,
             cpuTemp: Number(temp) / 1000,
-            diskUsage: Number(disk.match(/\/dev\/root +\d+ +(\d+)/)[1]),
-            ramUsage: Number(ram.match(/Mem: +\d+ +(\d+)/)[1]),
+            diskUsage: disk.match(/\/dev\/root +\d+ +(\d+)/)[1],
+            ramUsage: ram.match(/Mem: +\d+ +(\d+)/)[1],
         };
 
         await sendToInflux({meas: 'pi', values});

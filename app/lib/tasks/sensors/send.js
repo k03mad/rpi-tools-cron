@@ -10,7 +10,7 @@ const {sendToInflux} = require('../../utils');
  */
 const sendSensorsData = async () => {
     try {
-        const data = await shell.run(`python ${path.join(__dirname, 'sensors.py')}`);
+        const data = await shell.run(`python ${path.join(__dirname, 'get.py')}`);
         const values = parseJson(data);
 
         sendToInflux({meas: 'sensors', tags: {weather: 'sensors'}, values});

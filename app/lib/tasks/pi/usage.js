@@ -15,7 +15,7 @@ module.exports = async () => {
             shell.run('free -m'),
         ]);
 
-        const [cpuLoad1m, cpuLoad5m, cpuLoad15m] = load.split(' ');
+        const [cpuLoad1m, cpuLoad5m, cpuLoad15m] = load.split(' ').map(elem => Number(elem));
 
         const values = {
             cpuLoad1m, cpuLoad5m, cpuLoad15m,

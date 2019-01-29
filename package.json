@@ -11,9 +11,10 @@
   },
   "dependencies": {
     "forever": "0.15.3",
+    "json-parse-better-errors": "1.0.2",
     "node-cron": "2.0.3",
     "require-all": "3.0.0",
-    "utils-mad": "1.2.4"
+    "utils-mad": "1.2.6"
   },
   "devDependencies": {
     "eslint": "5.12.1",

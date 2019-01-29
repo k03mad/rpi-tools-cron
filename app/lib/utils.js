@@ -1,19 +1,6 @@
 'use strict';
 
-const {date} = require('utils-mad');
-
-/**
- * Print message with datestamp
- * @param {string} msg to add time
- * @returns {string}
- */
-const printMsg = msg => {
-    const dateMsg = `\n[${date.now()}]\n`;
-    const prettyMsg = typeof msg === 'string' ? msg : msg.toString();
-
-    console.log(dateMsg + prettyMsg);
-    return prettyMsg;
-};
+const {influx} = require('utils-mad');
 
 /**
  * Open repo and run script
@@ -29,7 +16,19 @@ const runRepoScript = (repo, script) => [
     `npm run ${script}`,
 ];
 
+/**
+ * Store data to InfluxDB
+ * @param {Object} data to send
+ */
+const sendToInflux = data => influx.write({
+    url: 'http://localhost:8086',
+    db: 'mad',
+    meas: data.meas,
+    tags: data.tags,
+    values: data.values,
+});
+
 module.exports = {
-    printMsg,
     runRepoScript,
+    sendToInflux,
 };

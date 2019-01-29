@@ -1,5 +1,6 @@
 'use strict';
 
+const {database: {url, db}} = require('../../env');
 const {influx} = require('utils-mad');
 
 /**
@@ -21,8 +22,7 @@ const runRepoScript = (repo, script) => [
  * @param {Object} data to send
  */
 const sendToInflux = data => influx.write({
-    url: 'http://localhost:8086',
-    db: 'mad',
+    url, db,
     meas: data.meas,
     tags: data.tags,
     values: data.values,

@@ -20,8 +20,8 @@ module.exports = async () => {
         const values = {
             cpuLoad1m, cpuLoad5m, cpuLoad15m,
             cpuTemp: Number(temp) / 1000,
-            diskUsage: disk.match(/\/dev\/root +\d+ +(\d+)/)[1],
-            ramUsage: ram.match(/Mem: +\d+ +(\d+)/)[1],
+            diskUsage: Number(disk.match(/\/dev\/root +\d+ +(\d+)/)[1]),
+            ramUsage: Number(ram.match(/Mem: +\d+ +(\d+)/)[1]),
         };
 
         await sendToInflux({meas: 'pi', values});

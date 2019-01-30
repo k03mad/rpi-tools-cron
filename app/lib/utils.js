@@ -21,12 +21,7 @@ const runRepoScript = (repo, script) => [
  * Store data to InfluxDB
  * @param {Object} data to send
  */
-const sendToInflux = async data => {
-    data.url = database.url;
-    data.db = database.db;
-
-    await influx.write(data);
-};
+const sendToInflux = data => influx.write({...database, ...data});
 
 /**
  * Get data from Pi-hole api

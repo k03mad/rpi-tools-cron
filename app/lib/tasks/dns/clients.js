@@ -23,7 +23,7 @@ module.exports = async () => {
             }
         }
 
-        await sendToInflux({meas: 'dns', tags: {pihole: 'clients'}, values});
+        await sendToInflux({meas: 'clients', values});
     } catch (err) {
         log.print(err);
     }

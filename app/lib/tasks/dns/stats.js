@@ -8,9 +8,23 @@ const {sendToInflux, sendPiholeRequest} = require('../../utils');
  */
 module.exports = async () => {
     try {
-        const body = await sendPiholeRequest();
+        const body = await sendPiholeRequest({summary: ''});
+        const data = {};
 
-        await sendToInflux({meas: 'dns', tags: {pihole: 'stats'}, values: body});
+        // eslint-disable-next-line prefer-const
+        for (let [key, value] of Object.entries(body)) {
+            if (typeof value === 'string') {
+                value = Number(value.replace(',', '.'));
+            }
+
+            if (!isNaN(value)) {
+                data[key] = value;
+            }
+        }
+
+        if (data.domains_being_blocked !== 0) {
+            await sendToInflux({meas: 'dns', tags: {pihole: 'stats'}, values: body});
+        }
     } catch (err) {
         log.print(err);
     }

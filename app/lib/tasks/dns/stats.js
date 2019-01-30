@@ -8,19 +8,18 @@ const {sendToInflux, sendPiholeRequest} = require('../../utils');
  */
 module.exports = async () => {
     try {
-        const body = await sendPiholeRequest({summary: ''});
+        const body = await sendPiholeRequest({summaryRaw: ''});
         const data = {};
 
-        // eslint-disable-next-line prefer-const
-        for (let [key, value] of Object.entries(body)) {
-            if (typeof value === 'string') {
-                value = Number(value.replace(',', ''));
-            }
+        for (const key in body) {
+            const prop = body[key];
 
-            if (!isNaN(value)) {
-                data[key] = value;
+            if (!isNaN(prop)) {
+                data[key] = prop;
             }
         }
+
+        console.log(data);
 
         if (data.domains_being_blocked !== 0) {
             await sendToInflux({meas: 'stats', values: data});

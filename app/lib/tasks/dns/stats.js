@@ -14,7 +14,7 @@ module.exports = async () => {
         // eslint-disable-next-line prefer-const
         for (let [key, value] of Object.entries(body)) {
             if (typeof value === 'string') {
-                value = Number(value.replace(',', '.'));
+                value = Number(value.replace(',', ''));
             }
 
             if (!isNaN(value)) {

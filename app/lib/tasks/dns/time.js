@@ -23,8 +23,8 @@ module.exports = async () => {
                 values[elem.name] = over_time[key][index];
             });
 
-            // nanosecs
-            stamps.push(Number(key) * 1000000);
+            // microseconds
+            stamps.push(Number(key) * 1000000000);
             data.push(values);
         }
 

@@ -1,7 +1,7 @@
 'use strict';
 
-const {database: {url, db}} = require('../../env');
-const {influx} = require('utils-mad');
+const {influx, request} = require('utils-mad');
+const {pihole, database} = require('../../env');
 
 /**
  * Open repo and run script
@@ -22,13 +22,27 @@ const runRepoScript = (repo, script) => [
  * @param {Object} data to send
  */
 const sendToInflux = data => influx.write({
-    url, db,
+    url: database.url,
+    db: database.db,
     meas: data.meas,
     tags: data.tags,
     values: data.values,
 });
 
+/**
+ * Get data from Pi-hole api
+ * @param {Object} query to send
+ */
+const sendPiholeRequest = async (query = {}) => {
+    const {url, auth} = pihole;
+    query.auth = auth;
+
+    const {body} = await request.got(url, {query, json: true});
+    return body;
+};
+
 module.exports = {
     runRepoScript,
     sendToInflux,
+    sendPiholeRequest,
 };

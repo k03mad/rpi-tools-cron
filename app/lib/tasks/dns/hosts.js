@@ -1,21 +1,16 @@
 'use strict';
 
-const {pihole} = require('../../../../env');
-const {request, log} = require('utils-mad');
-const {sendToInflux} = require('../../utils');
+const {log} = require('utils-mad');
+const {sendToInflux, sendPiholeRequest} = require('../../utils');
 
 /**
  * Send dns top hosts
  */
-const sendDnsTop = async () => {
+module.exports = async () => {
     const SEND_ITEMS = 15;
 
     try {
-        const {url, auth} = pihole;
-        const {body} = await request.got(url, {
-            query: {topItems: SEND_ITEMS, auth},
-            json: true,
-        });
+        const body = await sendPiholeRequest({topItems: SEND_ITEMS});
 
         const ads = {};
         const queries = {};
@@ -43,5 +38,3 @@ const sendDnsTop = async () => {
         log.print(err);
     }
 };
-
-module.exports = sendDnsTop;

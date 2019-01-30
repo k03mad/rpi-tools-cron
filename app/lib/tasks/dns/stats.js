@@ -19,8 +19,6 @@ module.exports = async () => {
             }
         }
 
-        console.log(data);
-
         if (data.domains_being_blocked !== 0) {
             await sendToInflux({meas: 'stats', values: data});
         }

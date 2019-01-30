@@ -8,10 +8,11 @@ cron.schedule('* * * * *', () => Promise.all([
     t.sensors.weather(),
 ]));
 
-cron.schedule('*/10 * * * *', () => Promise.all([
+cron.schedule('* * * * *', () => Promise.all([
     t.dns.clients(),
     t.dns.hosts(),
     t.dns.stats(),
+    t.dns.time(),
 ]));
 
 cron.schedule('0 * * * *', () => t.dns.update());

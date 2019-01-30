@@ -23,7 +23,7 @@ module.exports = async () => {
         }
 
         if (data.domains_being_blocked !== 0) {
-            await sendToInflux({meas: 'dns', tags: {pihole: 'stats'}, values: body});
+            await sendToInflux({meas: 'dns', tags: {pihole: 'stats'}, values: data});
         }
     } catch (err) {
         log.print(err);

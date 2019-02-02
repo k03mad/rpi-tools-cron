@@ -32,8 +32,8 @@ module.exports = async () => {
             data.push(values);
         }
 
-        await Promise.all(stamps.map(async (timestamp, index) => {
-            await sendToInflux({meas: 'timeline', values: data[index], timestamp});
+        await Promise.all(data.map(async (values, index) => {
+            await sendToInflux({meas: 'timeline', values, timestamp: stamps[index]});
         }));
     } catch (err) {
         log.print(err);

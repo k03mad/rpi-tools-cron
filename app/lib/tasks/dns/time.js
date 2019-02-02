@@ -20,7 +20,11 @@ module.exports = async () => {
             const values = {};
             const key = times[times.length - (i + 1)];
             clients.forEach((elem, index) => {
-                values[elem.name || elem.ip] = over_time[key][index];
+                const count = over_time[key][index];
+
+                if (count) {
+                    values[elem.name || elem.ip] = count;
+                }
             });
 
             // microseconds

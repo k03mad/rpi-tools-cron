@@ -20,7 +20,7 @@ module.exports = async () => {
             const values = {};
             const key = times[times.length - (i + 1)];
             clients.forEach((elem, index) => {
-                values[elem.name] = over_time[key][index];
+                values[elem.name || elem.ip] = over_time[key][index];
             });
 
             // microseconds
@@ -29,6 +29,7 @@ module.exports = async () => {
         }
 
         await Promise.all(stamps.map(async (timestamp, index) => {
+            console.log(data[index]);
             await sendToInflux({meas: 'timeline', values: data[index], timestamp});
         }));
     } catch (err) {

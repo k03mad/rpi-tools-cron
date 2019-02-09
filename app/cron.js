@@ -15,5 +15,5 @@ cron.schedule('*/10 * * * *', () => Promise.all([
 ]));
 
 cron.schedule('*/5 * * * *', () => t.dns.time());
-cron.schedule('0 * * * *', () => t.dns.update());
+cron.schedule('0 */6 * * *', () => t.dns.update());
 cron.schedule('30 5 * * *', () => t.pi.reboot());

@@ -9,18 +9,18 @@ const {sendToInflux, sendPiholeRequest} = require('../../utils');
 module.exports = async () => {
     try {
         const body = await sendPiholeRequest({summaryRaw: ''});
-        const data = {};
+        const values = {};
 
         for (const key in body) {
             const prop = body[key];
 
             if (!isNaN(prop)) {
-                data[key] = prop;
+                values[key] = prop;
             }
         }
 
-        if (data.domains_being_blocked !== 0) {
-            await sendToInflux({meas: 'stats', values: data});
+        if (values.domains_being_blocked !== 0) {
+            await sendToInflux({meas: 'stats', values});
         }
     } catch (err) {
         log.print(err);

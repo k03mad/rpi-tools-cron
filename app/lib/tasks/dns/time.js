@@ -20,12 +20,17 @@ module.exports = async () => {
             const values = {};
             const key = times[times.length - (i + 1)];
             clients.forEach((elem, index) => {
-                values[elem.name || elem.ip] = over_time[key][index];
+const blocked = over_time[key][index];
+if (blocked) {
+                values[elem.name || elem.ip] = blocked;
+}
             });
 
             // microseconds
             stamps.push(Number(key) * 1000000000);
+if (Object.keys(values).length) {
             data.push(values);
+}
         }
 
         await Promise.all(data.map(async (values, index) => {

@@ -7,6 +7,7 @@ const {array} = require('utils-mad');
 const crons = {
     // every minute
     '* * * * *': [
+        t.pi.ping,
         t.pi.usage,
         t.sensors.weather,
     ],

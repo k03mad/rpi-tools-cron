@@ -16,8 +16,8 @@ module.exports = async () => {
         const output = await Promise.all(hosts.map(host => shell.run(`ping ${host} -c 1`)));
         const values = output.map(elem => {
             const [, name] = elem.match(/PING ([\w.]+) /);
-            const [, time] = Number(elem.match(/time=(\d+\.\d+) /));
-            return {[name]: time};
+            const [, time] = elem.match(/time=(\d+\.\d+) /);
+            return {[name]: Number(time)};
         });
 
         await sendToInflux({meas: 'ping', values});

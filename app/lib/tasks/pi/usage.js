@@ -9,8 +9,8 @@ const {sendToInflux} = require('../../utils');
 module.exports = async () => {
     try {
         const stat = await shell.run('mpstat 1 1');
-        const idle = stat.split('\n')[3].split(' ');
-        const values = {usage: 100 - Number(idle.pop().replace(',', '.'))};
+        const idle = stat.split('\n')[3].split(' ').pop();
+        const values = {usage: 100 - Number(idle.replace(',', '.'))};
 
         await sendToInflux({meas: 'cpu', values});
     } catch (err) {

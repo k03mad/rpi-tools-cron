@@ -4,27 +4,15 @@ const {log, shell} = require('utils-mad');
 const {sendToInflux} = require('../../utils');
 
 /**
- * Get pi usage
+ * Get pi cpu usage
  */
 module.exports = async () => {
     try {
-        const [load, temp, disk, ram] = await Promise.all([
-            shell.run('cat /proc/loadavg'),
-            shell.run('cat /sys/class/thermal/thermal_zone0/temp'),
-            shell.run('df'),
-            shell.run('free -m'),
-        ]);
+        const stat = await shell.run('mpstat 1 1');
+        const idle = stat.split('\n')[3].split(' ');
+        const values = {usage: 100 - Number(idle.pop().replace(',', '.'))};
 
-        const [cpuLoad1m, cpuLoad5m, cpuLoad15m] = load.split(' ').map(elem => Number(elem));
-
-        const values = {
-            cpuLoad1m, cpuLoad5m, cpuLoad15m,
-            cpuTemp: Number(temp) / 1000,
-            diskUsage: Number(disk.match(/\/dev\/root +\d+ +(\d+)/)[1]),
-            ramUsage: Number(ram.match(/Mem: +\d+ +(\d+)/)[1]),
-        };
-
-        await sendToInflux({meas: 'pi', values});
+        await sendToInflux({meas: 'cpu', values});
     } catch (err) {
         log.print(err);
     }

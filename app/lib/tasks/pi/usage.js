@@ -15,7 +15,7 @@ module.exports = async () => {
             shell.run('free -m'),
         ]);
 
-        const cpuIdle = stat.split('\n')[3].split(' ').pop();
+        const cpuIdle = load.split('\n')[3].split(' ').pop();
 
         const values = {
             cpuLoad: 100 - Number(cpuIdle.replace(',', '.')),

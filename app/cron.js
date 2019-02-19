@@ -7,16 +7,13 @@ const {array} = require('utils-mad');
 const crons = {
     // every minute
     '* * * * *': [
-        t.pi.ping,
-        t.pi.usage,
-        t.sensors.weather,
-    ],
-    // every N minutes
-    '*/5 * * * *': [
         t.dns.clients,
         t.dns.hosts,
         t.dns.stats,
         t.dns.time,
+        t.pi.ping,
+        t.pi.usage,
+        t.sensors.weather,
     ],
     // every N hour, N minute
     '0 */6 * * *': t.dns.update,

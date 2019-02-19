@@ -18,20 +18,23 @@ module.exports = async () => {
 
         for (let i = 0; i < SEND_ITEMS; i++) {
             const values = {};
-            const key = times[times.length - (i + 1)];
-            clients.forEach((elem, index) => {
-                const blocked = over_time[key][index];
+            const time = times[times.length - (i + 1)];
 
-                if (blocked) {
-                    values[elem.name || elem.ip] = blocked;
+            if (time) {
+                clients.forEach((elem, index) => {
+                    const blocked = over_time[time][index];
+
+                    if (blocked) {
+                        values[elem.name || elem.ip] = blocked;
+                    }
+                });
+
+                // microseconds
+                stamps.push(Number(time) * 1000000000);
+
+                if (Object.keys(values).length > 0) {
+                    data.push(values);
                 }
-            });
-
-            // microseconds
-            stamps.push(Number(key) * 1000000000);
-
-            if (Object.keys(values).length > 0) {
-                data.push(values);
             }
         }
 
@@ -39,6 +42,7 @@ module.exports = async () => {
             (values, index) => sendToInflux({meas: 'timeline', values, timestamp: stamps[index]})
         ));
     } catch (err) {
+        console.log(err.stack);
         log.print(err);
     }
 };

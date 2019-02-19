@@ -9,16 +9,16 @@ const {sendToInflux} = require('../../utils');
 module.exports = async () => {
     try {
         const [load, temp, disk, ram] = await Promise.all([
-            shell.run('mpstat 1 1'),
+            shell.run('cat /proc/loadavg'),
             shell.run('cat /sys/class/thermal/thermal_zone0/temp'),
             shell.run('df'),
             shell.run('free -m'),
         ]);
 
-        const cpuIdle = load.split('\n')[3].split(' ').pop();
+        const [cpuLoad1m] = load.split(' ');
 
         const values = {
-            cpuLoad: 100 - Number(cpuIdle.replace(',', '.')),
+            cpuLoad: Number(cpuLoad1m),
             cpuTemp: Number(temp) / 1000,
             diskUsage: Number(disk.match(/\/dev\/root +\d+ +(\d+)/)[1]),
             ramUsage: Number(ram.match(/Mem: +\d+ +(\d+)/)[1]),

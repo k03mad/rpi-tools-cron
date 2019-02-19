@@ -13,14 +13,15 @@ module.exports = async () => {
     ];
 
     try {
-        const output = await Promise.all(hosts.map(host => shell.run(`ping ${host} -c 1`)));
-        const data = output.map(elem => {
-            const [, name] = elem.match(/PING ([\w.]+) /);
-            const [, time] = elem.match(/time=(\d+\.\d+) /);
-            return {[name]: Number(time)};
-        });
+        const values = {};
+        await Promise.all(hosts.map(async host => {
+            const data = await shell.run(`ping ${host} -c 1`);
+            const [, name] = data.match(/PING ([\w.]+) /);
+            const [, time] = data.match(/time=(\d+\.\d+) /);
+            values[name] = Number(time);
+        }));
 
-        await Promise.all(data.map(values => sendToInflux({meas: 'ping', values})));
+        await sendToInflux({meas: 'ping', values});
     } catch (err) {
         log.print(err);
     }

@@ -16,7 +16,7 @@ const crons = {
         t.sensors.weather,
     ],
     // every N hour, N minute
-    '0 */6 * * *': t.dns.update,
+    '0 */1 * * *': t.dns.update,
     // at N hour, N minute
     '30 5 * * *': t.pi.reboot,
 };

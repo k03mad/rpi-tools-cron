@@ -15,10 +15,8 @@ module.exports = async () => {
             shell.run('free -m'),
         ]);
 
-        const [cpuLoad1m] = load.split(' ');
-
         const values = {
-            cpuLoad: Number(cpuLoad1m),
+            cpuLoad: Number(load.split(' ')[0]),
             cpuTemp: Number(temp) / 1000,
             diskUsage: Number(disk.match(/\/dev\/root +\d+ +(\d+)/)[1]),
             ramUsage: Number(ram.match(/Mem: +\d+ +(\d+)/)[1]),

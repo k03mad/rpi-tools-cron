@@ -16,7 +16,6 @@ const crons = {
     ],
 
     '0 */3 * * *': t.dns.update,
-    '30 5 * * *': t.pi.reboot,
 
 };
 

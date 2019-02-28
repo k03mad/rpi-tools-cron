@@ -1,6 +1,6 @@
 'use strict';
 
-const {pihole, database} = require('../../env');
+const {pihole, database} = require('./env');
 const {request, influx} = require('utils-mad');
 
 /**

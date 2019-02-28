@@ -1,7 +1,7 @@
 'use strict';
 
 const {log} = require('utils-mad');
-const {sendToInflux, sendPiholeRequest} = require('../../utils');
+const {sendToInflux, sendPiholeRequest} = require('../../lib/utils');
 
 /**
  * Send pihole stats

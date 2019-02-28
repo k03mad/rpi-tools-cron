@@ -1,7 +1,7 @@
 'use strict';
 
 const {log, shell} = require('utils-mad');
-const {sendToInflux} = require('../../utils');
+const {sendToInflux} = require('../../lib/utils');
 
 /**
  * Get pi usage

@@ -1,7 +1,7 @@
 'use strict';
 
 const cron = require('node-cron');
-const t = require('require-all')(`${__dirname}/lib/tasks`);
+const t = require('require-all')(`${__dirname}/tasks`);
 const {array} = require('utils-mad');
 
 const crons = {
@@ -12,6 +12,7 @@ const crons = {
         t.dns.stats,
         t.dns.time,
         t.pi.usage,
+        t.router.usage,
         t.sensors.weather,
     ],
 

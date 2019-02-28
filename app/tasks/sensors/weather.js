@@ -3,7 +3,7 @@
 const parseJson = require('json-parse-better-errors');
 const path = require('path');
 const {log, shell} = require('utils-mad');
-const {sendToInflux} = require('../../utils');
+const {sendToInflux} = require('../../lib/utils');
 
 /**
  * Send connected sensors data

@@ -1,6 +1,7 @@
 'use strict';
 
 const getMikrotik = require('../../lib/mikrotik');
+const oui = require('oui');
 const {log} = require('utils-mad');
 const {sendToInflux} = require('../../lib/utils');
 
@@ -28,9 +29,10 @@ module.exports = async () => {
 
         const signalData = {};
         signal.forEach(elem => {
-            const mac = elem['mac-address'];
             const dbm = elem['signal-strength'].replace(/@.+/, '');
-            signalData[mac] = Number(dbm);
+            const mac = elem['mac-address'];
+            const [vendor] = (oui(mac) || '').split('\n')[0].split(' ');
+            signalData[`${vendor}_${mac}`] = Number(dbm);
         });
 
         await Promise.all([

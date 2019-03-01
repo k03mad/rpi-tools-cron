@@ -13,7 +13,6 @@ const crons = {
         t.dns.time,
         t.pi.usage,
         t.router.usage,
-        t.sensors.weather,
     ],
 
     '0 */3 * * *': t.dns.update,

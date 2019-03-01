@@ -12,8 +12,6 @@ const crons = {
         t.dns.stats,
         t.dns.time,
         t.pi.usage,
-        t.router.data,
-        t.router.speed,
         t.router.usage,
         t.sensors.weather,
     ],

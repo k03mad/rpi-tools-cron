@@ -9,10 +9,11 @@ const {sendToInflux} = require('../../lib/utils');
  */
 module.exports = async () => {
     try {
-        const [usage, data, speed] = await getMikrotik([
+        const [[usage], [data], [speed], signal] = await getMikrotik([
             '/system/resource/print',
             '/interface/print',
             ['/interface/monitor-traffic', '=interface=ether1', '=once'],
+            ['/interface/wireless/registration-table/print'],
         ]);
 
         const values = {
@@ -25,7 +26,17 @@ module.exports = async () => {
             speedtx: Number(speed['tx-bits-per-second']),
         };
 
-        await sendToInflux({meas: 'router-usage', values});
+        const signalData = {};
+        signal.forEach(elem => {
+            const mac = elem['mac-address'];
+            const dbm = elem['signal-strength'].replace(/@.+/, '');
+            signalData[mac] = Number(dbm);
+        });
+
+        await Promise.all([
+            sendToInflux({meas: 'router-usage', values}),
+            sendToInflux({meas: 'router-signal', values: signalData}),
+        ]);
     } catch (err) {
         log.print(err);
     }

@@ -18,7 +18,7 @@ const getMikrotik = async cmd => {
         const response = [];
 
         for (const elem of array.convert(cmd)) {
-            const [data] = await client.write(elem);
+            const data = await client.write(elem);
             response.push(data);
         }
 

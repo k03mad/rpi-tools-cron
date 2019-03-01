@@ -16,7 +16,7 @@ module.exports = async () => {
             hdd: Number(data['total-hdd-space']) - Number(data['free-hdd-space']),
         };
 
-        await sendToInflux({meas: 'mik', values});
+        await sendToInflux({meas: 'router-usage', values});
     } catch (err) {
         log.print(err);
     }

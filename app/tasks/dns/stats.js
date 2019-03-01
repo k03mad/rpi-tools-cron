@@ -20,7 +20,7 @@ module.exports = async () => {
         }
 
         if (values.domains_being_blocked !== 0) {
-            await sendToInflux({meas: 'stats', values});
+            await sendToInflux({meas: 'dns-stats', values});
         }
     } catch (err) {
         log.print(err);

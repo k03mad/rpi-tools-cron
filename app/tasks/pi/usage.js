@@ -22,7 +22,7 @@ module.exports = async () => {
             ramUsage: Number(ram.match(/Mem: +\d+ +(\d+)/)[1]),
         };
 
-        await sendToInflux({meas: 'pi', values});
+        await sendToInflux({meas: 'pi-usage', values});
     } catch (err) {
         log.print(err);
     }

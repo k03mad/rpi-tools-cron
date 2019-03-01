@@ -5,7 +5,7 @@ const {log} = require('utils-mad');
 const {sendToInflux} = require('../../lib/utils');
 
 /**
- * Get mikrotik traffic tx rx
+ * Get mikrotik traffic data
  */
 module.exports = async () => {
     try {
@@ -15,7 +15,7 @@ module.exports = async () => {
             tx: Number(data['tx-byte']),
         };
 
-        await sendToInflux({meas: 'traffic', values});
+        await sendToInflux({meas: 'router-data', values});
     } catch (err) {
         log.print(err);
     }

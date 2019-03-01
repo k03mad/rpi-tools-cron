@@ -31,8 +31,8 @@ module.exports = async () => {
         }
 
         await Promise.all([
-            sendToInflux({meas: 'hosts', tags: {top: 'ads'}, values: ads}),
-            sendToInflux({meas: 'hosts', tags: {top: 'queries'}, values: queries}),
+            sendToInflux({meas: 'dns-hosts', tags: {top: 'ads'}, values: ads}),
+            sendToInflux({meas: 'dns-hosts', tags: {top: 'queries'}, values: queries}),
         ]);
     } catch (err) {
         log.print(err);

@@ -39,7 +39,7 @@ module.exports = async () => {
         }
 
         await Promise.all(data.map(
-            (values, index) => sendToInflux({meas: 'timeline', values, timestamp: stamps[index]})
+            (values, index) => sendToInflux({meas: 'dns-time', values, timestamp: stamps[index]})
         ));
     } catch (err) {
         console.log(err.stack);

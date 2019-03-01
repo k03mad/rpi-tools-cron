@@ -23,7 +23,7 @@ module.exports = async () => {
             }
         }
 
-        await sendToInflux({meas: 'clients', values});
+        await sendToInflux({meas: 'dns-clients', values});
     } catch (err) {
         log.print(err);
     }

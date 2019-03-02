@@ -4,16 +4,15 @@ const {array} = require('utils-mad');
 const {mikrotik} = require('./env');
 const {RouterOSAPI} = require('node-routeros');
 
-const api = new RouterOSAPI(mikrotik);
-
 /**
  * Get data from mikrotik api
  * @param {string|string[]|Array[]} cmd
  */
-const getMikrotik = async cmd => {
+module.exports = async cmd => {
     let client;
 
     try {
+        const api = new RouterOSAPI(mikrotik);
         client = await api.connect();
         const response = [];
 
@@ -29,5 +28,3 @@ const getMikrotik = async cmd => {
         throw err;
     }
 };
-
-module.exports = getMikrotik;

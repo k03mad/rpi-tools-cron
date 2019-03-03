@@ -10,30 +10,28 @@ const {sendToInflux} = require('../../lib/utils');
  */
 module.exports = async () => {
     try {
-        const [[usage], [speed], ether, wifi] = await getMikrotik([
+        const clientsSignal = {};
+        const clientsTraffic = {};
+        const interfaceTraffic = {};
+        const interfaceSpeed = {};
+
+        const [[usage], interfaces, wifiClients, ...monitorTraffic] = await getMikrotik([
             '/system/resource/print',
-            ['/interface/monitor-traffic', '=interface=ether1', '=once'],
-            '/interface/ethernet/print',
+            '/interface/print',
             '/interface/wireless/registration-table/print',
+            ...['ether1', 'ether2', 'ether3', 'ether4', 'ether5', 'wlan1', 'wlan2'].map(
+                elem => ['/interface/monitor-traffic', `=interface=${elem}`, '=once']
+            ),
         ]);
 
-        const values = {
+        const health = {
             mem: Number(usage['total-memory']) - Number(usage['free-memory']),
             cpu: Number(usage['cpu-load']),
             hdd: Number(usage['total-hdd-space']) - Number(usage['free-hdd-space']),
-            // data usage by ehter1 (WAN)
-            datarx: Number(ether[0]['rx-bytes']),
-            datatx: Number(ether[0]['tx-bytes']),
-            // speed usage by ehter1 (WAN)
-            speedrx: Number(speed['rx-bits-per-second']),
-            speedtx: Number(speed['tx-bits-per-second']),
         };
 
-        const signalData = {};
-        const trafficData = {};
-
         // signal-strength and data usage by wifi clients
-        wifi.forEach(elem => {
+        wifiClients.forEach(elem => {
             const dbm = elem['signal-strength'].replace(/@.+/, '');
             const trf = elem.bytes.replace(',', '.');
             const mac = elem['mac-address'];
@@ -41,25 +39,38 @@ module.exports = async () => {
             const [vendor] = (oui(mac) || '').split('\n')[0].split(' ');
             const key = `${vendor}_${mac}`;
 
-            signalData[key] = Number(dbm);
-            trafficData[key] = Number(trf);
+            clientsSignal[key] = Number(dbm);
+            clientsTraffic[key] = Number(trf);
         });
 
-        // data usage by ethernet client, except WAN and zero-traffic
-        ether.forEach(elem => {
+        interfaces.forEach(elem => {
             const {name} = elem;
-            const rx = Number(elem['rx-bytes']);
-            const tx = Number(elem['tx-bytes']);
+            const rx = Number(elem['rx-byte']);
+            const tx = Number(elem['tx-byte']);
 
-            if (name !== 'ether1' && (rx !== 0 || tx !== 0)) {
-                trafficData[name] = rx + tx;
+            // data usage by ethernet clients, except WAN
+            // to add to wifi clients data graph
+            if (name !== 'ether1') {
+                clientsTraffic[name] = rx + tx;
             }
+
+            interfaceTraffic[`in_${name}`] = rx;
+            interfaceTraffic[`out_${name}`] = tx;
+        });
+
+        monitorTraffic.forEach(elem => {
+            const [obj] = elem;
+            const {name} = obj;
+            interfaceSpeed[`in_${name}`] = Number(obj['rx-bits-per-second']);
+            interfaceSpeed[`out_${name}`] = Number(obj['tx-bits-per-second']);
         });
 
         await Promise.all([
-            sendToInflux({meas: 'router-usage', values}),
-            sendToInflux({meas: 'router-signal', values: signalData}),
-            sendToInflux({meas: 'router-traffic', values: trafficData}),
+            sendToInflux({meas: 'router-usage', values: health}),
+            sendToInflux({meas: 'router-clients-signal', values: clientsSignal}),
+            sendToInflux({meas: 'router-clients-traffic', values: clientsTraffic}),
+            sendToInflux({meas: 'router-interface-traffic', values: interfaceTraffic}),
+            sendToInflux({meas: 'router-interface-speed', values: interfaceSpeed}),
         ]);
     } catch (err) {
         log.print(err);

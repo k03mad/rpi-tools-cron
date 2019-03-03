@@ -19,7 +19,7 @@ module.exports = async () => {
             '/system/resource/print',
             '/interface/print',
             '/interface/wireless/registration-table/print',
-            ...['ether1', 'ether2', 'ether3', 'ether4', 'ether5', 'wlan1', 'wlan2'].map(
+            ...['wan1', 'ether2', 'ether3', 'ether4', 'ether5', 'wlan1', 'wlan2'].map(
                 elem => ['/interface/monitor-traffic', `=interface=${elem}`, '=once']
             ),
         ]);
@@ -50,7 +50,7 @@ module.exports = async () => {
 
             // data usage by ethernet clients, except WAN
             // to add to wifi clients data graph
-            if (/ether[2-5]/.test(name)) {
+            if (name.includes('ether')) {
                 clientsTraffic[name] = rx + tx;
             }
 

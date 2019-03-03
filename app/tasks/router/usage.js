@@ -50,7 +50,7 @@ module.exports = async () => {
 
             // data usage by ethernet clients, except WAN
             // to add to wifi clients data graph
-            if (name !== 'ether1') {
+            if (/ether[2-5]/.test(name)) {
                 clientsTraffic[name] = rx + tx;
             }
 

@@ -19,9 +19,8 @@ module.exports = async () => {
             '/system/resource/print',
             '/interface/print',
             '/interface/wireless/registration-table/print',
-            ...['wan1', 'ether1', 'ether2', 'ether3', 'ether4', 'wlan1', 'wlan2'].map(
-                elem => ['/interface/monitor-traffic', `=interface=${elem}`, '=once']
-            ),
+            ...['wan1', 'ether1', 'ether2', 'ether3', 'ether4', 'wlan1', 'wlan2']
+                .map(elem => ['/interface/monitor-traffic', `=interface=${elem}`, '=once']),
         ]);
 
         const health = {

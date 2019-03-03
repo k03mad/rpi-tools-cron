@@ -55,16 +55,16 @@ module.exports = async () => {
             }
 
             if (name !== 'bridge') {
-                interfaceTraffic[`${name}_in`] = rx;
-                interfaceTraffic[`${name}_out`] = tx;
+                interfaceTraffic[`${name}_rx`] = rx;
+                interfaceTraffic[`${name}_tx`] = tx;
             }
         });
 
         monitorTraffic.forEach(elem => {
             const [obj] = elem;
             const {name} = obj;
-            interfaceSpeed[`${name}_in`] = Number(obj['rx-bits-per-second']);
-            interfaceSpeed[`${name}_out`] = Number(obj['tx-bits-per-second']);
+            interfaceSpeed[`${name}_rx`] = Number(obj['rx-bits-per-second']);
+            interfaceSpeed[`${name}_tx`] = Number(obj['tx-bits-per-second']);
         });
 
         await Promise.all([

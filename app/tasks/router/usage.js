@@ -8,7 +8,7 @@ const {sendToInflux} = require('../../lib/utils');
 /**
  * Get mikrotik usage
  */
-module.exports = async () => {
+const getData = async () => {
     try {
         const clientsSignal = {};
         const clientsTraffic = {};
@@ -27,6 +27,7 @@ module.exports = async () => {
             mem: Number(usage['total-memory']) - Number(usage['free-memory']),
             cpu: Number(usage['cpu-load']),
             hdd: Number(usage['total-hdd-space']) - Number(usage['free-hdd-space']),
+            uptime: usage.uptime,
         };
 
         // signal-strength and data usage by wifi clients
@@ -77,3 +78,5 @@ module.exports = async () => {
         log.print(err);
     }
 };
+
+module.exports = getData;

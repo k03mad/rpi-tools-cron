@@ -24,6 +24,12 @@ const runRepoScript = (repo, script) => [
 const sendToInflux = data => influx.write({...database, ...data});
 
 /**
+ * Append data to InfluxDB
+ * @param {Object} data to send
+ */
+const appendToInflux = data => influx.append({...database, ...data});
+
+/**
  * Get data from Pi-hole api
  * @param {Object} query to send
  */
@@ -36,7 +42,8 @@ const sendPiholeRequest = async (query = {}) => {
 };
 
 module.exports = {
+    appendToInflux,
     runRepoScript,
-    sendToInflux,
     sendPiholeRequest,
+    sendToInflux,
 };

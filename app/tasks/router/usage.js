@@ -3,7 +3,7 @@
 const getMikrotik = require('../../lib/mikrotik');
 const oui = require('oui');
 const {log} = require('utils-mad');
-const {sendToInflux, appendToInflux} = require('../../lib/utils');
+const {sendToInflux} = require('../../lib/utils');
 
 /**
  * Get mikrotik usage
@@ -68,8 +68,8 @@ const getData = async () => {
         });
 
         await Promise.all([
-            appendToInflux({meas: 'router-clients-traffic', values: clientsTraffic}),
-            appendToInflux({meas: 'router-interface-traffic', values: interfaceTraffic}),
+            sendToInflux({meas: 'router-clients-traffic', values: clientsTraffic}),
+            sendToInflux({meas: 'router-interface-traffic', values: interfaceTraffic}),
             sendToInflux({meas: 'router-clients-signal', values: clientsSignal}),
             sendToInflux({meas: 'router-interface-speed', values: interfaceSpeed}),
             sendToInflux({meas: 'router-usage', values: health}),

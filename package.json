@@ -15,7 +15,7 @@
     "node-routeros": "1.6.2",
     "oui": "9.1.5",
     "require-all": "3.0.0",
-    "utils-mad": "1.4.0"
+    "utils-mad": "1.5.0"
   },
   "devDependencies": {
     "eslint": "5.15.1",

@@ -1,5 +1,6 @@
 'use strict';
 
+const speed = require('speedtest-net');
 const {pihole, database} = require('./env');
 const {request, influx} = require('utils-mad');
 
@@ -41,9 +42,21 @@ const sendPiholeRequest = async (query = {}) => {
     return body;
 };
 
+const speedTest = () => {
+    const test = speed({
+        maxTime: 10000,
+        pingCount: 10,
+    });
+    return new Promise((resolve, reject) => {
+        test.on('data', data => resolve(data));
+        test.on('error', err => reject(err));
+    });
+};
+
 module.exports = {
     appendToInflux,
     runRepoScript,
     sendPiholeRequest,
     sendToInflux,
+    speedTest,
 };

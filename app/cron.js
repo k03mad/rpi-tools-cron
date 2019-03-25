@@ -2,7 +2,7 @@
 
 const cron = require('node-cron');
 const t = require('require-all')(`${__dirname}/tasks`);
-const {array} = require('utils-mad');
+const {array, log} = require('utils-mad');
 
 const crons = {
 
@@ -15,12 +15,13 @@ const crons = {
         t.router.usage,
     ],
 
+    '0 */1 * * *': t.pi.network,
     '0 */3 * * *': t.dns.update,
 
 };
 
 for (const [key, value] of Object.entries(crons)) {
     for (const func of array.convert(value)) {
-        cron.schedule(key, () => func());
+        cron.schedule(key, () => func().catch(err => log.print(err)));
     }
 }

@@ -15,6 +15,7 @@
     "node-routeros": "1.6.2",
     "oui": "9.1.7",
     "require-all": "3.0.0",
+    "speedtest-net": "1.5.1",
     "utils-mad": "1.5.1"
   },
   "devDependencies": {

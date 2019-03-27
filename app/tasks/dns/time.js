@@ -2,9 +2,6 @@
 
 const {sendToInflux, sendPiholeRequest} = require('../../lib/utils');
 
-/**
- * Send dns clients queries by time
- */
 module.exports = async () => {
     const SEND_ITEMS = 10;
 

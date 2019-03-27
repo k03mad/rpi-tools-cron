@@ -4,9 +4,6 @@ const getMikrotik = require('../../lib/mikrotik');
 const oui = require('oui');
 const {appendToInflux, sendToInflux} = require('../../lib/utils');
 
-/**
- * Get mikrotik usage
- */
 module.exports = async () => {
     const clientsSignal = {};
     const clientsTraffic = {};

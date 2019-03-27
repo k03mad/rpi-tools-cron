@@ -3,9 +3,6 @@
 const {sendToInflux} = require('../../lib/utils');
 const {shell} = require('utils-mad');
 
-/**
- * Get pi usage
- */
 module.exports = async () => {
     const [uptime, temp, disk, ram] = await Promise.all([
         shell.run('uptime'),

@@ -2,9 +2,6 @@
 
 const {sendToInflux, sendPiholeRequest} = require('../../lib/utils');
 
-/**
- * Send pihole stats
- */
 module.exports = async () => {
     const body = await sendPiholeRequest({summaryRaw: ''});
     const values = {};

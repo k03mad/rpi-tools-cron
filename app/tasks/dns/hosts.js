@@ -16,13 +16,8 @@ module.exports = async () => {
         const adElem = topAds[i];
         const queElem = topQueries[i];
 
-        if (adElem) {
-            ads[adElem] = body.top_ads[adElem];
-        }
-
-        if (queElem) {
-            queries[queElem] = body.top_queries[queElem];
-        }
+        if (adElem) ads[adElem] = body.top_ads[adElem];
+        if (queElem) queries[queElem] = body.top_queries[queElem];
     }
 
     await Promise.all([

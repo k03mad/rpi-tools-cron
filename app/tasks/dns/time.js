@@ -16,20 +16,14 @@ module.exports = async () => {
         const time = times[times.length - (i + 1)];
 
         if (time) {
-            clients.forEach((elem, index) => {
+            clients.forEach(({name, ip}, index) => {
                 const blocked = over_time[time][index];
-
-                if (blocked) {
-                    values[elem.name || elem.ip] = blocked;
-                }
+                if (blocked) values[name || ip] = blocked;
             });
 
             // microseconds
             stamps.push(Number(time) * 1000000000);
-
-            if (Object.keys(values).length > 0) {
-                data.push(values);
-            }
+            if (Object.keys(values).length > 0) data.push(values);
         }
     }
 

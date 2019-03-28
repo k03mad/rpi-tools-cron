@@ -8,12 +8,11 @@ module.exports = async () => {
     const psCpu = {};
     const psMem = {};
 
-    ps.forEach(elem => {
-        const key = `${elem.pid}:${elem.command}`.replace(/ .+/, '').trim();
-        const {cpu, mem} = elem;
+    ps.forEach(({cpu, mem, command}) => {
+        const proc = command.replace(/ .+/, '').trim();
 
-        if (cpu > 0) psCpu[key] = cpu;
-        if (mem > 1) psMem[key] = mem;
+        if (cpu > 0) psCpu[proc] = psCpu[proc] + cpu || cpu;
+        if (mem > 1) psMem[proc] = psMem[proc] + mem || mem;
     });
 
     await Promise.all([

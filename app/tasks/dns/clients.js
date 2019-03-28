@@ -12,10 +12,7 @@ module.exports = async () => {
 
     for (let i = 0; i < SEND_ITEMS; i++) {
         const client = topClients[i];
-
-        if (client) {
-            values[client] = body.top_sources[client];
-        }
+        if (client) values[client] = body.top_sources[client];
     }
 
     await sendToInflux({meas: 'dns-clients', values});

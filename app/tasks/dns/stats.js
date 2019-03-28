@@ -8,10 +8,7 @@ module.exports = async () => {
 
     for (const key in body) {
         const prop = body[key];
-
-        if (!isNaN(prop)) {
-            values[key] = prop;
-        }
+        if (!isNaN(prop)) values[key] = prop;
     }
 
     if (values.domains_being_blocked !== 0) {

@@ -55,11 +55,9 @@ module.exports = async () => {
         }
     });
 
-    monitorTraffic.forEach(elem => {
-        const [obj] = elem;
-        const {name} = obj;
-        interfaceSpeed[`${name}_rx`] = Number(obj['rx-bits-per-second']);
-        interfaceSpeed[`${name}_tx`] = Number(obj['tx-bits-per-second']);
+    monitorTraffic.forEach(([obj]) => {
+        interfaceSpeed[`${obj.name}_rx`] = Number(obj['rx-bits-per-second']);
+        interfaceSpeed[`${obj.name}_tx`] = Number(obj['tx-bits-per-second']);
     });
 
     await Promise.all([

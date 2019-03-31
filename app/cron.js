@@ -1,10 +1,9 @@
 'use strict';
 
-const cron = require('node-cron');
+const schedule = require('./lib/schedule');
 const t = require('require-all')(`${__dirname}/tasks`);
-const {array, log} = require('utils-mad');
 
-const crons = {
+schedule({
 
     '* * * * *': [
         t.dns.clients,
@@ -15,13 +14,12 @@ const crons = {
         t.router.usage,
     ],
 
-    '0 */1 * * *': t.pi.network,
-    '0 */3 * * *': t.dns.update,
+    '0 */6 * * *': [
+        t.dns.update,
+        t.pi.updates,
+    ],
 
-};
+    '0 */1 * * *':
+        t.pi.network,
 
-for (const [key, value] of Object.entries(crons)) {
-    for (const func of array.convert(value)) {
-        cron.schedule(key, () => func().catch(err => log.print(err)));
-    }
-}
+});

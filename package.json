@@ -10,16 +10,16 @@
     "node": ">=10"
   },
   "dependencies": {
-    "forever": "0.15.3",
+    "forever": "0.15.4",
     "node-cron": "2.0.3",
     "node-routeros": "1.6.2",
-    "oui": "9.1.7",
+    "oui": "9.1.8",
     "require-all": "3.0.0",
     "speedtest-net": "1.5.1",
     "utils-mad": "1.5.1"
   },
   "devDependencies": {
-    "eslint": "5.15.3",
+    "eslint": "5.16.0",
     "eslint-config-k03mad": "2.2.2",
     "eslint-plugin-const-case": "1.0.4",
     "eslint-plugin-jsdoc": "4.6.0",
@@ -36,7 +36,7 @@
     "clean:log": "rm -rf ./forever.log || true",
     "lint": "eslint --report-unused-disable-directives ./ --cache --format codeframe && echo '\n\\033[34mESLinted!\\033[39m\n'",
     "setup": "npm i && npm run clean:log",
-    "start": "forever start -a --uid rpicron --minUptime 1000 --spinSleepTime 10000 -l ../git/rpi-tools-cron/forever.log index.js",
+    "start": "forever start -a --uid rpicron --minUptime 1000 --spinSleepTime 10000 -l ../git/rpi-tools-cron/forever.log app/cron.js",
     "stop": "forever stop -t rpicron || true"
   },
   "pre-commit": [

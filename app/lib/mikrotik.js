@@ -8,7 +8,7 @@ const api = new RouterOSAPI(mikrotik);
 
 /**
  * Get data from mikrotik api
- * @param {string|string[]|Array[]} cmd
+ * @param {string|string[]} cmd
  */
 module.exports = async cmd => {
     let client;

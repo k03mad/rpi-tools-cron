@@ -1,7 +1,7 @@
 'use strict';
 
 const {array} = require('utils-mad');
-const {mikrotik} = require('./env');
+const {mikrotik} = require('../../env');
 const {RouterOSAPI} = require('node-routeros');
 
 const api = new RouterOSAPI(mikrotik);

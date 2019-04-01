@@ -4,10 +4,6 @@
 process.env.NTBA_FIX_319 = true;
 
 module.exports = {
-    database: {
-        url: process.env.INFLUX_URL,
-        db: process.env.INFLUX_DB,
-    },
     pihole: {
         url: process.env.PIHOLE_URL,
         auth: process.env.PIHOLE_AUTH,

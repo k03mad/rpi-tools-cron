@@ -1,7 +1,6 @@
 'use strict';
 
-const {sendToInflux} = require('../../lib/utils');
-const {shell} = require('utils-mad');
+const {shell, influx} = require('utils-mad');
 
 module.exports = async () => {
     const values = {
@@ -11,5 +10,5 @@ module.exports = async () => {
         ]),
     };
 
-    await sendToInflux({meas: 'pi-update', values});
+    await influx.write({meas: 'pi-update', values});
 };

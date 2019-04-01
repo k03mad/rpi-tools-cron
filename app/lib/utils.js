@@ -1,34 +1,8 @@
 'use strict';
 
 const speed = require('speedtest-net');
-const {pihole, database} = require('./env');
-const {request, influx} = require('utils-mad');
-
-/**
- * Open repo and run script
- * @param {string} repo to change dir
- * @param {string} script to run
- * @returns {string}
- */
-const runRepoScript = (repo, script) => [
-    `cd ~/git/${repo}`,
-    'git reset --hard',
-    'git pull',
-    'npm run setup',
-    `npm run ${script}`,
-];
-
-/**
- * Store data to InfluxDB
- * @param {Object} data to send
- */
-const sendToInflux = data => influx.write({...database, ...data});
-
-/**
- * Append data to InfluxDB
- * @param {Object} data to send
- */
-const appendToInflux = data => influx.append({...database, ...data});
+const {pihole} = require('../../env');
+const {request} = require('utils-mad');
 
 /**
  * Get data from Pi-hole api
@@ -54,9 +28,6 @@ const speedTest = () => {
 };
 
 module.exports = {
-    appendToInflux,
-    runRepoScript,
     sendPiholeRequest,
-    sendToInflux,
     speedTest,
 };

@@ -1,6 +1,7 @@
 'use strict';
 
-const {sendToInflux, sendPiholeRequest} = require('../../lib/utils');
+const {influx} = require('utils-mad');
+const {sendPiholeRequest} = require('../../lib/utils');
 
 module.exports = async () => {
     const SEND_ITEMS = 30;
@@ -18,5 +19,5 @@ module.exports = async () => {
         }
     }
 
-    await sendToInflux({meas: 'dns-clients', values});
+    await influx.write({meas: 'dns-clients', values});
 };

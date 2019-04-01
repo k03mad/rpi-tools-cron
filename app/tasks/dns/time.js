@@ -1,6 +1,7 @@
 'use strict';
 
-const {sendToInflux, sendPiholeRequest} = require('../../lib/utils');
+const {influx} = require('utils-mad');
+const {sendPiholeRequest} = require('../../lib/utils');
 
 module.exports = async () => {
     const SEND_ITEMS = 10;
@@ -34,6 +35,6 @@ module.exports = async () => {
     }
 
     await Promise.all(data.map(
-        (values, index) => sendToInflux({meas: 'dns-time', values, timestamp: stamps[index]})
+        (values, index) => influx.write({meas: 'dns-time', values, timestamp: stamps[index]})
     ));
 };

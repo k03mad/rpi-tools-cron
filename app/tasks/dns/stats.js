@@ -1,6 +1,7 @@
 'use strict';
 
-const {sendToInflux, sendPiholeRequest} = require('../../lib/utils');
+const {influx} = require('utils-mad');
+const {sendPiholeRequest} = require('../../lib/utils');
 
 module.exports = async () => {
     const body = await sendPiholeRequest({summaryRaw: ''});
@@ -15,6 +16,6 @@ module.exports = async () => {
     }
 
     if (values.domains_being_blocked !== 0) {
-        await sendToInflux({meas: 'dns-stats', values});
+        await influx.write({meas: 'dns-stats', values});
     }
 };

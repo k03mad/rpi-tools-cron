@@ -1,6 +1,6 @@
 'use strict';
 
-const {sendToInflux} = require('../../lib/utils');
+const {influx} = require('utils-mad');
 const {speedTest} = require('../../lib/utils');
 
 module.exports = async () => {
@@ -16,7 +16,7 @@ module.exports = async () => {
     };
 
     await Promise.all([
-        sendToInflux({meas: 'pi-network-speed', values: speeds}),
-        sendToInflux({meas: 'pi-network-ping', values: ping}),
+        influx.write({meas: 'pi-network-speed', values: speeds}),
+        influx.write({meas: 'pi-network-ping', values: ping}),
     ]);
 };

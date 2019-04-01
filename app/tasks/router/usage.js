@@ -2,7 +2,7 @@
 
 const getMikrotik = require('../../lib/mikrotik');
 const oui = require('oui');
-const {appendToInflux, sendToInflux} = require('../../lib/utils');
+const {influx} = require('utils-mad');
 
 module.exports = async () => {
     const clientsSignal = {};
@@ -75,11 +75,11 @@ module.exports = async () => {
     });
 
     await Promise.all([
-        appendToInflux({meas: 'router-clients-traffic', values: clientsTraffic}),
-        appendToInflux({meas: 'router-interface-traffic', values: interfaceTraffic}),
-        sendToInflux({meas: 'router-clients-signal', values: clientsSignal}),
-        sendToInflux({meas: 'router-interface-speed', values: interfaceSpeed}),
-        sendToInflux({meas: 'router-updates', values: version}),
-        sendToInflux({meas: 'router-usage', values: health}),
+        influx.append({meas: 'router-clients-traffic', values: clientsTraffic}),
+        influx.append({meas: 'router-interface-traffic', values: interfaceTraffic}),
+        influx.write({meas: 'router-clients-signal', values: clientsSignal}),
+        influx.write({meas: 'router-interface-speed', values: interfaceSpeed}),
+        influx.write({meas: 'router-updates', values: version}),
+        influx.write({meas: 'router-usage', values: health}),
     ]);
 };

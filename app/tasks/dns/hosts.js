@@ -1,6 +1,7 @@
 'use strict';
 
-const {sendToInflux, sendPiholeRequest} = require('../../lib/utils');
+const {influx} = require('utils-mad');
+const {sendPiholeRequest} = require('../../lib/utils');
 
 module.exports = async () => {
     const SEND_ITEMS = 15;
@@ -26,7 +27,7 @@ module.exports = async () => {
     }
 
     await Promise.all([
-        sendToInflux({meas: 'dns-hosts', tags: {top: 'ads'}, values: ads}),
-        sendToInflux({meas: 'dns-hosts', tags: {top: 'queries'}, values: queries}),
+        influx.write({meas: 'dns-hosts', tags: {top: 'ads'}, values: ads}),
+        influx.write({meas: 'dns-hosts', tags: {top: 'queries'}, values: queries}),
     ]);
 };

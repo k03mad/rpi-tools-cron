@@ -1,7 +1,6 @@
 'use strict';
 
-const {sendToInflux} = require('../../lib/utils');
-const {shell} = require('utils-mad');
+const {shell, influx} = require('utils-mad');
 
 module.exports = async () => {
     const [uptime, temp, disk, ram] = await Promise.all([
@@ -19,5 +18,5 @@ module.exports = async () => {
         uptime: uptime.match(/up(.+?),/)[1],
     };
 
-    await sendToInflux({meas: 'pi-usage', values});
+    await influx.write({meas: 'pi-usage', values});
 };

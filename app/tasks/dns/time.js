@@ -18,12 +18,18 @@ module.exports = async () => {
         if (time) {
             clients.forEach(({name, ip}, index) => {
                 const blocked = over_time[time][index];
-                if (blocked) values[name || ip] = blocked;
+
+                if (blocked) {
+                    values[name || ip] = blocked;
+                }
             });
 
             // microseconds
             stamps.push(Number(time) * 1000000000);
-            if (Object.keys(values).length > 0) data.push(values);
+
+            if (Object.keys(values).length > 0) {
+                data.push(values);
+            }
         }
     }
 

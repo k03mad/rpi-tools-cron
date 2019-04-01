@@ -17,7 +17,6 @@ schedule({
     '0 */6 * * *': [
         t.dns.update,
         t.pi.updates,
-        t.router.updates,
     ],
 
     '0 */1 * * *':

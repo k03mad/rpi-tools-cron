@@ -10,10 +10,17 @@ module.exports = async () => {
     const interfaceTraffic = {};
     const interfaceSpeed = {};
 
-    const [[usage], interfaces, wifiClients, ...monitorTraffic] = await getMikrotik([
+    const [
+        [usage],
+        interfaces,
+        wifiClients,
+        [, updates],
+        ...monitorTraffic
+    ] = await getMikrotik([
         '/system/resource/print',
         '/interface/print',
         '/interface/wireless/registration-table/print',
+        '/system/package/update/check-for-updates',
         ...['wan1', 'ether1', 'ether2', 'ether3', 'ether4', 'wlan1', 'wlan2']
             .map(elem => ['/interface/monitor-traffic', `=interface=${elem}`, '=once']),
     ]);
@@ -23,6 +30,13 @@ module.exports = async () => {
         cpu: Number(usage['cpu-load']),
         hdd: Number(usage['total-hdd-space']) - Number(usage['free-hdd-space']),
         uptime: usage.uptime,
+    };
+
+    const version = {
+        updates: [
+            updates['installed-version'],
+            updates['latest-version'],
+        ].join(' / '),
     };
 
     // signal-strength and data usage by wifi clients
@@ -65,6 +79,7 @@ module.exports = async () => {
         appendToInflux({meas: 'router-interface-traffic', values: interfaceTraffic}),
         sendToInflux({meas: 'router-clients-signal', values: clientsSignal}),
         sendToInflux({meas: 'router-interface-speed', values: interfaceSpeed}),
+        sendToInflux({meas: 'router-updates', values: version}),
         sendToInflux({meas: 'router-usage', values: health}),
     ]);
 };

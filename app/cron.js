@@ -14,11 +14,9 @@ schedule({
         t.router.usage,
     ],
 
-    '0 */1 * * *':
-        t.pi.network,
-
     '0 */6 * * *': [
         t.dns.update,
+        t.pi.network,
         t.pi.updates,
     ],
 

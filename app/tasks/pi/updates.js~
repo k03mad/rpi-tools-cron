@@ -1,0 +1,16 @@
+'use strict';
+
+const {shell, influx} = require('utils-mad');
+
+const my = async () => {
+    const values = {
+        updates: await shell.run([
+            'sudo apt-get update',
+            'sudo apt-get upgrade -u -s',
+        ]),
+    };
+    console.log(values);
+    await influx.write({meas: 'pi-update', values});
+};
+
+my().then();

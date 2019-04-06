@@ -11,7 +11,7 @@ const api = new RouterOSAPI(mikrotik);
  * @param {string|string[]} cmd
  */
 module.exports = async cmd => {
-    let client;
+    let client, error, res;
 
     try {
         client = await api.connect();
@@ -22,13 +22,18 @@ module.exports = async cmd => {
             response.push(data);
         }
 
-        await client.close();
-        return response;
+        res = response;
     } catch (err) {
-        try {
-            await client.close();
-        } catch (err2) {}
-
-        throw err;
+        error = err;
     }
+
+    try {
+        await client.close();
+    } catch (err) {}
+
+    if (res) {
+        return res;
+    }
+
+    throw error;
 };

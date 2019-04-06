@@ -15,7 +15,7 @@ module.exports = async () => {
             const [, name, current, updated] = elem.match(/Inst (.+) \[(.+)] \((.+?) /);
             return `${name} ${current} (${updated})`;
         })
-        .join(' | ');
+        .join(' | ') || 'no';
 
     await influx.write({meas: 'pi-update', values: {updates}});
 };

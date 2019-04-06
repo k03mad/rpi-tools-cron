@@ -1,8 +1,7 @@
 'use strict';
 
-const getMikrotik = require('../../lib/mikrotik');
 const oui = require('oui');
-const {influx} = require('utils-mad');
+const {influx, mikrotik} = require('utils-mad');
 
 module.exports = async () => {
     const clientsSignal = {};
@@ -16,7 +15,7 @@ module.exports = async () => {
         wifiClients,
         [, updates],
         ...monitorTraffic
-    ] = await getMikrotik([
+    ] = await mikrotik.get([
         '/system/resource/print',
         '/interface/print',
         '/interface/wireless/registration-table/print',

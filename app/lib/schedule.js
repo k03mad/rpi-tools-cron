@@ -9,7 +9,7 @@ module.exports = crons => {
             cron.schedule(
                 key,
                 () => func().catch(err => log.print(err)),
-                {timezone: 'Europe/Moscow'}
+                {timezone: 'Europe/Moscow'},
             );
         }
     }

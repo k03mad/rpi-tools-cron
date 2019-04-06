@@ -35,6 +35,6 @@ module.exports = async () => {
     }
 
     await Promise.all(data.map(
-        (values, index) => influx.write({meas: 'dns-time', values, timestamp: stamps[index]})
+        (values, index) => influx.write({meas: 'dns-time', values, timestamp: stamps[index]}),
     ));
 };

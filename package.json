@@ -13,21 +13,21 @@
     "forever": "1.0.0",
     "node-cron": "2.0.3",
     "node-routeros": "1.6.2",
-    "oui": "9.1.9",
+    "oui": "9.1.10",
     "require-all": "3.0.0",
     "speedtest-net": "1.5.1",
-    "utils-mad": "1.7.0"
+    "utils-mad": "1.7.2"
   },
   "devDependencies": {
     "eslint": "5.16.0",
     "eslint-config-k03mad": "2.2.3",
     "eslint-plugin-const-case": "1.0.4",
-    "eslint-plugin-jsdoc": "4.8.0",
+    "eslint-plugin-jsdoc": "4.8.3",
     "eslint-plugin-node": "8.0.1",
     "eslint-plugin-optimize-regex": "1.1.6",
     "eslint-plugin-promise": "4.1.1",
     "eslint-plugin-sort-requires": "2.1.0",
-    "eslint-plugin-unicorn": "8.0.1",
+    "eslint-plugin-unicorn": "8.0.2",
     "pre-commit": "1.2.2"
   },
   "scripts": {

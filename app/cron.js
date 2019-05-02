@@ -1,6 +1,6 @@
 'use strict';
 
-const {dns, pi, router} = require('require-all')(`${__dirname}/tasks`);
+const {dns, pi, router, staff} = require('require-all')(`${__dirname}/tasks`);
 
 require('./lib/schedule')({
 
@@ -17,6 +17,7 @@ require('./lib/schedule')({
         dns.update,
         pi.network,
         pi.updates,
+        staff.ndr,
     ],
 
 });

@@ -16,7 +16,7 @@
     "oui": "9.1.11",
     "require-all": "3.0.0",
     "speedtest-net": "1.5.1",
-    "utils-mad": "1.8.0"
+    "utils-mad": "1.8.1"
   },
   "devDependencies": {
     "eslint": "5.16.0",

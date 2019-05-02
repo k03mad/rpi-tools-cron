@@ -13,11 +13,12 @@ require('./lib/schedule')({
         router.usage,
     ],
 
+    '0 */1 * * *': [staff.ndr],
+
     '0 */6 * * *': [
         dns.update,
         pi.network,
         pi.updates,
-        staff.ndr,
     ],
 
 });

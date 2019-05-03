@@ -2,7 +2,7 @@
 
 const {request, influx} = require('utils-mad');
 
-module.exports = async () => {
+const ndr = async () => {
     const values = {};
 
     const {body} = await request.got('http://ndr-ru.surge.sh/releases.json', {json: true});
@@ -16,3 +16,5 @@ module.exports = async () => {
 
     await influx.write({meas: 'staff-ndr', values});
 };
+
+module.exports = ndr;

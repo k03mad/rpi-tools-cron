@@ -13,7 +13,10 @@ require('./lib/schedule')({
         router.usage,
     ],
 
-    '0 */1 * * *': [media.films],
+    '0 */1 * * *': [
+        media.films,
+        media.genres,
+    ],
 
     '0 */6 * * *': [
         dns.update,

@@ -55,11 +55,12 @@ module.exports = async () => {
         const {name} = elem;
         const rx = Number(elem['rx-byte']);
         const tx = Number(elem['tx-byte']);
+        const sum = rx + tx;
 
         // data usage by ethernet clients, except WAN
         // to add to wifi clients data graph
-        if (name.includes('ether')) {
-            clientsTraffic[name] = rx + tx;
+        if (name.includes('ether') && sum > 0) {
+            clientsTraffic[name] = sum;
         }
 
         if (name !== 'bridge') {

@@ -9,7 +9,7 @@ module.exports = async () => {
     body.forEach(elem => {
         const kpRate = Number(elem.ratingKP);
 
-        if (kpRate >= 7) {
+        if (kpRate > 0) {
             values[elem.nameRU || elem.nameOriginal] = kpRate;
         }
     });

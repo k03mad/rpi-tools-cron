@@ -25,7 +25,7 @@ module.exports = async () => {
     });
 
     await Promise.all([
-        influx.write({meas: 'media-films-kp', values: kp}),
-        influx.write({meas: 'media-films-imdb', values: imdb}),
+        influx.write({meas: 'films-ratings-kp', values: kp}),
+        influx.write({meas: 'films-ratings-imdb', values: imdb}),
     ]);
 };

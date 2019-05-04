@@ -20,7 +20,7 @@ const sendPiholeRequest = async (query = {}) => {
  * Get ndr data
  */
 const sendNdrRequest = async () => {
-    const {body} = await request.got('http://ndr-ru.surge.sh/releases.json', {json: true});
+    const {body} = await request.got('https://ndr-ru.surge.sh/releases.json', {json: true});
     return body;
 };
 

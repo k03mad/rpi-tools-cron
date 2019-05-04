@@ -1,6 +1,6 @@
 'use strict';
 
-const {dns, pi, router, media} = require('require-all')(`${__dirname}/tasks`);
+const {dns, pi, router, films} = require('require-all')(`${__dirname}/tasks`);
 
 require('./lib/schedule')({
 
@@ -14,8 +14,9 @@ require('./lib/schedule')({
     ],
 
     '0 */1 * * *': [
-        media.films,
-        media.genres,
+        films.data,
+        films.ratings,
+        films.type,
     ],
 
     '0 */6 * * *': [

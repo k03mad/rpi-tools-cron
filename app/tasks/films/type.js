@@ -1,13 +1,13 @@
 'use strict';
 
-const {request, influx, array} = require('utils-mad');
+const {influx, array} = require('utils-mad');
+const {sendNdrRequest} = require('../../lib/utils');
 
 module.exports = async () => {
-    const {body} = await request.got('http://ndr-ru.surge.sh/releases.json', {json: true});
+    const body = await sendNdrRequest();
 
-    const types = [];
-    body.forEach(elem => elem.torrents.forEach(torrent => types.push(torrent.type)));
-    const values = array.count(types);
+    const values = {};
+    body.forEach(elem => elem.torrents.forEach(torrent => array.count(torrent.type, values)));
 
     await influx.write({meas: 'films-type', values});
 };

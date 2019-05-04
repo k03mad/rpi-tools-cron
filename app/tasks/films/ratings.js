@@ -1,9 +1,10 @@
 'use strict';
 
-const {request, influx} = require('utils-mad');
+const {influx} = require('utils-mad');
+const {sendNdrRequest} = require('../../lib/utils');
 
 module.exports = async () => {
-    const {body} = await request.got('http://ndr-ru.surge.sh/releases.json', {json: true});
+    const body = await sendNdrRequest();
 
     const kp = {};
     const imdb = {};

@@ -16,6 +16,17 @@ const sendPiholeRequest = async (query = {}) => {
     return body;
 };
 
+/**
+ * Get ndr data
+ */
+const sendNdrRequest = async () => {
+    const {body} = await request.got('http://ndr-ru.surge.sh/releases.json', {json: true});
+    return body;
+};
+
+/**
+ * Get speed test results
+ */
 const speedTest = () => {
     const test = speed({
         maxTime: 10000,
@@ -29,5 +40,6 @@ const speedTest = () => {
 
 module.exports = {
     sendPiholeRequest,
+    sendNdrRequest,
     speedTest,
 };

@@ -1,7 +1,7 @@
 'use strict';
 
 const {influx} = require('utils-mad');
-const {sendPiholeRequest} = require('../../lib/utils');
+const {sendPiholeRequest} = require('../../lib/api');
 
 module.exports = async () => {
     const SEND_ITEMS = 15;

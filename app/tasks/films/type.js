@@ -1,7 +1,7 @@
 'use strict';
 
 const {influx, array} = require('utils-mad');
-const {sendNdrRequest} = require('../../lib/utils');
+const {sendNdrRequest} = require('../../lib/api');
 
 module.exports = async () => {
     const body = await sendNdrRequest();

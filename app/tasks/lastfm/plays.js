@@ -8,7 +8,11 @@ module.exports = async () => {
 
     const values = {};
     body.forEach(data => {
-        values[data.fmuser] = Number(data.user.playcount);
+        const plays = Number(data.user.playcount);
+
+        if (plays > 0) {
+            values[data.fmuser] = Number(data.user.playcount);
+        }
     });
 
     await influx.write({meas: 'lastfm-plays', values});

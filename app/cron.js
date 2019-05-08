@@ -1,6 +1,6 @@
 'use strict';
 
-const {dns, films, lastfm, pi, router} = require('require-all')(`${__dirname}/tasks`);
+const {dns, lastfm, pi, router} = require('require-all')(`${__dirname}/tasks`);
 
 require('./lib/schedule')({
 
@@ -17,12 +17,6 @@ require('./lib/schedule')({
         lastfm.artists,
         lastfm.plays,
         lastfm.top,
-    ],
-
-    '0 */1 * * *': [
-        films.data,
-        films.ratings,
-        films.type,
     ],
 
     '0 */6 * * *': [

@@ -16,14 +16,6 @@ const sendPiholeRequest = async (query = {}) => {
 };
 
 /**
- * Get ndr data
- */
-const sendNdrRequest = async () => {
-    const {body} = await request.got('https://ndr-ru.surge.sh/releases.json', {json: true});
-    return body;
-};
-
-/**
  * Get last.fm data
  * @param {string} method
  * @param {Object} params
@@ -45,6 +37,5 @@ const sendLastFmRequest = (method, params = {}) => Promise.all(
 
 module.exports = {
     sendLastFmRequest,
-    sendNdrRequest,
     sendPiholeRequest,
 };

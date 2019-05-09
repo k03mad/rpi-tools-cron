@@ -12,4 +12,7 @@ module.exports = {
         key: process.env.LASTFM_KEY,
         users: process.env.LASTFM_USERS.split(','),
     },
+    tmdb: {
+        key: process.env.TMDB_KEY,
+    },
 };

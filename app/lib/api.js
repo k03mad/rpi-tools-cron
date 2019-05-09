@@ -1,6 +1,6 @@
 'use strict';
 
-const {pihole, lastfm} = require('../../env');
+const {pihole, lastfm, tmdb} = require('../../env');
 const {request, array} = require('utils-mad');
 
 /**
@@ -35,7 +35,36 @@ const sendLastFmRequest = (method, params = {}) => Promise.all(
     }),
 );
 
+/**
+ * Get tmdb data
+ * @param {Object} opts
+ * @param {string} opts.path
+ * @param {Object} opts.params
+ * @param {number} opts.count
+ */
+const sendTmdbRequest = async ({path, params = {}, count = 20} = {}) => {
+    const DEFAULT_ONE_PAGE_COUNT = 20;
+
+    const pages = Math.ceil(count / DEFAULT_ONE_PAGE_COUNT);
+    const output = [];
+
+    for (let i = 0; i < pages; i++) {
+        const query = {
+            api_key: tmdb.key,
+            language: 'ru-RU',
+            page: i + 1,
+            ...params,
+        };
+
+        const {body} = await request.got(`https://api.themoviedb.org/3/${path}`, {query, json: true});
+        output.push(...body.results);
+    }
+
+    return output.slice(0, count);
+};
+
 module.exports = {
     sendLastFmRequest,
     sendPiholeRequest,
+    sendTmdbRequest,
 };

@@ -9,7 +9,7 @@ module.exports = async () => {
 
     const paths = [];
     media.forEach(elem => {
-        paths.push(`trending/${elem}/day`, `${elem}/popular`);
+        paths.push(`trending/${elem}/week`, `${elem}/popular`);
     });
 
     const data = {};

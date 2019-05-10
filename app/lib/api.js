@@ -1,6 +1,6 @@
 'use strict';
 
-const {pihole, lastfm, tmdb} = require('../../env');
+const {pihole, lastfm, tmdb, myshows} = require('../../env');
 const {request, array} = require('utils-mad');
 
 /**
@@ -63,8 +63,44 @@ const sendTmdbRequest = async ({path, params = {}, count = 20} = {}) => {
     return output.slice(0, count);
 };
 
+/**
+ * Get myshows data
+ * @param {string} method
+ * @param {Object} params
+ */
+const sendMyshowsRequest = async (method, params = {}) => {
+    const {login, password, client, secret} = myshows;
+
+    const auth = await request.got('https://myshows.me/oauth/token', {
+        body: {
+            grant_type: 'password',
+            client_id: client,
+            client_secret: secret,
+            username: login,
+            password,
+        },
+        json: true,
+    });
+
+    const {access_token: token, token_type: type} = auth.body;
+
+    const {body} = await request.got('https://api.myshows.me/v2/rpc/', {
+        Authorization: `${type} ${token}`,
+        body: {
+            id: 1,
+            jsonrpc: '2.0',
+            params: {login, ...params},
+            method,
+        },
+        json: true,
+    });
+
+    return body.result;
+};
+
 module.exports = {
     sendLastFmRequest,
     sendPiholeRequest,
     sendTmdbRequest,
+    sendMyshowsRequest,
 };

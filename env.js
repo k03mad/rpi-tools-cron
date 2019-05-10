@@ -15,4 +15,10 @@ module.exports = {
     tmdb: {
         key: process.env.TMDB_KEY,
     },
+    myshows: {
+        client: process.env.MYSHOWS_CLIENT,
+        secret: process.env.MYSHOWS_SECRET,
+        login: process.env.MYSHOWS_LOGIN,
+        password: process.env.MYSHOWS_PASSWORD,
+    },
 };

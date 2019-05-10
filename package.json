@@ -17,7 +17,7 @@
     "oui": "9.1.11",
     "require-all": "3.0.0",
     "speedtest-net": "1.5.1",
-    "utils-mad": "1.8.6"
+    "utils-mad": "1.8.7"
   },
   "devDependencies": {
     "eslint": "5.16.0",
@@ -38,7 +38,8 @@
     "lint": "eslint --report-unused-disable-directives ./ --format codeframe && echo '\n\\033[34mESLinted!\\033[39m\n'",
     "setup": "npm i && npm run clean:log",
     "start": "forever start -a --uid rpicron --minUptime 1000 --spinSleepTime 10000 -l ../git/rpi-tools-cron/forever.log app/cron.js",
-    "stop": "forever stop -t rpicron || true"
+    "stop": "forever stop -t rpicron || true",
+    "task": "node runner.js"
   },
   "pre-commit": [
     "lint"

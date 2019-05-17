@@ -23,7 +23,6 @@ require('./lib/schedule')({
         myshows.stats,
         myshows.status,
         myshows.year,
-        tmdb.popular,
         tmdb.ratings,
     ],
 

@@ -4,7 +4,10 @@ const {influx} = require('utils-mad');
 const {sendTmdbRequest} = require('../../lib/api');
 
 module.exports = async () => {
-    const MEDIA_COUNT = 30;
+    const MEDIA_COUNT = 50;
+    const MIN_VOTE = 0;
+    const MIN_VOTES = 20;
+
     const media = ['movie', 'tv'];
 
     const paths = media.map(elem => `trending/${elem}/week`);
@@ -15,9 +18,9 @@ module.exports = async () => {
         const results = await sendTmdbRequest({path, count: MEDIA_COUNT});
 
         results.forEach(result => {
-            const {title, name, vote_average: vote} = result;
+            const {title, name, vote_average: vote, vote_count: count} = result;
 
-            if (vote > 0) {
+            if (vote > MIN_VOTE && count > MIN_VOTES) {
                 values[title || name] = vote;
             }
         });

@@ -7,10 +7,7 @@ module.exports = async () => {
     const MEDIA_COUNT = 30;
     const media = ['movie', 'tv'];
 
-    const paths = [];
-    media.forEach(elem => {
-        paths.push(`trending/${elem}/week`, `${elem}/popular`);
-    });
+    const paths = media.map(elem => `trending/${elem}/week`);
 
     const data = {};
     await Promise.all(paths.map(async path => {

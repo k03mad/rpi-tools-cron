@@ -11,11 +11,7 @@ module.exports = async () => {
     const updates = apt
         .split('\n')
         .filter(elem => elem.includes('Inst'))
-        .map(elem => {
-            const [, name, current, updated] = elem.match(/Inst (.+) \[(.+)] \((.+?) /);
-            return `${name} ${current} (${updated})`;
-        })
-        .join(' | ') || 'no';
+        .length;
 
     await influx.write({meas: 'pi-update', values: {updates}});
 };

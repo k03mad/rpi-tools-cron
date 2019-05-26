@@ -5,7 +5,8 @@ const {request, array} = require('utils-mad');
 
 /**
  * Get data from Pi-hole api
- * @param {Object} query
+ * @param {object} query
+ * @returns {object}
  */
 const sendPiholeRequest = async (query = {}) => {
     const {url, auth} = pihole;
@@ -17,6 +18,7 @@ const sendPiholeRequest = async (query = {}) => {
 
 /**
  * Get chsv data
+ * @returns {object}
  */
 const sendChsvRequest = async () => {
     const {body} = await request.got('http://chsv.ml/releases.json', {json: true});
@@ -26,7 +28,8 @@ const sendChsvRequest = async () => {
 /**
  * Get last.fm data
  * @param {string} method
- * @param {Object} params
+ * @param {object} params
+ * @returns {object}
  */
 const sendLastFmRequest = (method, params = {}) => Promise.all(
     array.convert(lastfm.users).map(async user => {
@@ -45,10 +48,11 @@ const sendLastFmRequest = (method, params = {}) => Promise.all(
 
 /**
  * Get tmdb data
- * @param {Object} opts
+ * @param {object} opts
  * @param {string} opts.path
- * @param {Object} opts.params
+ * @param {object} opts.params
  * @param {number} opts.count
+ * @returns {Array}
  */
 const sendTmdbRequest = async ({path, params = {}, count = 20} = {}) => {
     const DEFAULT_ONE_PAGE_COUNT = 20;
@@ -74,7 +78,8 @@ const sendTmdbRequest = async ({path, params = {}, count = 20} = {}) => {
 /**
  * Get myshows data
  * @param {string} method
- * @param {Object} params
+ * @param {object} params
+ * @returns {object}
  */
 const sendMyshowsRequest = async (method, params = {}) => {
     const {login, password, client, secret} = myshows;

@@ -4,6 +4,7 @@ const speed = require('speedtest-net');
 
 /**
  * Get speed test results
+ * @returns {Promise}
  */
 const speedTest = () => {
     const test = speed({

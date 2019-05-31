@@ -7,6 +7,7 @@ require('./lib/schedule')({
     '* * * * *': [
         dns.clients,
         dns.hosts,
+        dns.network,
         dns.stats,
         dns.time,
         pi.usage,

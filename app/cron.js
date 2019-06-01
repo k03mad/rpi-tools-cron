@@ -21,13 +21,14 @@ require('./lib/schedule')({
     ],
 
     '0 */1 * * *': [
+        films.data,
+        films.ratings,
+        films.type,
+        myshows.series,
         myshows.stats,
         myshows.status,
         myshows.year,
         tmdb.ratings,
-        films.data,
-        films.ratings,
-        films.type,
     ],
 
     '0 */6 * * *': [

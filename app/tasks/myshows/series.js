@@ -1,10 +1,9 @@
 'use strict';
 
-const {influx} = require('utils-mad');
-const {sendMyshowsRequest} = require('../../lib/api');
+const {myshows, influx} = require('utils-mad');
 
 module.exports = async () => {
-    const body = await sendMyshowsRequest('profile.Shows');
+    const body = await myshows.get({method: 'profile.Shows'});
     const watching = body.filter(elem => elem.watchStatus === 'watching');
 
     const values = {};

@@ -17,11 +17,11 @@
     "oui": "10.0.4",
     "require-all": "3.0.0",
     "speedtest-net": "1.5.1",
-    "utils-mad": "1.8.11"
+    "utils-mad": "1.8.13"
   },
   "devDependencies": {
     "eslint": "5.16.0",
-    "eslint-config-k03mad": "2.4.1",
+    "eslint-config-k03mad": "2.4.2",
     "eslint-plugin-const-case": "1.0.4",
     "eslint-plugin-jsdoc": "7.2.3",
     "eslint-plugin-node": "9.1.0",

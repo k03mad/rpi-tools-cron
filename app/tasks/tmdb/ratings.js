@@ -1,7 +1,6 @@
 'use strict';
 
-const {influx} = require('utils-mad');
-const {sendTmdbRequest} = require('../../lib/api');
+const {influx, tmdb} = require('utils-mad');
 
 module.exports = async () => {
     const MEDIA_COUNT = 50;
@@ -15,7 +14,7 @@ module.exports = async () => {
     const data = {};
     await Promise.all(paths.map(async path => {
         const values = {};
-        const results = await sendTmdbRequest({path, count: MEDIA_COUNT});
+        const results = await tmdb.get({path, count: MEDIA_COUNT});
 
         results.forEach(result => {
             const {title, name, vote_average: vote, vote_count: count} = result;

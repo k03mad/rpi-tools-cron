@@ -24,7 +24,7 @@ require('./lib/schedule')({
         films.data,
         films.ratings,
         films.type,
-        // myshows.series,
+        myshows.series,
         myshows.stats,
         myshows.status,
         myshows.year,

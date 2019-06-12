@@ -1,6 +1,6 @@
 'use strict';
 
-const {dns, films, lastfm, myshows, pi, router, tmdb, parser} = require('require-all')(`${__dirname}/tasks`);
+const {dns, films, lastfm, myshows, pi, router, parser} = require('require-all')(`${__dirname}/tasks`);
 
 require('./lib/schedule')({
 
@@ -28,7 +28,6 @@ require('./lib/schedule')({
         myshows.stats,
         myshows.status,
         myshows.year,
-        tmdb.ratings,
     ],
 
     '0 */6 * * *': [

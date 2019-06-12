@@ -33,9 +33,10 @@ require('./lib/schedule')({
 
     '0 */6 * * *': [
         dns.update,
-        parser.update,
         pi.network,
         pi.updates,
     ],
+
+    '0 5 * * *': parser.update,
 
 });

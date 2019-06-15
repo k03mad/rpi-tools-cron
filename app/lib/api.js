@@ -18,15 +18,6 @@ const sendPiholeRequest = async (query = {}, path = '/admin/api.php') => {
 };
 
 /**
- * Get chsv data
- * @returns {object}
- */
-const sendChsvRequest = async () => {
-    const {body} = await request.got('http://chsv.ml/releases.json', {json: true});
-    return body;
-};
-
-/**
  * Get last.fm data
  * @param {string} method
  * @param {object} params
@@ -49,6 +40,5 @@ const sendLastFmRequest = (method, params = {}) => Promise.all(
 
 module.exports = {
     sendLastFmRequest,
-    sendChsvRequest,
     sendPiholeRequest,
 };

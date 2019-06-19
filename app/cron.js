@@ -14,12 +14,6 @@ require('./lib/schedule')({
         router.usage,
     ],
 
-    '*/5 * * * *': [
-        lastfm.artists,
-        lastfm.plays,
-        lastfm.top,
-    ],
-
     '0 */1 * * *': [
         myshows.series,
         myshows.stats,

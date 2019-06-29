@@ -1,6 +1,6 @@
 'use strict';
 
-const {dns, lastfm, myshows, pi, router, parser} = require('require-all')(`${__dirname}/tasks`);
+const {dns, myshows, pi, router, parser} = require('require-all')(`${__dirname}/tasks`);
 
 require('./lib/schedule')({
 

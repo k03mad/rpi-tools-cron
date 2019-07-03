@@ -13,29 +13,12 @@ module.exports = async () => {
 
     const values = {};
 
-    const clear = [
-        'data|',
-        'hosts|',
-        'master|',
-        'raw.githubusercontent.com|',
-        's3.amazonaws.com|',
-        'bitbucket.org|',
-        'gitlab.com|',
-        /raw\|[\da-f]+\|/,
-        /\.php\|.+/,
-        /\|easylist/g,
-    ];
-
     Object.entries(JSON.parse(data)).forEach(([key, value]) => {
-        clear.forEach(elem => {
-            key = key.replace(elem, '');
-        });
-
         if (values[key]) {
             key = `dup!! ${key}`;
         }
 
-        values[key.replace(/\|/g, '/')] = value;
+        values[key] = value;
     });
 
     await influx.write({meas: 'dns-lists', values});

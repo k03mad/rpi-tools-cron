@@ -24,7 +24,6 @@ require('./lib/schedule')({
 
     '0 */6 * * *': [
         dns.update,
-        pi.network,
         pi.updates,
     ],
 

@@ -10,6 +10,7 @@ require('./lib/schedule')({
         dns.network,
         dns.stats,
         dns.time,
+        pi.apps,
         pi.usage,
         router.usage,
     ],

@@ -5,14 +5,17 @@ const {dns, myshows, pi, router, parser} = require('require-all')(`${__dirname}/
 require('./lib/schedule')({
 
     '* * * * *': [
+        pi.apps,
+        pi.usage,
+        router.usage,
+    ],
+
+    '*/10 * * * *': [
         dns.clients,
         dns.hosts,
         dns.network,
         dns.stats,
         dns.time,
-        pi.apps,
-        pi.usage,
-        router.usage,
     ],
 
     '0 */1 * * *': [

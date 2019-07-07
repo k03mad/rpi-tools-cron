@@ -10,11 +10,12 @@ require('./lib/schedule')({
         router.usage,
     ],
 
-    '*/10 * * * *': [
+    '*/10 * * * *': dns.time,
+
+    '*/30 * * * *': [
         dns.clients,
         dns.hosts,
         dns.stats,
-        dns.time,
     ],
 
     '0 */1 * * *': [

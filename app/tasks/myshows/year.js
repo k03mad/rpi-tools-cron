@@ -1,6 +1,6 @@
 'use strict';
 
-const {influx, date, parse} = require('utils-mad');
+const {influx, date, parse, ua} = require('utils-mad');
 
 module.exports = async () => {
     const SHOWS_COUNT = 20;
@@ -16,7 +16,7 @@ module.exports = async () => {
             url: 'https://myshows.me/search/all/',
             gotOpts: {
                 query: {year: dates[year]},
-                headers: {'user-agent': 'Mozilla/5.0 (Linux; Android 8.0; Pixel 2 Build/OPD3.170816.012) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.169 Mobile Safari/537.36'},
+                headers: {'user-agent': ua.android.chrome},
             },
         });
 

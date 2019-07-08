@@ -30,7 +30,7 @@ require('./lib/schedule')({
         pi.updates,
     ],
 
-    '0 5 * * *': parser.shows,
-    '30 5 * * *': parser.films,
+    '0 7 * * *': parser.shows,
+    '30 7 * * *': parser.films,
 
 });

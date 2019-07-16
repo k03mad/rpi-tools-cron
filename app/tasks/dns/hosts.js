@@ -26,8 +26,9 @@ module.exports = async () => {
         }
     }
 
-    await Promise.all([
-        influx.write({meas: 'dns-hosts', tags: {top: 'ads'}, values: ads}),
-        influx.write({meas: 'dns-hosts', tags: {top: 'queries'}, values: queries}),
-    ]);
+    if (Object.keys(ads).length > 0) {
+        await influx.write({meas: 'dns-hosts', tags: {top: 'ads'}, values: ads});
+    }
+
+    await influx.write({meas: 'dns-hosts', tags: {top: 'queries'}, values: queries});
 };

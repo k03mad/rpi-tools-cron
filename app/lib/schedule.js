@@ -8,7 +8,7 @@ module.exports = crons => {
         for (const func of array.convert(value)) {
             cron.schedule(
                 key,
-                () => func().catch(err => print.ex(err)),
+                () => func().catch(err => print.ex(err, {exit: true})),
                 {timezone: 'Europe/Moscow'},
             );
         }

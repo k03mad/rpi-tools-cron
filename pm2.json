@@ -2,9 +2,6 @@
   "name": "cron",
   "script": "app/cron.js",
 
-  "watch": true,
-  "watch_delay": 60000,
-
   "exp_backoff_restart_delay": 100,
   "max_memory_restart": "100M",
 

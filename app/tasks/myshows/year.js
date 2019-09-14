@@ -7,7 +7,7 @@ module.exports = async () => {
 
     const dates = {
         current: date.now('YYYY'),
-        previous: date.sub({form: 'YYYY', period: 'year'}),
+        previous: date.sub({format: 'YYYY', period: 'years'}),
     };
 
     await Promise.all(Object.keys(dates).map(async year => {

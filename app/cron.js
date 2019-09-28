@@ -1,6 +1,6 @@
 'use strict';
 
-const {dns, myshows, pi, router, parser} = require('require-all')(`${__dirname}/tasks`);
+const {dns, myshows, pi, router, tools} = require('require-all')(`${__dirname}/tasks`);
 
 require('./lib/schedule')({
 
@@ -31,9 +31,6 @@ require('./lib/schedule')({
         pi.updates,
     ],
 
-    '30 */6 * * *': [
-        parser.shows,
-        parser.films,
-    ],
+    '30 */6 * * *': tools.parse,
 
 });

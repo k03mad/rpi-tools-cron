@@ -22,6 +22,9 @@ require('./lib/schedule')({
         myshows.series,
         myshows.stats,
         myshows.status,
+    ],
+
+    '0 */5 * * *': [
         myshows.trends,
         myshows.year,
     ],

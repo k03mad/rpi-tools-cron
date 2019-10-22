@@ -1,6 +1,7 @@
 'use strict';
 
-const {influx, date, parse, ua} = require('utils-mad');
+const randomMua = require('random-mua');
+const {influx, date, parse} = require('utils-mad');
 
 module.exports = async () => {
     const SHOWS_COUNT = 20;
@@ -16,7 +17,7 @@ module.exports = async () => {
             url: 'https://myshows.me/search/all/',
             gotOpts: {
                 query: {year: dates[year]},
-                headers: {'user-agent': ua.android.chrome},
+                headers: {'user-agent': randomMua('m')},
             },
         });
 

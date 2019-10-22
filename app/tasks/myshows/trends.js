@@ -1,7 +1,6 @@
 'use strict';
 
-const randomMua = require('random-mua');
-const {influx, parse} = require('utils-mad');
+const {influx, parse, ua} = require('utils-mad');
 
 module.exports = async () => {
     const SHOWS_COUNT = 20;
@@ -10,7 +9,7 @@ module.exports = async () => {
         selector: '.catalogTable .alignRight , .catalogTable a',
         url: 'https://myshows.me/ratings/trends/',
         gotOpts: {
-            headers: {'user-agent': randomMua()},
+            headers: {'user-agent': ua.random.desktop()},
         },
     });
 

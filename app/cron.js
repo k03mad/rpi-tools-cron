@@ -19,12 +19,13 @@ require('./lib/schedule')({
     ],
 
     '0 */1 * * *': [
+        lastfm.artists,
+        lastfm.plays,
+        lastfm.songs,
+        lastfm.top,
         myshows.series,
         myshows.stats,
         myshows.status,
-        lastfm.artists,
-        lastfm.plays,
-        lastfm.top,
     ],
 
     '0 */5 * * *': [

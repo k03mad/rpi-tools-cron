@@ -17,6 +17,7 @@ module.exports = async () => {
             gotOpts: {
                 query: {year: dates[year]},
                 headers: {'user-agent': ua.random.mobile()},
+                timeout: 20000,
             },
         });
 

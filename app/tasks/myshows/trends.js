@@ -10,6 +10,7 @@ module.exports = async () => {
         url: 'https://myshows.me/ratings/trends/',
         gotOpts: {
             headers: {'user-agent': ua.random.desktop()},
+            timeout: 20000,
         },
     });
 

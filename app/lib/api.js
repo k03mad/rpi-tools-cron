@@ -32,7 +32,7 @@ const sendLastFmRequest = (method, params = {}) => Promise.all(
             ...params,
         };
 
-        const {body} = await request.got('https://ws.audioscrobbler.com/2.0/', {query, json: true});
+        const {body} = await request.got('https://ws.audioscrobbler.com/2.0/', {query, json: true, timeout: 20000});
         body.fmuser = user;
         return body;
     }),

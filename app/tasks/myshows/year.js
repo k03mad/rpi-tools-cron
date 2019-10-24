@@ -1,6 +1,6 @@
 'use strict';
 
-const {influx, date, parse, ua} = require('utils-mad');
+const {influx, date, parse, ua, request} = require('utils-mad');
 
 module.exports = async () => {
     const SHOWS_COUNT = 20;
@@ -10,13 +10,13 @@ module.exports = async () => {
         previous: date.sub({format: 'YYYY', period: 'years'}),
     };
 
+    const [proxy] = await request.proxy();
     await Promise.all(Object.keys(dates).map(async year => {
         const parsed = await parse.text({
-            selector: '.table__row_even .table__cell_countLooking span , .series-title__local-title a',
-            url: 'https://myshows.me/search/all/',
+            selector: '.catalogTable .alignRight:nth-child(3) , td a',
+            url: `${proxy}https://myshows.me/search/all/?year=${dates[year]}`,
             gotOpts: {
-                query: {year: dates[year]},
-                headers: {'user-agent': ua.random.mobile()},
+                headers: {'user-agent': ua.random.desktop()},
                 timeout: 20000,
             },
         });
@@ -24,7 +24,7 @@ module.exports = async () => {
         const values = {};
 
         for (let i = 0; i < parsed.length && i < SHOWS_COUNT * 2; i += 2) {
-            values[parsed[i]] = Number(parsed[i + 1]);
+            values[parsed[i]] = Number(parsed[i + 1].replace(/\s/g, ''));
         }
 
         await influx.write({meas: `myshows-year-${year}`, values});

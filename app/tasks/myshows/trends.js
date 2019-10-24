@@ -1,13 +1,14 @@
 'use strict';
 
-const {influx, parse, ua} = require('utils-mad');
+const {influx, parse, ua, request} = require('utils-mad');
 
 module.exports = async () => {
     const SHOWS_COUNT = 20;
 
+    const [proxy] = await request.proxy();
     const parsed = await parse.text({
         selector: '.catalogTable .alignRight , .catalogTable a',
-        url: 'https://myshows.me/ratings/trends/',
+        url: `${proxy}https://myshows.me/ratings/trends/`,
         gotOpts: {
             headers: {'user-agent': ua.random.desktop()},
             timeout: 20000,

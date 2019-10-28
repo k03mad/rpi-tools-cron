@@ -10,7 +10,7 @@ require('./lib/schedule')({
         router.usage,
     ],
 
-    '*/10 * * * *': dns.time,
+    '*/7 * * * *': dns.time,
 
     '*/30 * * * *': [
         dns.clients,
@@ -18,7 +18,7 @@ require('./lib/schedule')({
         dns.stats,
     ],
 
-    '0 */1 * * *': [
+    '40 */1 * * *': [
         lastfm.artists,
         lastfm.plays,
         lastfm.songs,
@@ -28,12 +28,12 @@ require('./lib/schedule')({
         myshows.status,
     ],
 
-    '0 */5 * * *': [
+    '20 */5 * * *': [
         myshows.trends,
         myshows.year,
     ],
 
-    '0 */6 * * *': [
+    '10 */6 * * *': [
         dns.update,
         pi.updates,
     ],

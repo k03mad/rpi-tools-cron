@@ -1,25 +1,35 @@
 'use strict';
 
 const appRoot = require('app-root-path');
-const {influx, repo} = require('utils-mad');
+const {influx, repo, array} = require('utils-mad');
 const {promises: fs} = require('fs');
+const {sendAdgRequest} = require('../../lib/api');
 
 module.exports = async () => {
     const REPO = 'adblock-hosts-list';
     const file = `${REPO}/output/stats.json`;
 
     await repo.run(REPO, 'deploy');
-    const data = await fs.readFile(`${appRoot}/../${file}`, 'utf8');
+    await sendAdgRequest('filtering/refresh', {method: 'POST', json: false});
 
-    const values = {};
+    const apiData = await sendAdgRequest('filtering/status');
+    const apiHostsSum = array.sum(apiData.filters.map(elem => elem.rules_count));
 
-    Object.entries(JSON.parse(data)).forEach(([key, value]) => {
-        if (values[key]) {
+    const fileData = JSON.parse(await fs.readFile(`${appRoot}/../${file}`, 'utf8'));
+    const fileHostsSum = fileData.uniqcount;
+
+    const listsValues = {};
+
+    Object.entries(fileData.results).forEach(([key, value]) => {
+        if (listsValues[key]) {
             key = `dup!! ${key}`;
         }
 
-        values[key] = value;
+        listsValues[key] = value;
     });
 
-    await influx.write({meas: 'dns-lists', values});
+    await Promise.all([
+        influx.write({meas: 'dns-lists', values: listsValues}),
+        influx.write({meas: 'dns-lists-count', values: {api: apiHostsSum, file: fileHostsSum}}),
+    ]);
 };

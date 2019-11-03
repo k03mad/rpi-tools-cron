@@ -1,6 +1,6 @@
 'use strict';
 
-const {lastfm} = require('../../env');
+const {lastfm, adg} = require('../../env');
 const {request, array} = require('utils-mad');
 
 /**
@@ -24,6 +24,22 @@ const sendLastFmRequest = (method, params = {}) => Promise.all(
     }),
 );
 
+/**
+ * Get AdGuard Home data
+ * @param {string} path
+ * @param {object} opts
+ * @returns {object}
+ */
+const sendAdgRequest = async (path, opts) => {
+    const {body} = await request.got(adg.url + path, {
+        json: true,
+        headers: {Authorization: `Basic ${adg.auth}`},
+        ...opts,
+    });
+    return body;
+};
+
 module.exports = {
+    sendAdgRequest,
     sendLastFmRequest,
 };

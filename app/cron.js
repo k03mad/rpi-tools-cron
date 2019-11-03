@@ -38,6 +38,6 @@ require('./lib/schedule')({
         pi.updates,
     ],
 
-    '30 */6 * * *': tools.parse,
+    '30 4,6 * * *': tools.parse,
 
 });

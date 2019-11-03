@@ -8,7 +8,7 @@ module.exports = async () => {
     const REPO = 'adblock-hosts-list';
     const file = `${REPO}/output/stats.json`;
 
-    await repo.run(REPO, 'deploy && pihole -g');
+    await repo.run(REPO, 'deploy');
     const data = await fs.readFile(`${appRoot}/../${file}`, 'utf8');
 
     const values = {};

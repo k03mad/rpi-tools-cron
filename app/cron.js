@@ -12,12 +12,6 @@ require('./lib/schedule')({
 
     '*/7 * * * *': dns.time,
 
-    '*/30 * * * *': [
-        dns.clients,
-        dns.hosts,
-        dns.stats,
-    ],
-
     '40 */1 * * *': [
         lastfm.artists,
         lastfm.plays,

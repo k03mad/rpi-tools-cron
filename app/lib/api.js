@@ -1,21 +1,7 @@
 'use strict';
 
-const {pihole, lastfm} = require('../../env');
+const {lastfm} = require('../../env');
 const {request, array} = require('utils-mad');
-
-/**
- * Get data from Pi-hole api
- * @param {object} query
- * @param {string} path
- * @returns {object}
- */
-const sendPiholeRequest = async (query = {}, path = '/admin/api.php') => {
-    const {url, auth} = pihole;
-    query.auth = auth;
-
-    const {body} = await request.got(url + path, {query, json: true});
-    return body;
-};
 
 /**
  * Get last.fm data
@@ -39,6 +25,5 @@ const sendLastFmRequest = (method, params = {}) => Promise.all(
 );
 
 module.exports = {
-    sendPiholeRequest,
     sendLastFmRequest,
 };

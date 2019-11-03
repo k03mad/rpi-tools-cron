@@ -10,8 +10,6 @@ require('./lib/schedule')({
         router.usage,
     ],
 
-    '*/7 * * * *': dns.time,
-
     '40 */1 * * *': [
         lastfm.artists,
         lastfm.plays,

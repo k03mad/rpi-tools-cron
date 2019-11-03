@@ -14,7 +14,7 @@
 		"node-cron": "2.0.3",
 		"oui": "10.0.28",
 		"require-all": "3.0.0",
-		"utils-mad": "2.4.3"
+		"utils-mad": "2.4.5"
 	},
 	"devDependencies": {
 		"eslint": "6.6.0",

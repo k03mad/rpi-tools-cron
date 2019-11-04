@@ -16,7 +16,6 @@ module.exports = async () => {
     const apiHostsSum = array.sum(apiData.filters.map(elem => elem.rules_count));
 
     const fileData = JSON.parse(await fs.readFile(`${appRoot}/../${file}`, 'utf8'));
-    const fileHostsSum = fileData.uniqcount;
 
     const listsValues = {};
 
@@ -30,6 +29,6 @@ module.exports = async () => {
 
     await Promise.all([
         influx.write({meas: 'dns-lists', values: listsValues}),
-        influx.write({meas: 'dns-lists-count', values: {api: apiHostsSum, file: fileHostsSum}}),
+        influx.write({meas: 'dns-lists-count', values: {api: apiHostsSum, file: fileData.uniqcount, white: fileData.whitelisted}}),
     ]);
 };

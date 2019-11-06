@@ -10,10 +10,20 @@ module.exports = crons => {
                 key,
                 () => {
                     const id = Math.floor(Math.random() * Math.floor(100000));
+                    const skip = key === '* * * * *';
 
-                    console.log(`before: ${id} "${key}" ${date.now()}`);
+                    if (!skip) {
+                        console.log(`before: ${id} "${key}" ${date.now()}`);
+                    }
+
                     return func()
-                        .then(console.log(`then: ${id} "${key}" ${date.now()}`))
+                        .then(() => {
+                            if (!skip) {
+                                console.log(`then: ${id} "${key}" ${date.now()}`);
+                            }
+
+                            return true;
+                        })
                         .catch(err => print.ex(err, {
                             add: `catch: ${id} "${key}" ${date.now()}`,
                             exit: true,

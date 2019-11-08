@@ -11,8 +11,8 @@
 	},
 	"dependencies": {
 		"app-root-path": "3.0.0",
-		"node-cron": "2.0.3",
 		"oui": "10.0.28",
+		"recron": "1.0.2",
 		"require-all": "3.0.0",
 		"utils-mad": "2.4.6"
 	},

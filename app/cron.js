@@ -28,7 +28,7 @@ require('./lib/schedule')({
     ],
 
     '10 */6 * * *': dns.update,
-    '20 */6 * * *': pi.updates,
+    '20 */6 * * *': pi.update,
     '30 4,6 * * *': tools.parse,
 
 });

@@ -4,7 +4,7 @@ const {dns, myshows, pi, router, tools, lastfm} = require('require-all')(`${__di
 
 require('./lib/schedule')({
 
-    '*/2 * * * *': [
+    '* * * * *': [
         pi.apps,
         pi.usage,
         router.usage,

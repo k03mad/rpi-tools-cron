@@ -44,7 +44,7 @@ module.exports = async () => {
         const trf = elem.bytes.replace(',', '.');
         const mac = elem['mac-address'];
 
-        const [vendor] = (oui(mac) || '').split('\n')[0].split(' ');
+        const vendor = oui(mac).split('\n')[0].match(/^(\w+( \w+)?)/)[0].replace(' ', '_');
         const key = `${vendor}_${mac}`;
 
         clientsSignal[key] = Number(dbm);

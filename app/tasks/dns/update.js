@@ -7,7 +7,7 @@ const {sendAdgRequest} = require('../../lib/api');
 
 module.exports = async () => {
     const REPO = 'adblock-hosts-list';
-    const file = `${REPO}/output/stats.json`;
+    const file = `${REPO}/output/temp/stats.json`;
 
     await repo.run(REPO, 'deploy');
     await sendAdgRequest('filtering/refresh', {method: 'POST', json: false});

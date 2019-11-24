@@ -11,7 +11,7 @@ module.exports = async () => {
         url: `${proxy}https://myshows.me/ratings/trends/`,
         gotOpts: {
             headers: {'user-agent': ua.random.desktop()},
-            timeout: 20000,
+            timeout: 30000,
         },
     });
 

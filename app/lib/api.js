@@ -34,7 +34,7 @@ const sendAdgRequest = async (path, opts) => {
     const {body} = await request.got(adg.url + path, {
         json: true,
         headers: {Authorization: `Basic ${adg.auth}`},
-        timeout: 20000,
+        timeout: 30000,
         ...opts,
     });
     return body;

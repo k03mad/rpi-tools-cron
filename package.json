@@ -14,7 +14,7 @@
 		"oui": "10.0.32",
 		"recron": "1.0.3",
 		"require-all": "3.0.0",
-		"utils-mad": "2.5.1"
+		"utils-mad": "2.6.0"
 	},
 	"devDependencies": {
 		"eslint": "6.7.0",

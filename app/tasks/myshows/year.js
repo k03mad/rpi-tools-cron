@@ -10,11 +10,10 @@ module.exports = async () => {
         previous: date.sub({format: 'YYYY', period: 'years'}),
     };
 
-    const [proxy] = await request.proxy();
     await Promise.all(Object.keys(dates).map(async year => {
         const parsed = await parse.text({
             selector: '.catalogTable .alignRight:nth-child(3) , td a',
-            url: `${proxy}https://myshows.me/search/all/?year=${dates[year]}`,
+            url: 'https://myshows.me/search/all/?year=${dates[year]}',
             gotOpts: {
                 headers: {'user-agent': ua.random.desktop()},
                 timeout: 30000,

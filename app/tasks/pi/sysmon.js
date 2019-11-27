@@ -30,13 +30,17 @@ module.exports = async () => {
     });
 
     const cpuProc = {};
-    processes.cpu_sorted.forEach((elem, i) => {
-        cpuProc[`${i} ${elem.name}`] = elem.cpu;
+    processes.cpu_sorted.forEach(elem => {
+        cpuProc[elem.name]
+            ? cpuProc[elem.name] += elem.cpu
+            : cpuProc[elem.name] = elem.cpu;
     });
 
     const memProc = {};
-    processes.mem_sorted.forEach((elem, i) => {
-        memProc[`${i} ${elem.name}`] = elem.memory;
+    processes.mem_sorted.forEach(elem => {
+        memProc[elem.name]
+            ? memProc[elem.name] += elem.memory
+            : memProc[elem.name] = elem.memory;
     });
 
     const memUsage = {};

@@ -1,6 +1,6 @@
 'use strict';
 
-const {influx, parse, ua, request} = require('utils-mad');
+const {influx, parse, ua} = require('utils-mad');
 
 module.exports = async () => {
     const SHOWS_COUNT = 20;

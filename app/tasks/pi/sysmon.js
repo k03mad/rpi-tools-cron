@@ -55,9 +55,9 @@ module.exports = async () => {
 
     await Promise.all([
         influx.write({meas: 'pi-sysmon-stats-usage', values: statsUsage}),
-        influx.write({meas: 'pi-sysmon-storage-size', values: storSize}),
-        influx.write({meas: 'pi-sysmon-used-stor', values: storUsed}),
-        influx.write({meas: 'pi-sysmon-usage-stor', values: storUsage}),
+        influx.write({meas: 'pi-sysmon-stor-size', values: storSize}),
+        influx.write({meas: 'pi-sysmon-stor-used', values: storUsed}),
+        influx.write({meas: 'pi-sysmon-stor-usage', values: storUsage}),
         influx.write({meas: 'pi-sysmon-cpu-proc', values: cpuProc}),
         influx.write({meas: 'pi-sysmon-mem-proc', values: memProc}),
         influx.write({meas: 'pi-sysmon-mem-usage', values: memUsage}),

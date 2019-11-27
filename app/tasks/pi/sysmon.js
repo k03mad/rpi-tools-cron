@@ -4,12 +4,8 @@ const {shell, influx} = require('utils-mad');
 
 module.exports = async () => {
     const sysinfos = await shell.run('pm2 sysinfos');
-
-    const {cpu, mem, fd, storage, connections, network, processes} = JSON.parse(
-        sysinfos
-            .replace(/'/g, '"')
-            .replace(/(\w*?): /g, '"$1":'),
-    );
+    const replaced = sysinfos.replace(/'/g, '"').replace(/(\w*?): /g, '"$1":');
+    const {cpu, mem, fd, storage, connections, network, processes} = JSON.parse(replaced);
 
     const statsUsage = {
         'cpu usage': Number(cpu.usage),

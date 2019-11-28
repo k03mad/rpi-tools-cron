@@ -6,7 +6,6 @@ require('./lib/schedule')({
 
     '@every 1m': [
         pi.apps,
-        pi.sysmon,
         pi.usage,
         router.usage,
     ],

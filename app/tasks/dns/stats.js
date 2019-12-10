@@ -4,7 +4,7 @@ const {influx, array} = require('utils-mad');
 const {sendAdgRequest} = require('../../lib/api');
 
 module.exports = async () => {
-    const DOMAINS_COUNT = 15;
+    const DOMAINS_COUNT = 100;
 
     const [
         {

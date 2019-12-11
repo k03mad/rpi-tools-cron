@@ -11,14 +11,14 @@ const {request, array} = require('utils-mad');
  */
 const sendLastFmRequest = (method, params = {}) => Promise.all(
     array.convert(lastfm.users).map(async user => {
-        const query = {
+        const searchParams = {
             method, user,
             api_key: lastfm.key,
             format: 'json',
             ...params,
         };
 
-        const {body} = await request.got('https://ws.audioscrobbler.com/2.0/', {query, json: true});
+        const {body} = await request.got('https://ws.audioscrobbler.com/2.0/', {searchParams, responseType: 'json'});
         body.fmuser = user;
         return body;
     }),
@@ -32,7 +32,7 @@ const sendLastFmRequest = (method, params = {}) => Promise.all(
  */
 const sendAdgRequest = async (path, opts) => {
     const {body} = await request.got(adg.url + path, {
-        json: true,
+        responseType: 'json',
         headers: {Authorization: `Basic ${adg.auth}`},
         timeout: 30000,
         ...opts,

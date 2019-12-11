@@ -10,7 +10,7 @@ module.exports = async () => {
     const file = `${REPO}/output/temp/stats.json`;
 
     await repo.run(REPO, 'deploy');
-    await sendAdgRequest('filtering/refresh', {method: 'POST', json: false});
+    await sendAdgRequest('filtering/refresh', {method: 'POST', responseType: 'text'});
 
     const apiData = await sendAdgRequest('filtering/status');
     const fileData = JSON.parse(await fs.readFile(`${appRoot}/../${file}`, 'utf8'));

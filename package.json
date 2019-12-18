@@ -11,10 +11,10 @@
 	},
 	"dependencies": {
 		"app-root-path": "3.0.0",
-		"oui": "10.0.34",
+		"oui": "10.0.35",
 		"recron": "1.0.3",
 		"require-all": "3.0.0",
-		"utils-mad": "3.1.0"
+		"utils-mad": "3.1.1"
 	},
 	"devDependencies": {
 		"eslint": "6.7.2",

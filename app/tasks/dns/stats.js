@@ -33,7 +33,7 @@ module.exports = async () => {
             found = true;
         } else {
             for (const client of clients) {
-                if (client.ip === ip) {
+                if (client.ids.includes(ip)) {
                     clientsNamed[`${client.name} (${ip})`] = count;
                     found = true;
                     break;

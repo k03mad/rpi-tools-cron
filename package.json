@@ -11,13 +11,13 @@
 	},
 	"dependencies": {
 		"app-root-path": "3.0.0",
-		"oui": "10.0.35",
+		"oui": "10.0.36",
 		"recron": "1.0.3",
 		"require-all": "3.0.0",
 		"utils-mad": "3.1.1"
 	},
 	"devDependencies": {
-		"eslint": "6.7.2",
+		"eslint": "6.8.0",
 		"eslint-config-k03mad": "3.3.0",
 		"eslint-plugin-const-case": "1.2.2",
 		"eslint-plugin-jsdoc": "18.4.3",

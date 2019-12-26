@@ -12,7 +12,7 @@ require('./lib/schedule')({
 
     '@every 17m': [
         dns.stats,
-        dns.hosts,
+        dns.lists,
     ],
 
     '@every 1h': [

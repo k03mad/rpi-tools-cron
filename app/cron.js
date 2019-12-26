@@ -10,7 +10,10 @@ require('./lib/schedule')({
         router.usage,
     ],
 
-    '@every 17m': dns.stats,
+    '@every 17m': [
+        dns.stats,
+        dns.hosts,
+    ],
 
     '@every 1h': [
         lastfm.artists,
@@ -27,7 +30,6 @@ require('./lib/schedule')({
         myshows.year,
     ],
 
-    '10 */6 * * *': dns.update,
     '20 */6 * * *': pi.update,
     '30 4,5 * * *': tools.parse,
 

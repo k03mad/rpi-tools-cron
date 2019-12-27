@@ -25,8 +25,8 @@ module.exports = async () => {
         showsTimings: showsTimestamp.diffRaw,
 
         parsedStart: [
-            `films ${filmsTimestamp.startTime} (${filmsTimestamp.diff})`,
-            `shows ${showsTimestamp.startTime} (${showsTimestamp.diff})`,
+            `films ${filmsTimestamp.startTime}`,
+            `shows ${showsTimestamp.startTime}`,
         ].join('\n'),
 
         filmsCount: filmsItems.length,

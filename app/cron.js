@@ -15,16 +15,20 @@ require('./lib/schedule')({
         dns.lists,
     ],
 
-    '@every 1h': [
+    '@every 33m': [
         lastfm.artists,
         lastfm.plays,
         lastfm.songs,
         lastfm.top,
+    ],
+
+    '@every 43m': [
         myshows.series,
         myshows.stats,
         myshows.status,
-        magnet.stats,
     ],
+
+    '@every 60m': [magnet.stats],
 
     '40 */3 * * *': [
         myshows.trends,

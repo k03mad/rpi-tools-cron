@@ -28,6 +28,10 @@ module.exports = async () => {
             values[parsed[i]] = Number(parsed[i + 1].replace(/\s/g, ''));
         }
 
+        if (year === 'next' && Object.keys(values).length === 0) {
+            return;
+        }
+
         await influx.write({meas: `myshows-year-${year}`, values});
     }));
 };

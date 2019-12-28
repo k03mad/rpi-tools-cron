@@ -4,10 +4,12 @@ const {influx, date, parse, ua} = require('utils-mad');
 
 module.exports = async () => {
     const SHOWS_COUNT = 20;
+    const current = Number(date.now('YYYY'));
 
     const dates = {
-        current: date.now('YYYY'),
-        previous: date.sub({format: 'YYYY', period: 'years'}),
+        current,
+        previous: current - 1,
+        next: current + 1,
     };
 
     await Promise.all(Object.keys(dates).map(async year => {

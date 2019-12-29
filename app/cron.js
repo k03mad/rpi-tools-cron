@@ -4,38 +4,28 @@ const {dns, myshows, pi, router, magnet, lastfm} = require('require-all')(`${__d
 
 require('./lib/schedule')({
 
-    '* * * * *': [
+    '@every 1m': [
         pi.apps,
         pi.usage,
         router.usage,
     ],
 
-    '17 * * * *': [
-        dns.stats,
+    '@every 1h': [
         dns.lists,
-    ],
-
-    '33 * * * *': [
+        dns.stats,
         lastfm.artists,
         lastfm.plays,
         lastfm.songs,
         lastfm.top,
-    ],
-
-    '43 * * * *': [
+        magnet.stats,
         myshows.series,
         myshows.stats,
         myshows.status,
-    ],
-
-    '0 */1 * * *': [magnet.stats],
-
-    '50 */2 * * *': [
         myshows.trends,
         myshows.year,
+        pi.update,
     ],
 
-    '20 */6 * * *': pi.update,
     '30 4,5 * * *': magnet.parse,
 
 });

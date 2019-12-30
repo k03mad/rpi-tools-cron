@@ -77,13 +77,14 @@ module.exports = async () => {
     const filmsTopGenres = getTopFlat({items: filmsItems, firstLevel: 'genres'});
     const filmsTopYears = getTopFlat({items: filmsItems, firstLevel: 'rutor', secondLevel: 'year', split: '-'});
     const filmsTopQuality = getTopFlat({items: filmsItems, firstLevel: 'rutor', secondLevel: 'quality'});
-    const filmsTopTags = getTopFlat({items: filmsItems, firstLevel: 'rutor', secondLevel: 'tags', split: ' | '});
+    const filmsTopTags = getTopFlat({items: filmsItems, firstLevel: 'rutor', secondLevel: 'tags', split: / \| |, /});
 
     const showsTopGenres = getTopFlat({items: showsItems, firstLevel: 'genres'});
     const showsTopYears = getTopFlat({items: showsItems, firstLevel: 'rutor', secondLevel: 'year', split: '-'});
     const showsTopQuality = getTopFlat({items: showsItems, firstLevel: 'rutor', secondLevel: 'quality'});
     const showsTopTags = getTopFlat({items: showsItems, firstLevel: 'rutor', secondLevel: 'tags', split: ' | '});
     const showsTopEpisodes = getTopFlat({items: showsItems, firstLevel: 'rutor', secondLevel: 'episodes', one: true});
+    const showsTopNetworks = getTopFlat({items: showsItems, firstLevel: 'networks', split: ', '});
 
     await Promise.all([
         influx.write({meas: 'magnet-stats', values: stats}),
@@ -99,5 +100,6 @@ module.exports = async () => {
         influx.write({meas: 'magnet-shows-top-quality', values: showsTopQuality}),
         influx.write({meas: 'magnet-shows-top-tags', values: showsTopTags}),
         influx.write({meas: 'magnet-shows-top-episodes', values: showsTopEpisodes}),
+        influx.write({meas: 'magnet-shows-top-networks', values: showsTopNetworks}),
     ]);
 };

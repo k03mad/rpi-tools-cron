@@ -82,7 +82,7 @@ module.exports = async () => {
     const showsTopGenres = getTopFlat({items: showsItems, firstLevel: 'genres'});
     const showsTopYears = getTopFlat({items: showsItems, firstLevel: 'rutor', secondLevel: 'year', split: '-'});
     const showsTopQuality = getTopFlat({items: showsItems, firstLevel: 'rutor', secondLevel: 'quality'});
-    const showsTopTags = getTopFlat({items: showsItems, firstLevel: 'rutor', secondLevel: 'tags', split: ' | '});
+    const showsTopTags = getTopFlat({items: showsItems, firstLevel: 'rutor', secondLevel: 'tags', split: / \| |, /});
     const showsTopEpisodes = getTopFlat({items: showsItems, firstLevel: 'rutor', secondLevel: 'episodes', one: true});
     const showsTopNetworks = getTopFlat({items: showsItems, firstLevel: 'networks', split: ', '});
 

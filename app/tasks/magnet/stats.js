@@ -43,7 +43,7 @@ module.exports = async () => {
      * @param {object} opts
      * @returns {object}
      */
-    const getTopFlat = ({items, firstLevel, secondLevel, split, min, one}) => {
+    const getTopFlat = ({items, firstLevel, secondLevel, split, above, one}) => {
         let output = one
             ? items.map(elem => elem[firstLevel][0])
             : items.flatMap(elem => elem[firstLevel]);
@@ -58,33 +58,37 @@ module.exports = async () => {
 
         const count = array.count(output.filter(Boolean));
 
-        if (min) {
-            const minCount = {};
+        if (above) {
+            const aboveCount = {};
 
             for (const [key, prop] of Object.entries(count)) {
-                if (prop > min) {
-                    minCount[key] = prop;
+                if (prop > above) {
+                    aboveCount[key] = prop;
                 }
             }
 
-            return minCount;
+            return aboveCount;
         }
 
         return count;
     };
 
-    const filmsTopActors = getTopFlat({items: filmsItems, firstLevel: 'photos', secondLevel: 'name', min: 3});
+    const filmsTopActors = getTopFlat({items: filmsItems, firstLevel: 'photos', secondLevel: 'name', above: 3});
     const filmsTopGenres = getTopFlat({items: filmsItems, firstLevel: 'genres'});
     const filmsTopYears = getTopFlat({items: filmsItems, firstLevel: 'rutor', secondLevel: 'year', split: '-'});
     const filmsTopQuality = getTopFlat({items: filmsItems, firstLevel: 'rutor', secondLevel: 'quality'});
     const filmsTopTags = getTopFlat({items: filmsItems, firstLevel: 'rutor', secondLevel: 'tags', split: / \| |, /});
+    const filmsTopCompanies = getTopFlat({items: filmsItems, firstLevel: 'companies', above: 7});
+    const filmsTopCountries = getTopFlat({items: filmsItems, firstLevel: 'countries', above: 7});
 
     const showsTopGenres = getTopFlat({items: showsItems, firstLevel: 'genres'});
     const showsTopYears = getTopFlat({items: showsItems, firstLevel: 'rutor', secondLevel: 'year', split: '-'});
     const showsTopQuality = getTopFlat({items: showsItems, firstLevel: 'rutor', secondLevel: 'quality'});
     const showsTopTags = getTopFlat({items: showsItems, firstLevel: 'rutor', secondLevel: 'tags', split: / \| |, /});
     const showsTopEpisodes = getTopFlat({items: showsItems, firstLevel: 'rutor', secondLevel: 'episodes', one: true});
-    const showsTopNetworks = getTopFlat({items: showsItems, firstLevel: 'networks', split: ', '});
+    const showsTopNetworks = getTopFlat({items: showsItems, firstLevel: 'networks'});
+    const showsTopCompanies = getTopFlat({items: showsItems, firstLevel: 'companies', above: 1});
+    const showsTopCountries = getTopFlat({items: showsItems, firstLevel: 'countries'});
 
     await Promise.all([
         influx.write({meas: 'magnet-stats', values: stats}),
@@ -94,6 +98,8 @@ module.exports = async () => {
         influx.write({meas: 'magnet-films-top-years', values: filmsTopYears}),
         influx.write({meas: 'magnet-films-top-quality', values: filmsTopQuality}),
         influx.write({meas: 'magnet-films-top-tags', values: filmsTopTags}),
+        influx.write({meas: 'magnet-films-top-companies', values: filmsTopCompanies}),
+        influx.write({meas: 'magnet-films-top-countries', values: filmsTopCountries}),
 
         influx.write({meas: 'magnet-shows-top-genres', values: showsTopGenres}),
         influx.write({meas: 'magnet-shows-top-years', values: showsTopYears}),
@@ -101,5 +107,7 @@ module.exports = async () => {
         influx.write({meas: 'magnet-shows-top-tags', values: showsTopTags}),
         influx.write({meas: 'magnet-shows-top-episodes', values: showsTopEpisodes}),
         influx.write({meas: 'magnet-shows-top-networks', values: showsTopNetworks}),
+        influx.write({meas: 'magnet-shows-top-companies', values: showsTopCompanies}),
+        influx.write({meas: 'magnet-shows-top-countries', values: showsTopCountries}),
     ]);
 };

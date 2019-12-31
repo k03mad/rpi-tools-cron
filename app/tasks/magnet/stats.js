@@ -73,13 +73,13 @@ module.exports = async () => {
         return count;
     };
 
-    const filmsTopActors = getTopFlat({items: filmsItems, firstLevel: 'photos', secondLevel: 'name'});
+    const filmsTopActors = getTopFlat({items: filmsItems, firstLevel: 'photos', secondLevel: 'name', above: 2});
     const filmsTopGenres = getTopFlat({items: filmsItems, firstLevel: 'genres'});
     const filmsTopYears = getTopFlat({items: filmsItems, firstLevel: 'rutor', secondLevel: 'year', split: '-'});
     const filmsTopQuality = getTopFlat({items: filmsItems, firstLevel: 'rutor', secondLevel: 'quality'});
     const filmsTopTags = getTopFlat({items: filmsItems, firstLevel: 'rutor', secondLevel: 'tags', split: / \| |, /});
-    const filmsTopCompanies = getTopFlat({items: filmsItems, firstLevel: 'companies'});
-    const filmsTopCountries = getTopFlat({items: filmsItems, firstLevel: 'countries'});
+    const filmsTopCompanies = getTopFlat({items: filmsItems, firstLevel: 'companies', above: 2});
+    const filmsTopCountries = getTopFlat({items: filmsItems, firstLevel: 'countries', above: 2});
 
     const showsTopGenres = getTopFlat({items: showsItems, firstLevel: 'genres'});
     const showsTopYears = getTopFlat({items: showsItems, firstLevel: 'rutor', secondLevel: 'year', split: '-'});
@@ -100,7 +100,9 @@ module.exports = async () => {
         influx.write({meas: 'magnet-films-top-tags', values: filmsTopTags}),
         influx.write({meas: 'magnet-films-top-companies', values: filmsTopCompanies}),
         influx.write({meas: 'magnet-films-top-countries', values: filmsTopCountries}),
+    ]);
 
+    await Promise.all([
         influx.write({meas: 'magnet-shows-top-genres', values: showsTopGenres}),
         influx.write({meas: 'magnet-shows-top-years', values: showsTopYears}),
         influx.write({meas: 'magnet-shows-top-quality', values: showsTopQuality}),

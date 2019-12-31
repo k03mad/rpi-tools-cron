@@ -73,13 +73,13 @@ module.exports = async () => {
         return count;
     };
 
-    const filmsTopActors = getTopFlat({items: filmsItems, firstLevel: 'photos', secondLevel: 'name', above: 3});
+    const filmsTopActors = getTopFlat({items: filmsItems, firstLevel: 'photos', secondLevel: 'name', above: 2});
     const filmsTopGenres = getTopFlat({items: filmsItems, firstLevel: 'genres'});
     const filmsTopYears = getTopFlat({items: filmsItems, firstLevel: 'rutor', secondLevel: 'year', split: '-'});
     const filmsTopQuality = getTopFlat({items: filmsItems, firstLevel: 'rutor', secondLevel: 'quality'});
     const filmsTopTags = getTopFlat({items: filmsItems, firstLevel: 'rutor', secondLevel: 'tags', split: / \| |, /});
-    const filmsTopCompanies = getTopFlat({items: filmsItems, firstLevel: 'companies', above: 7});
-    const filmsTopCountries = getTopFlat({items: filmsItems, firstLevel: 'countries', above: 7});
+    const filmsTopCompanies = getTopFlat({items: filmsItems, firstLevel: 'companies', above: 4});
+    const filmsTopCountries = getTopFlat({items: filmsItems, firstLevel: 'countries', above: 4});
 
     const showsTopGenres = getTopFlat({items: showsItems, firstLevel: 'genres'});
     const showsTopYears = getTopFlat({items: showsItems, firstLevel: 'rutor', secondLevel: 'year', split: '-'});

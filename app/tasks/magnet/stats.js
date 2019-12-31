@@ -73,13 +73,13 @@ module.exports = async () => {
         return count;
     };
 
-    const filmsTopActors = getTopFlat({items: filmsItems, firstLevel: 'photos', secondLevel: 'name', above: 2});
+    const filmsTopActors = getTopFlat({items: filmsItems, firstLevel: 'photos', secondLevel: 'name'});
     const filmsTopGenres = getTopFlat({items: filmsItems, firstLevel: 'genres'});
     const filmsTopYears = getTopFlat({items: filmsItems, firstLevel: 'rutor', secondLevel: 'year', split: '-'});
     const filmsTopQuality = getTopFlat({items: filmsItems, firstLevel: 'rutor', secondLevel: 'quality'});
     const filmsTopTags = getTopFlat({items: filmsItems, firstLevel: 'rutor', secondLevel: 'tags', split: / \| |, /});
-    const filmsTopCompanies = getTopFlat({items: filmsItems, firstLevel: 'companies', above: 4});
-    const filmsTopCountries = getTopFlat({items: filmsItems, firstLevel: 'countries', above: 4});
+    const filmsTopCompanies = getTopFlat({items: filmsItems, firstLevel: 'companies'});
+    const filmsTopCountries = getTopFlat({items: filmsItems, firstLevel: 'countries'});
 
     const showsTopGenres = getTopFlat({items: showsItems, firstLevel: 'genres'});
     const showsTopYears = getTopFlat({items: showsItems, firstLevel: 'rutor', secondLevel: 'year', split: '-'});
@@ -87,7 +87,7 @@ module.exports = async () => {
     const showsTopTags = getTopFlat({items: showsItems, firstLevel: 'rutor', secondLevel: 'tags', split: / \| |, /});
     const showsTopEpisodes = getTopFlat({items: showsItems, firstLevel: 'rutor', secondLevel: 'episodes', one: true});
     const showsTopNetworks = getTopFlat({items: showsItems, firstLevel: 'networks'});
-    const showsTopCompanies = getTopFlat({items: showsItems, firstLevel: 'companies', above: 1});
+    const showsTopCompanies = getTopFlat({items: showsItems, firstLevel: 'companies'});
     const showsTopCountries = getTopFlat({items: showsItems, firstLevel: 'countries'});
 
     await Promise.all([

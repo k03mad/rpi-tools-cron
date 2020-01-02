@@ -26,12 +26,13 @@ module.exports = async () => {
     const clientsNamed = {};
     top_clients.forEach(elem => {
         const [[ip, count]] = Object.entries(elem);
-        let found = false;
 
         if (ip.startsWith('10.')) {
             clientsNamed[`VPN (${ip})`] = count;
-            found = true;
-        } else {
+
+        } else if (ip.startsWith('192.')) {
+            let found;
+
             for (const client of clients) {
                 if (client.ids.includes(ip)) {
                     clientsNamed[`${client.name} (${ip})`] = count;
@@ -39,10 +40,12 @@ module.exports = async () => {
                     break;
                 }
             }
-        }
 
-        if (!found) {
-            clientsNamed[`_Unknown (${ip})`] = count;
+            if (!found) {
+                clientsNamed[`Unknown Internal (${ip})`] = count;
+            }
+        } else {
+            clientsNamed[`Unknown External (${ip})`] = count;
         }
     });
 

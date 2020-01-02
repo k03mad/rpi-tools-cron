@@ -27,10 +27,10 @@ module.exports = async () => {
     top_clients.forEach(elem => {
         const [[ip, count]] = Object.entries(elem);
 
-        if (ip.startsWith('10.')) {
+        if (ip.match(/^10\./)) {
             clientsNamed[`VPN (${ip})`] = count;
 
-        } else if (ip.startsWith('192.')) {
+        } else if (ip.match(/^(192|127)\./)) {
             let found;
 
             for (const client of clients) {

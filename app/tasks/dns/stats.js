@@ -1,7 +1,7 @@
 'use strict';
 
 const {influx, array} = require('utils-mad');
-const {sendAdgRequest} = require('../../lib/api');
+const {sendAdgRequest, sendIpLookupRequest} = require('../../lib/api');
 
 module.exports = async () => {
     const DOMAINS_COUNT = 100;
@@ -24,30 +24,32 @@ module.exports = async () => {
     ]);
 
     const clientsNamed = {};
-    top_clients.forEach(elem => {
+    await Promise.all(top_clients.map(async elem => {
         const [[ip, count]] = Object.entries(elem);
 
-        if (ip.match(/^10\./)) {
-            clientsNamed[`VPN (${ip})`] = count;
-
-        } else if (ip.match(/^(192|127)\./)) {
+        if (
+            ip.startsWith('10.8.0.')
+            || ip.startsWith('192.168.1.')
+            || ip.startsWith('127.0.0.')
+        ) {
             let found;
 
             for (const client of clients) {
                 if (client.ids.includes(ip)) {
-                    clientsNamed[`${client.name} (${ip})`] = count;
+                    clientsNamed[`${ip} (${client.name})`] = count;
                     found = true;
                     break;
                 }
             }
 
             if (!found) {
-                clientsNamed[`Unknown Internal (${ip})`] = count;
+                clientsNamed[ip] = count;
             }
         } else {
-            clientsNamed[`Unknown External (${ip})`] = count;
+            const {ipName, city, countryCode, isp} = await sendIpLookupRequest(ip);
+            clientsNamed[`${ip} (${ipName} - ${city} ${countryCode} - ${isp})`] = count;
         }
-    });
+    }));
 
     await Promise.all([
         influx.write({meas: 'dns-stats-common', values: {avg_processing_time, num_blocked_filtering, num_dns_queries}}),

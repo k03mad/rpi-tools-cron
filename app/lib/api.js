@@ -40,7 +40,17 @@ const sendAdgRequest = async (path, opts) => {
     return body;
 };
 
+/**
+ * Get IP lookup
+ * @param {string} ip
+ */
+const sendIpLookupRequest = async ip => {
+    const {body} = await request.got(`https://extreme-ip-lookup.com/json/${ip}`, {responseType: 'json'});
+    return body;
+};
+
 module.exports = {
     sendAdgRequest,
     sendLastFmRequest,
+    sendIpLookupRequest,
 };

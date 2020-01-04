@@ -36,7 +36,7 @@ module.exports = async () => {
 
             for (const client of clients) {
                 if (client.ids.includes(ip)) {
-                    clientsNamed[`${ip} (${client.name})`] = count;
+                    clientsNamed[`${ip} - ${client.name}`] = count;
                     found = true;
                     break;
                 }
@@ -47,7 +47,7 @@ module.exports = async () => {
             }
         } else {
             const {ipName, city, countryCode, isp} = await sendIpLookupRequest(ip);
-            clientsNamed[`${ip} (${ipName} - ${city} ${countryCode} - ${isp})`] = count;
+            clientsNamed[`${ip} - ${ipName} - ${city} ${countryCode} - ${isp}`] = count;
         }
     }));
 

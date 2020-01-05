@@ -18,7 +18,9 @@ const sendLastFmRequest = (method, params = {}) => Promise.all(
             ...params,
         };
 
-        const {body} = await request.got('https://ws.audioscrobbler.com/2.0/', {searchParams, responseType: 'json'});
+        const {body} = await request.got('https://ws.audioscrobbler.com/2.0/', {
+            searchParams, responseType: 'json',
+        });
         body.fmuser = user;
         return body;
     }),
@@ -45,7 +47,9 @@ const sendAdgRequest = async (path, opts) => {
  * @param {string} ip
  */
 const sendIpLookupRequest = async ip => {
-    const {body} = await request.got(`https://extreme-ip-lookup.com/json/${ip}`, {responseType: 'json'});
+    const {body} = await request.got(`https://extreme-ip-lookup.com/json/${ip}`, {
+        responseType: 'json',
+    });
     return body;
 };
 

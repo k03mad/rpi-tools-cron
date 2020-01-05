@@ -46,8 +46,17 @@ module.exports = async () => {
                 clientsNamed[ip] = count;
             }
         } else {
-            const {ipName, city, countryCode, isp} = await sendIpLookupRequest(ip);
-            clientsNamed[`${ip} - ${ipName} - ${city} ${countryCode} - ${isp}`] = count;
+            const lookup = await sendIpLookupRequest(ip);
+            const name = [];
+
+            lookup.ipName && name.push(lookup.ipName);
+            lookup.city && lookup.countryCode
+                ? name.push(`${lookup.city} ${lookup.countryCode}`)
+                : lookup.city && name.push(lookup.city);
+
+            lookup.isp && name.push(lookup.isp);
+
+            clientsNamed[`${ip} - ${name.join(' - ')}`] = count;
         }
     }));
 

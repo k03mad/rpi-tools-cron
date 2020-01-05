@@ -49,12 +49,19 @@ module.exports = async () => {
             const lookup = await sendIpLookupRequest(ip);
             const name = [];
 
-            lookup.ipName && name.push(lookup.ipName);
-            lookup.city && lookup.countryCode
-                ? name.push(`${lookup.city} ${lookup.countryCode}`)
-                : lookup.city && name.push(lookup.city);
+            if (lookup.ipName && !lookup.ipName.includes(ip.replace(/\./g, '-'))) {
+                name.push(lookup.ipName);
+            }
 
-            lookup.isp && name.push(lookup.isp);
+            if (lookup.city && lookup.countryCode) {
+                name.push(`${lookup.city} ${lookup.countryCode}`);
+            } else if (lookup.city) {
+                name.push(lookup.city);
+            }
+
+            if (lookup.isp) {
+                name.push(lookup.isp);
+            }
 
             clientsNamed[`${ip} - ${name.join(' - ')}`] = count;
         }

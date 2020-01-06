@@ -1,7 +1,7 @@
 'use strict';
 
-const {influx, array} = require('utils-mad');
-const {sendAdgRequest, sendIpLookupRequest} = require('../../lib/api');
+const {influx, array, adg} = require('utils-mad');
+const {sendIpLookupRequest} = require('../../lib/api');
 
 module.exports = async () => {
     const DOMAINS_COUNT = 100;
@@ -19,8 +19,8 @@ module.exports = async () => {
             clients,
         },
     ] = await Promise.all([
-        sendAdgRequest('stats'),
-        sendAdgRequest('clients'),
+        adg.query('stats'),
+        adg.query('clients'),
     ]);
 
     const clientsNamed = {};

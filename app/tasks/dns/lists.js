@@ -1,10 +1,9 @@
 'use strict';
 
-const {influx} = require('utils-mad');
-const {sendAdgRequest} = require('../../lib/api');
+const {influx, adg} = require('utils-mad');
 
 module.exports = async () => {
-    const {filters} = await sendAdgRequest('filtering/status');
+    const {filters} = await adg.query('filtering/status');
     const values = {};
 
     filters.forEach(elem => {

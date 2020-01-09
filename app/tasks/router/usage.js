@@ -8,18 +8,21 @@ module.exports = async () => {
     const clientsTraffic = {};
     const interfaceTraffic = {};
     const interfaceSpeed = {};
+    const natTraffic = {};
 
     const [
         [usage],
         interfaces,
         wifiClients,
         [, updates],
+        firewallNat,
         ...monitorTraffic
     ] = await mikrotik.get([
         '/system/resource/print',
         '/interface/print',
         '/interface/wireless/registration-table/print',
         '/system/package/update/check-for-updates',
+        '/ip/firewall/nat/print',
         ...['wan1', 'ether1', 'ether2', 'ether3', 'ether4', 'wlan1', 'wlan2']
             .map(elem => ['/interface/monitor-traffic', `=interface=${elem}`, '=once']),
     ]);
@@ -74,9 +77,29 @@ module.exports = async () => {
         interfaceSpeed[`${obj.name}_tx`] = Number(obj['tx-bits-per-second']);
     });
 
+    firewallNat.forEach(elem => {
+        if (elem.protocol) {
+            let name = elem['dst-port'];
+
+            for (const obj of firewallNat) {
+                if (obj['dst-port'] === name && obj.comment) {
+                    name += `: ${obj.comment}`;
+                    break;
+                }
+            }
+
+            if (natTraffic[name]) {
+                natTraffic[name] += Number(elem.bytes);
+            } else {
+                natTraffic[name] = Number(elem.bytes);
+            }
+        }
+    });
+
     await Promise.all([
         influx.append({meas: 'router-clients-traffic', values: clientsTraffic}),
         influx.append({meas: 'router-interface-traffic', values: interfaceTraffic}),
+        influx.append({meas: 'router-nat-traffic', values: natTraffic}),
         influx.write({meas: 'router-clients-signal', values: clientsSignal}),
         influx.write({meas: 'router-interface-speed', values: interfaceSpeed}),
         influx.write({meas: 'router-updates', values: version}),

@@ -83,7 +83,7 @@ module.exports = async () => {
 
             for (const obj of firewallNat) {
                 if (obj['dst-port'] === name && obj.comment) {
-                    name += `: ${obj.comment}`;
+                    name += ` :: ${obj.comment}`;
                     break;
                 }
             }

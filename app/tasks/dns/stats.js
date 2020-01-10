@@ -1,7 +1,6 @@
 'use strict';
 
-const {influx, array, adg} = require('utils-mad');
-const {sendIpLookupRequest} = require('../../lib/api');
+const {influx, array, adg, ip} = require('utils-mad');
 
 module.exports = async () => {
     const DOMAINS_COUNT = 100;
@@ -25,32 +24,32 @@ module.exports = async () => {
 
     const clientsNamed = {};
     await Promise.all(top_clients.map(async elem => {
-        const [[ip, count]] = Object.entries(elem);
+        const [[address, count]] = Object.entries(elem);
 
         if (
-            ip.startsWith('10.8.0.')
-            || ip.startsWith('192.168.1.')
-            || ip.startsWith('127.0.0.')
+            address.startsWith('10.8.0.')
+            || address.startsWith('192.168.1.')
+            || address.startsWith('127.0.0.')
         ) {
             let found;
 
             for (const client of clients) {
-                if (client.ids.includes(ip)) {
-                    clientsNamed[`${ip} - ${client.name}`] = count;
+                if (client.ids.includes(address)) {
+                    clientsNamed[`${address} - ${client.name}`] = count;
                     found = true;
                     break;
                 }
             }
 
             if (!found) {
-                clientsNamed[ip] = count;
+                clientsNamed[address] = count;
             }
         } else {
-            const lookup = await sendIpLookupRequest(ip);
+            const lookup = await ip.lookup(address);
             const name = [];
 
-            if (lookup.ipName && !lookup.ipName.includes(ip.replace(/\./g, '-'))) {
-                name.push(lookup.ipName);
+            if (lookup.addressName && !lookup.addressName.includes(address.replace(/\./g, '-'))) {
+                name.push(lookup.addressName);
             }
 
             if (lookup.city && lookup.countryCode) {
@@ -63,7 +62,7 @@ module.exports = async () => {
                 name.push(lookup.isp);
             }
 
-            clientsNamed[`${ip} - ${name.join(' - ')}`] = count;
+            clientsNamed[`${address} - ${name.join(' - ')}`] = count;
         }
     }));
 

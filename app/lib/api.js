@@ -26,18 +26,6 @@ const sendLastFmRequest = (method, params = {}) => Promise.all(
     }),
 );
 
-/**
- * Get IP lookup
- * @param {string} ip
- */
-const sendIpLookupRequest = async ip => {
-    const {body} = await request.got(`https://extreme-ip-lookup.com/json/${ip}`, {
-        responseType: 'json',
-    });
-    return body;
-};
-
 module.exports = {
     sendLastFmRequest,
-    sendIpLookupRequest,
 };

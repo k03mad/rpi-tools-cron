@@ -3,7 +3,7 @@
 const {influx, adg} = require('utils-mad');
 
 module.exports = async () => {
-    const {filters} = await adg.query('filtering/status');
+    const {filters} = await adg.get('filtering/status');
     const values = {};
 
     filters.forEach(elem => {

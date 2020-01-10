@@ -19,8 +19,8 @@ module.exports = async () => {
             clients,
         },
     ] = await Promise.all([
-        adg.query('stats'),
-        adg.query('clients'),
+        adg.get('stats'),
+        adg.get('clients'),
     ]);
 
     const clientsNamed = {};

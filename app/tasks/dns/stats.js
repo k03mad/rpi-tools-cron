@@ -26,11 +26,7 @@ module.exports = async () => {
     await Promise.all(top_clients.map(async elem => {
         const [[address, count]] = Object.entries(elem);
 
-        if (
-            address.startsWith('10.8.0.')
-            || address.startsWith('192.168.1.')
-            || address.startsWith('127.0.0.')
-        ) {
+        if (address.match(/^(127|192|10)\./)) {
             let found;
 
             for (const client of clients) {
@@ -46,23 +42,15 @@ module.exports = async () => {
             }
         } else {
             const lookup = await ip.lookup(address);
-            const name = [];
+            const name = [
+                address,
+                lookup.ipName.replace(/(\d+-?){4}/, '{ip}'),
+                lookup.city,
+                lookup.countryCode,
+                lookup.isp,
+            ];
 
-            if (lookup.addressName && !lookup.addressName.includes(address.replace(/\./g, '-'))) {
-                name.push(lookup.addressName);
-            }
-
-            if (lookup.city && lookup.countryCode) {
-                name.push(`${lookup.city} ${lookup.countryCode}`);
-            } else if (lookup.city) {
-                name.push(lookup.city);
-            }
-
-            if (lookup.isp) {
-                name.push(lookup.isp);
-            }
-
-            clientsNamed[`${address} - ${name.join(' - ')}`] = count;
+            clientsNamed[name.filter(Boolean).join(' - ')] = count;
         }
     }));
 

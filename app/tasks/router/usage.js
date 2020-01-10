@@ -77,17 +77,22 @@ module.exports = async () => {
         interfaceSpeed[`${obj.name}_tx`] = Number(obj['tx-bits-per-second']);
     });
 
-    firewallNat.forEach(elem => {
-        if (elem.protocol) {
-            let name = elem['dst-port'];
+    firewallNat.forEach((elem, i) => {
+        let name;
 
-            for (const obj of firewallNat) {
-                if (obj['dst-port'] === name && obj.comment) {
-                    name += ` :: ${obj.comment}`;
-                    break;
-                }
+        for (let j = i; j <= i; i--) {
+            const {comment, 'dst-port': port} = firewallNat[i];
+
+            if (comment) {
+                name = port
+                    ? `${port} :: ${comment}`
+                    : `noport :: ${comment}`;
+
+                break;
             }
+        }
 
+        if (name && !name.includes('defconf')) {
             if (natTraffic[name]) {
                 natTraffic[name] += Number(elem.bytes);
             } else {

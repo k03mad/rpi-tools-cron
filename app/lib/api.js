@@ -18,10 +18,9 @@ const sendLastFmRequest = (method, params = {}) => Promise.all(
             ...params,
         };
 
-        const {body} = await request.got('https://ws.audioscrobbler.com/2.0/', {
-            searchParams, responseType: 'json',
-        });
+        const {body} = await request.got('https://ws.audioscrobbler.com/2.0/', {searchParams});
         body.fmuser = user;
+
         return body;
     }),
 );

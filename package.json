@@ -11,16 +11,16 @@
 	},
 	"dependencies": {
 		"app-root-path": "3.0.0",
-		"oui": "10.0.38",
+		"oui": "10.0.39",
 		"recron": "1.0.3",
 		"require-all": "3.0.0",
-		"utils-mad": "4.3.3"
+		"utils-mad": "4.4.0"
 	},
 	"devDependencies": {
 		"eslint": "6.8.0",
 		"eslint-config-k03mad": "3.3.0",
 		"eslint-plugin-const-case": "1.2.2",
-		"eslint-plugin-jsdoc": "20.0.5",
+		"eslint-plugin-jsdoc": "20.3.0",
 		"eslint-plugin-node": "11.0.0",
 		"eslint-plugin-optimize-regex": "1.1.7",
 		"eslint-plugin-promise": "4.2.1",

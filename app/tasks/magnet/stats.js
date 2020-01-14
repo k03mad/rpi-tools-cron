@@ -92,10 +92,6 @@ module.exports = async () => {
             values: getTopFlat({items: filmsItems, firstLevel: 'rutor', secondLevel: 'tags', split: / \| |, /}),
         },
         {
-            meas: 'magnet-films-top-companies',
-            values: getTopFlat({items: filmsItems, firstLevel: 'companies', above: 2}),
-        },
-        {
             meas: 'magnet-films-top-countries',
             values: getTopFlat({items: filmsItems, firstLevel: 'countries', above: 2}),
         },

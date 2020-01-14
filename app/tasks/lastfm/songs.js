@@ -18,8 +18,7 @@ module.exports = async () => {
         top[user.fmuser] = data;
     });
 
-    await Promise.all(Object.keys(top).map(user => {
-        const values = top[user];
-        return influx.write({meas: `lastfm-songs-${user}`, values});
-    }));
+    for (const user of Object.keys(top)) {
+        await influx.write({meas: `lastfm-songs-${user}`, values: top[user]});
+    }
 };

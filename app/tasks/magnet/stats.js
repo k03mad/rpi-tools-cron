@@ -1,6 +1,7 @@
 'use strict';
 
 const appRoot = require('app-root-path');
+const pMap = require('p-map');
 const {influx, array} = require('utils-mad');
 const {promises: fs} = require('fs');
 
@@ -19,24 +20,6 @@ module.exports = async () => {
         const data = await fs.readFile(`${appRoot}/../${file}`, 'utf8');
         return JSON.parse(data);
     }));
-
-    const stats = {
-        filmsTimings: filmsTimestamp.diffRaw,
-        showsTimings: showsTimestamp.diffRaw,
-
-        parsedStart: [
-            `films ${filmsTimestamp.startTime}`,
-            `shows ${showsTimestamp.startTime}`,
-        ].join('</br>'),
-
-        filmsCount: filmsItems.length,
-        filmsTorrentsCount: filmsItems.flatMap(elem => elem.rutor).length,
-        filmsTorrentsSeedCount: array.sum(filmsItems.flatMap(elem => elem.rutor).map(elem => Number(elem.seed))),
-
-        showsCount: showsItems.length,
-        showsTorrentsCount: showsItems.flatMap(elem => elem.rutor).length,
-        showsTorrentsSeedCount: array.sum(showsItems.flatMap(elem => elem.rutor).map(elem => Number(elem.seed))),
-    };
 
     /**
      * Получить топы торрентов
@@ -73,43 +56,75 @@ module.exports = async () => {
         return count;
     };
 
-    const filmsTopActors = getTopFlat({items: filmsItems, firstLevel: 'photos', secondLevel: 'name', above: 2});
-    const filmsTopGenres = getTopFlat({items: filmsItems, firstLevel: 'genres'});
-    const filmsTopYears = getTopFlat({items: filmsItems, firstLevel: 'rutor', secondLevel: 'year', split: '-'});
-    const filmsTopQuality = getTopFlat({items: filmsItems, firstLevel: 'rutor', secondLevel: 'quality'});
-    const filmsTopTags = getTopFlat({items: filmsItems, firstLevel: 'rutor', secondLevel: 'tags', split: / \| |, /});
-    const filmsTopCompanies = getTopFlat({items: filmsItems, firstLevel: 'companies', above: 2});
-    const filmsTopCountries = getTopFlat({items: filmsItems, firstLevel: 'countries', above: 2});
+    const counters = [
+        // common
+        {
+            meas: 'magnet-stats',
+            values: {
+                filmsTimings: filmsTimestamp.diffRaw,
+                showsTimings: showsTimestamp.diffRaw,
 
-    const showsTopGenres = getTopFlat({items: showsItems, firstLevel: 'genres'});
-    const showsTopYears = getTopFlat({items: showsItems, firstLevel: 'rutor', secondLevel: 'year', split: '-'});
-    const showsTopQuality = getTopFlat({items: showsItems, firstLevel: 'rutor', secondLevel: 'quality'});
-    const showsTopTags = getTopFlat({items: showsItems, firstLevel: 'rutor', secondLevel: 'tags', split: / \| |, /});
-    const showsTopEpisodes = getTopFlat({items: showsItems, firstLevel: 'rutor', secondLevel: 'episodes', one: true});
-    const showsTopNetworks = getTopFlat({items: showsItems, firstLevel: 'networks'});
-    const showsTopCompanies = getTopFlat({items: showsItems, firstLevel: 'companies'});
-    const showsTopCountries = getTopFlat({items: showsItems, firstLevel: 'countries'});
+                parsedStart: [
+                    `films ${filmsTimestamp.startTime}`,
+                    `shows ${showsTimestamp.startTime}`,
+                ].join('</br>'),
 
-    await Promise.all([
-        influx.write({meas: 'magnet-stats', values: stats}),
+                filmsCount: filmsItems.length,
+                filmsTorrentsCount: filmsItems.flatMap(elem => elem.rutor).length,
+                filmsTorrentsSeedCount: array.sum(filmsItems.flatMap(elem => elem.rutor).map(elem => Number(elem.seed))),
 
-        influx.write({meas: 'magnet-films-top-actors', values: filmsTopActors}),
-        influx.write({meas: 'magnet-films-top-genres', values: filmsTopGenres}),
-        influx.write({meas: 'magnet-films-top-years', values: filmsTopYears}),
-        influx.write({meas: 'magnet-films-top-quality', values: filmsTopQuality}),
-        influx.write({meas: 'magnet-films-top-tags', values: filmsTopTags}),
-        influx.write({meas: 'magnet-films-top-companies', values: filmsTopCompanies}),
-        influx.write({meas: 'magnet-films-top-countries', values: filmsTopCountries}),
-    ]);
+                showsCount: showsItems.length,
+                showsTorrentsCount: showsItems.flatMap(elem => elem.rutor).length,
+                showsTorrentsSeedCount: array.sum(showsItems.flatMap(elem => elem.rutor).map(elem => Number(elem.seed))),
+            },
+        },
+        // films
+        {
+            meas: 'magnet-films-top-years',
+            values: getTopFlat({items: filmsItems, firstLevel: 'rutor', secondLevel: 'year', split: '-'}),
+        },
+        {
+            meas: 'magnet-films-top-quality',
+            values: getTopFlat({items: filmsItems, firstLevel: 'rutor', secondLevel: 'quality'}),
+        },
+        {
+            meas: 'magnet-films-top-tags',
+            values: getTopFlat({items: filmsItems, firstLevel: 'rutor', secondLevel: 'tags', split: / \| |, /}),
+        },
+        {
+            meas: 'magnet-films-top-companies',
+            values: getTopFlat({items: filmsItems, firstLevel: 'companies', above: 2}),
+        },
+        {
+            meas: 'magnet-films-top-countries',
+            values: getTopFlat({items: filmsItems, firstLevel: 'countries', above: 2}),
+        },
+        // shows
+        {
+            meas: 'magnet-shows-top-years',
+            values: getTopFlat({items: showsItems, firstLevel: 'rutor', secondLevel: 'year', split: '-'}),
+        },
+        {
+            meas: 'magnet-shows-top-quality',
+            values: getTopFlat({items: showsItems, firstLevel: 'rutor', secondLevel: 'quality'}),
+        },
+        {
+            meas: 'magnet-shows-top-tags',
+            values: getTopFlat({items: showsItems, firstLevel: 'rutor', secondLevel: 'tags', split: / \| |, /}),
+        },
+        {
+            meas: 'magnet-shows-top-episodes',
+            values: getTopFlat({items: showsItems, firstLevel: 'rutor', secondLevel: 'episodes', one: true}),
+        },
+        {
+            meas: 'magnet-shows-top-networks',
+            values: getTopFlat({items: showsItems, firstLevel: 'networks'}),
+        },
+        {
+            meas: 'magnet-shows-top-countries',
+            values: getTopFlat({items: showsItems, firstLevel: 'countries'}),
+        },
+    ];
 
-    await Promise.all([
-        influx.write({meas: 'magnet-shows-top-genres', values: showsTopGenres}),
-        influx.write({meas: 'magnet-shows-top-years', values: showsTopYears}),
-        influx.write({meas: 'magnet-shows-top-quality', values: showsTopQuality}),
-        influx.write({meas: 'magnet-shows-top-tags', values: showsTopTags}),
-        influx.write({meas: 'magnet-shows-top-episodes', values: showsTopEpisodes}),
-        influx.write({meas: 'magnet-shows-top-networks', values: showsTopNetworks}),
-        influx.write({meas: 'magnet-shows-top-companies', values: showsTopCompanies}),
-        influx.write({meas: 'magnet-shows-top-countries', values: showsTopCountries}),
-    ]);
+    await pMap(counters, data => influx.write(data), {concurrency: 2});
 };

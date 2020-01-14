@@ -1,6 +1,7 @@
 'use strict';
 
 const oui = require('oui');
+const pMap = require('p-map');
 const {influx, mikrotik} = require('utils-mad');
 
 module.exports = async () => {
@@ -101,13 +102,22 @@ module.exports = async () => {
         }
     });
 
-    await Promise.all([
-        influx.append({meas: 'router-clients-traffic', values: clientsTraffic}),
-        influx.append({meas: 'router-interface-traffic', values: interfaceTraffic}),
-        influx.append({meas: 'router-nat-traffic', values: natTraffic}),
-        influx.write({meas: 'router-clients-signal', values: clientsSignal}),
-        influx.write({meas: 'router-interface-speed', values: interfaceSpeed}),
-        influx.write({meas: 'router-updates', values: version}),
-        influx.write({meas: 'router-usage', values: health}),
-    ]);
+    const write = [
+        {meas: 'router-clients-signal', values: clientsSignal},
+        {meas: 'router-interface-speed', values: interfaceSpeed},
+        {meas: 'router-updates', values: version},
+        {meas: 'router-usage', values: health},
+    ];
+
+    await pMap(write, data => influx.write(data), {concurrency: 2});
+
+    const append = [
+        {meas: 'router-clients-traffic', values: clientsTraffic},
+        {meas: 'router-interface-traffic', values: interfaceTraffic},
+        {meas: 'router-nat-traffic', values: natTraffic},
+    ];
+
+    for (const data of append) {
+        await influx.append(data);
+    }
 };

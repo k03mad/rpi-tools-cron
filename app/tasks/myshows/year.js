@@ -12,7 +12,7 @@ module.exports = async () => {
         next: current + 1,
     };
 
-    await Promise.all(Object.keys(dates).map(async year => {
+    for (const year of Object.keys(dates)) {
         const parsed = await parse.text({
             selector: '.catalogTable .alignRight:nth-child(3) , td a',
             url: `https://myshows.me/search/all/?year=${dates[year]}`,
@@ -29,9 +29,9 @@ module.exports = async () => {
         }
 
         if (year === 'next' && Object.keys(values).length === 0) {
-            return;
+            continue;
         }
 
         await influx.write({meas: `myshows-year-${year}`, values});
-    }));
+    }
 };

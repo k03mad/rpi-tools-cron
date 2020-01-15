@@ -1,7 +1,6 @@
 'use strict';
 
 const oui = require('oui');
-const pMap = require('p-map');
 const {influx, mikrotik} = require('utils-mad');
 
 module.exports = async () => {
@@ -33,13 +32,7 @@ module.exports = async () => {
         cpu: Number(usage['cpu-load']),
         hdd: Number(usage['total-hdd-space']) - Number(usage['free-hdd-space']),
         uptime: usage.uptime,
-    };
-
-    const version = {
-        updates: [
-            updates['installed-version'],
-            updates['latest-version'],
-        ].join(' / '),
+        updates: `current: ${updates['installed-version']}</br>latest: ${updates['latest-version']}`,
     };
 
     // signal-strength and data usage by wifi clients
@@ -102,22 +95,17 @@ module.exports = async () => {
         }
     });
 
-    const write = [
-        {meas: 'router-clients-signal', values: clientsSignal},
-        {meas: 'router-interface-speed', values: interfaceSpeed},
-        {meas: 'router-updates', values: version},
-        {meas: 'router-usage', values: health},
+    const counters = [
+        {action: 'write', counter: {meas: 'router-clients-signal', values: clientsSignal}},
+        {action: 'write', counter: {meas: 'router-interface-speed', values: interfaceSpeed}},
+        {action: 'write', counter: {meas: 'router-usage', values: health}},
+
+        {action: 'append', counter: {meas: 'router-clients-traffic', values: clientsTraffic}},
+        {action: 'append', counter: {meas: 'router-interface-traffic', values: interfaceTraffic}},
+        {action: 'append', counter: {meas: 'router-nat-traffic', values: natTraffic}},
     ];
 
-    await pMap(write, data => influx.write(data), {concurrency: 2});
-
-    const append = [
-        {meas: 'router-clients-traffic', values: clientsTraffic},
-        {meas: 'router-interface-traffic', values: interfaceTraffic},
-        {meas: 'router-nat-traffic', values: natTraffic},
-    ];
-
-    for (const data of append) {
-        await influx.append(data);
+    for (const data of counters) {
+        await influx[data.action](data.counter);
     }
 };

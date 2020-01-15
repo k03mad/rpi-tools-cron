@@ -12,7 +12,6 @@
 	"dependencies": {
 		"app-root-path": "3.0.0",
 		"oui": "10.0.39",
-		"p-map": "3.0.0",
 		"recron": "1.0.3",
 		"require-all": "3.0.0",
 		"utils-mad": "4.4.0"

@@ -15,9 +15,13 @@ module.exports = async () => {
         restarts[elem.name] = elem.pm2_env.restart_time;
     });
 
-    await Promise.all([
-        influx.write({meas: 'pi-apps-memory', values: memory}),
-        influx.write({meas: 'pi-apps-cpu', values: cpu}),
-        influx.write({meas: 'pi-apps-restarts', values: restarts}),
-    ]);
+    const counters = [
+        {meas: 'pi-apps-memory', values: memory},
+        {meas: 'pi-apps-cpu', values: cpu},
+        {meas: 'pi-apps-restarts', values: restarts},
+    ];
+
+    for (const data of counters) {
+        await influx.write(data);
+    }
 };

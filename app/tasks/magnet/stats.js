@@ -1,7 +1,6 @@
 'use strict';
 
 const appRoot = require('app-root-path');
-const pMap = require('p-map');
 const {influx, array} = require('utils-mad');
 const {promises: fs} = require('fs');
 
@@ -122,5 +121,7 @@ module.exports = async () => {
         },
     ];
 
-    await pMap(counters, data => influx.write(data), {concurrency: 2});
+    for (const data of counters) {
+        await influx.write(data);
+    }
 };

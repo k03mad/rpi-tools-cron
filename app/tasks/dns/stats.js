@@ -54,13 +54,15 @@ module.exports = async () => {
         }
     }));
 
-    await Promise.all([
-        influx.write({meas: 'dns-stats-common', values: {avg_processing_time, num_blocked_filtering, num_dns_queries}}),
-        influx.write({meas: 'dns-stats-clients', values: clientsNamed}),
-    ]);
+    const counters = [
+        {meas: 'dns-stats-common', values: {avg_processing_time, num_blocked_filtering, num_dns_queries}},
+        {meas: 'dns-stats-clients', values: clientsNamed},
+        {meas: 'dns-stats-domains-q', values: array.mergeobj(top_queried_domains.slice(0, DOMAINS_COUNT))},
+        {meas: 'dns-stats-domains-b', values: array.mergeobj(top_blocked_domains.slice(0, DOMAINS_COUNT))},
+    ];
 
-    await Promise.all([
-        influx.write({meas: 'dns-stats-domains-q', values: array.mergeobj(top_queried_domains.slice(0, DOMAINS_COUNT))}),
-        influx.write({meas: 'dns-stats-domains-b', values: array.mergeobj(top_blocked_domains.slice(0, DOMAINS_COUNT))}),
-    ]);
+    for (const data of counters) {
+        await influx.write(data);
+    }
+
 };

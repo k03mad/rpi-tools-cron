@@ -2,6 +2,4 @@
 
 const {repo} = require('utils-mad');
 
-module.exports = () => repo.run(
-    'magnet-co-parser', 'start',
-);
+module.exports = () => repo.run('magnet-co-parser', 'start');

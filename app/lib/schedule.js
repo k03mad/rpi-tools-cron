@@ -13,7 +13,7 @@ module.exports = crons => {
                 try {
                     await func();
                 } catch (err) {
-                    print.ex(err, {exit: true});
+                    print.ex(err, {afterline: false, exit: true});
                 }
             }, {timezone: 'Europe/Moscow'});
         }

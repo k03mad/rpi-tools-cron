@@ -1,6 +1,6 @@
 'use strict';
 
-const {influx, array, adg, ip} = require('utils-mad');
+const {influx, array, adg, ip, object} = require('utils-mad');
 
 module.exports = async () => {
     const DOMAINS_COUNT = 100;
@@ -22,7 +22,9 @@ module.exports = async () => {
         adg.get('clients'),
     ]);
 
-    const clientsNamed = {};
+    const clientsByIp = {};
+    const clientsByName = {};
+
     await Promise.all(top_clients.map(async elem => {
         const [[address, count]] = Object.entries(elem);
 
@@ -31,32 +33,47 @@ module.exports = async () => {
 
             for (const client of clients) {
                 if (client.ids.includes(address)) {
-                    clientsNamed[`${address} - ${client.name}`] = count;
+                    clientsByIp[`${address} - ${client.name}`] = count;
+                    object.count(clientsByName, client.name, count);
+
                     found = true;
                     break;
                 }
             }
 
             if (!found) {
-                clientsNamed[address] = count;
+                clientsByIp[address] = count;
+
+                if (address.startsWith('10.')) {
+                    object.count(clientsByName, 'VPN', count);
+                } else {
+                    object.count(clientsByName, 'Unknown', count);
+                }
             }
         } else {
             const lookup = await ip.lookup(address);
-            const name = [
-                address,
+            const clientInfo = [
                 lookup.ipName.replace(/(\d+-?){4}/, '{ip}'),
                 lookup.city,
                 lookup.countryCode,
                 lookup.isp,
-            ];
+            ].filter(Boolean);
 
-            clientsNamed[name.filter(Boolean).join(' - ')] = count;
+            const withIp = [address, ...clientInfo]
+                .join(' - ');
+
+            const withoutIp = clientInfo
+                .join(' - ');
+
+            clientsByIp[withIp] = count;
+            object.count(clientsByName, withoutIp, count);
         }
     }));
 
     const counters = [
         {meas: 'dns-stats-common', values: {avg_processing_time, num_blocked_filtering, num_dns_queries}},
-        {meas: 'dns-stats-clients', values: clientsNamed},
+        {meas: 'dns-stats-clients', values: clientsByIp},
+        {meas: 'dns-stats-clients-name', values: clientsByName},
         {meas: 'dns-stats-domains-q', values: array.mergeobj(top_queried_domains.slice(0, DOMAINS_COUNT))},
         {meas: 'dns-stats-domains-b', values: array.mergeobj(top_blocked_domains.slice(0, DOMAINS_COUNT))},
     ];

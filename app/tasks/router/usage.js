@@ -16,6 +16,7 @@ module.exports = async () => {
         wifiClients,
         [, updates],
         firewallNat,
+        dhcpLeases,
         ...monitorTraffic
     ] = await mikrotik.get([
         '/system/resource/print',
@@ -23,6 +24,7 @@ module.exports = async () => {
         '/interface/wireless/registration-table/print',
         '/system/package/update/check-for-updates',
         '/ip/firewall/nat/print',
+        '/ip/dhcp-server/lease/print',
         ...['wan1', 'ether1', 'ether2', 'ether3', 'ether4', 'wlan1', 'wlan2']
             .map(elem => ['/interface/monitor-traffic', `=interface=${elem}`, '=once']),
     ]);
@@ -41,8 +43,16 @@ module.exports = async () => {
         const trf = elem.bytes.replace(',', '.');
         const mac = elem['mac-address'];
 
-        const [vendor] = oui(mac).split('\n')[0].match(/^(\w+( \w+)?)/);
-        const key = `${vendor} [${mac}]`;
+        const [client] = dhcpLeases.filter(lease => lease['mac-address'] === mac);
+
+        let key;
+
+        if (client && client.comment) {
+            key = client.comment;
+        } else {
+            const [vendor] = oui(mac).split('\n')[0].match(/^(\w+( \w+)?)/);
+            key = `${vendor} [${mac}]`;
+        }
 
         clientsSignal[key] = Number(dbm);
         clientsTraffic[key] = Number(trf);
@@ -87,6 +97,19 @@ module.exports = async () => {
         }
 
         if (name && !name.includes('defconf')) {
+            const REGEXP_IP = /((?:\d{1,3}\.){3}\d{1,3})/;
+            const matchedIp = name.match(REGEXP_IP);
+
+            if (matchedIp) {
+                const [client] = dhcpLeases.filter(lease => lease.address === matchedIp[0]);
+
+                if (client && client.comment) {
+                    name = name.replace(REGEXP_IP, `${client.comment} :: $1`);
+                }
+            }
+
+            name = name.replace(/(\d): /g, '$1 :: ');
+
             if (natTraffic[name]) {
                 natTraffic[name] += Number(elem.bytes);
             } else {
@@ -95,21 +118,15 @@ module.exports = async () => {
         }
     });
 
-    const appendData = [
+    await influx.append([
         {meas: 'router-clients-traffic', values: clientsTraffic},
         {meas: 'router-interface-traffic', values: interfaceTraffic},
         {meas: 'router-nat-traffic', values: natTraffic},
-    ];
+    ]);
 
-    const writeData = [
+    await influx.write([
         {meas: 'router-clients-signal', values: clientsSignal},
         {meas: 'router-interface-speed', values: interfaceSpeed},
         {meas: 'router-usage', values: health},
-    ];
-
-    for (const data of appendData) {
-        await influx.append(data);
-    }
-
-    await influx.write(writeData);
+    ]);
 };

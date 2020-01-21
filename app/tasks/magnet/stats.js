@@ -121,7 +121,5 @@ module.exports = async () => {
         },
     ];
 
-    for (const data of counters) {
-        await influx.write(data);
-    }
+    await influx.write(counters);
 };

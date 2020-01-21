@@ -70,16 +70,12 @@ module.exports = async () => {
         }
     }));
 
-    const counters = [
+    await influx.write([
         {meas: 'dns-stats-common', values: {avg_processing_time, num_blocked_filtering, num_dns_queries}},
         {meas: 'dns-stats-clients', values: clientsByIp},
         {meas: 'dns-stats-clients-name', values: clientsByName},
         {meas: 'dns-stats-domains-q', values: array.mergeobj(top_queried_domains.slice(0, DOMAINS_COUNT))},
         {meas: 'dns-stats-domains-b', values: array.mergeobj(top_blocked_domains.slice(0, DOMAINS_COUNT))},
-    ];
-
-    for (const data of counters) {
-        await influx.write(data);
-    }
+    ]);
 
 };

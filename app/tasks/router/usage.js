@@ -95,17 +95,21 @@ module.exports = async () => {
         }
     });
 
-    const counters = [
-        {action: 'write', counter: {meas: 'router-clients-signal', values: clientsSignal}},
-        {action: 'write', counter: {meas: 'router-interface-speed', values: interfaceSpeed}},
-        {action: 'write', counter: {meas: 'router-usage', values: health}},
-
-        {action: 'append', counter: {meas: 'router-clients-traffic', values: clientsTraffic}},
-        {action: 'append', counter: {meas: 'router-interface-traffic', values: interfaceTraffic}},
-        {action: 'append', counter: {meas: 'router-nat-traffic', values: natTraffic}},
+    const appendData = [
+        {meas: 'router-clients-traffic', values: clientsTraffic},
+        {meas: 'router-interface-traffic', values: interfaceTraffic},
+        {meas: 'router-nat-traffic', values: natTraffic},
     ];
 
-    for (const data of counters) {
-        await influx[data.action](data.counter);
+    const writeData = [
+        {meas: 'router-clients-signal', values: clientsSignal},
+        {meas: 'router-interface-speed', values: interfaceSpeed},
+        {meas: 'router-usage', values: health},
+    ];
+
+    for (const data of appendData) {
+        await influx.append(data);
     }
+
+    await influx.write(writeData);
 };

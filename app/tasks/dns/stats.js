@@ -47,10 +47,10 @@ module.exports = async () => {
         } else {
             const lookup = await ip.lookup(address);
             const clientInfo = [
-                lookup.countryCode,
+                lookup.countrycode,
                 lookup.city,
                 lookup.isp,
-            ].filter(Boolean).join(IP_SEPARATOR);
+            ].join(IP_SEPARATOR);
 
             object.count(external, clientInfo, count);
         }

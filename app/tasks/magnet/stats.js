@@ -26,12 +26,13 @@ module.exports = async () => {
      * @returns {object}
      */
     const getTopFlat = ({items, firstLevel, secondLevel, split, one, replace}) => {
-        let output = one
+        let output = (one
             ? items.map(elem => elem[firstLevel][0])
-            : items.flatMap(elem => elem[firstLevel]);
+            : items.flatMap(elem => elem[firstLevel])
+        ).filter(Boolean);
 
         if (secondLevel) {
-            output = output.map(elem => elem ? elem[secondLevel] : '');
+            output = output.map(elem => elem[secondLevel]);
         }
 
         if (split) {
@@ -42,7 +43,7 @@ module.exports = async () => {
             output = output.map(elem => elem.replace(replace.re, replace.str));
         }
 
-        return array.count(output.filter(Boolean));
+        return array.count(output);
     };
 
     const counters = [
@@ -82,7 +83,7 @@ module.exports = async () => {
         },
         {
             meas: 'magnet-films-top-countries',
-            values: getTopFlat({items: filmsItems, firstLevel: 'countries'}),
+            values: getTopFlat({items: filmsItems, firstLevel: 'countries', replace: {re: ' (Китайская Народная Республика)', str: ''}}),
         },
         // shows
         {

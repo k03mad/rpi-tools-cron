@@ -25,7 +25,7 @@ module.exports = async () => {
      * @param {object} opts
      * @returns {object}
      */
-    const getTopFlat = ({items, firstLevel, secondLevel, split, above, one}) => {
+    const getTopFlat = ({items, firstLevel, secondLevel, split, one, replace}) => {
         let output = one
             ? items.map(elem => elem[firstLevel][0])
             : items.flatMap(elem => elem[firstLevel]);
@@ -38,21 +38,11 @@ module.exports = async () => {
             output = output.flatMap(elem => elem.split(split));
         }
 
-        const count = array.count(output.filter(Boolean));
-
-        if (above) {
-            const aboveCount = {};
-
-            for (const [key, prop] of Object.entries(count)) {
-                if (prop > above) {
-                    aboveCount[key] = prop;
-                }
-            }
-
-            return aboveCount;
+        if (replace) {
+            output = output.map(elem => elem.replace(replace.re, replace.str));
         }
 
-        return count;
+        return array.count(output.filter(Boolean));
     };
 
     const counters = [
@@ -92,7 +82,7 @@ module.exports = async () => {
         },
         {
             meas: 'magnet-films-top-countries',
-            values: getTopFlat({items: filmsItems, firstLevel: 'countries', above: 2}),
+            values: getTopFlat({items: filmsItems, firstLevel: 'countries'}),
         },
         // shows
         {
@@ -109,7 +99,7 @@ module.exports = async () => {
         },
         {
             meas: 'magnet-shows-top-episodes',
-            values: getTopFlat({items: showsItems, firstLevel: 'rutor', secondLevel: 'episodes', one: true}),
+            values: getTopFlat({items: showsItems, firstLevel: 'rutor', secondLevel: 'episodes', one: true, replace: {re: /(.*?) .+/, str: '$1'}}),
         },
         {
             meas: 'magnet-shows-top-networks',

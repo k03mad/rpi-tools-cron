@@ -26,13 +26,16 @@ module.exports = async () => {
      * @returns {object}
      */
     const getTopFlat = ({items, firstLevel, secondLevel, split, one, replace}) => {
-        let output = (one
+        let output = one
             ? items.map(elem => elem[firstLevel][0])
-            : items.flatMap(elem => elem[firstLevel])
-        ).filter(Boolean);
+            : items.flatMap(elem => elem[firstLevel]);
+
+        output = output.filter(Boolean);
 
         if (secondLevel) {
-            output = output.map(elem => elem[secondLevel]);
+            output = output
+                .map(elem => elem[secondLevel])
+                .filter(Boolean);
         }
 
         if (split) {

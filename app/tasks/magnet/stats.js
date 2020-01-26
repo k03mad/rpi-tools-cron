@@ -74,7 +74,7 @@ module.exports = async () => {
         // films
         {
             meas: 'magnet-films-top-years',
-            values: getTopFlat({items: filmsItems, firstLevel: 'rutor', secondLevel: 'year', split: '-'}),
+            values: getTopFlat({items: filmsItems, firstLevel: 'rutor', secondLevel: 'year', one: true, split: '-'}),
         },
         {
             meas: 'magnet-films-top-quality',
@@ -91,7 +91,7 @@ module.exports = async () => {
         // shows
         {
             meas: 'magnet-shows-top-years',
-            values: getTopFlat({items: showsItems, firstLevel: 'rutor', secondLevel: 'year', split: '-'}),
+            values: getTopFlat({items: showsItems, firstLevel: 'rutor', secondLevel: 'year', one: true, split: '-'}),
         },
         {
             meas: 'magnet-shows-top-quality',

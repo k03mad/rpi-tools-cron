@@ -25,34 +25,28 @@ module.exports = async () => {
      * @param {object} opts
      * @returns {object}
      */
-    const getTopFlat = ({items, firstLevel, secondLevel, split, above, one}) => {
+    const getTopFlat = ({items, firstLevel, secondLevel, split, one, replace}) => {
         let output = one
             ? items.map(elem => elem[firstLevel][0])
             : items.flatMap(elem => elem[firstLevel]);
 
+        output = output.filter(Boolean);
+
         if (secondLevel) {
-            output = output.map(elem => elem ? elem[secondLevel] : '');
+            output = output
+                .map(elem => elem[secondLevel])
+                .filter(Boolean);
         }
 
         if (split) {
             output = output.flatMap(elem => elem.split(split));
         }
 
-        const count = array.count(output.filter(Boolean));
-
-        if (above) {
-            const aboveCount = {};
-
-            for (const [key, prop] of Object.entries(count)) {
-                if (prop > above) {
-                    aboveCount[key] = prop;
-                }
-            }
-
-            return aboveCount;
+        if (replace) {
+            output = output.map(elem => elem.replace(replace.re, replace.str));
         }
 
-        return count;
+        return array.count(output);
     };
 
     const counters = [
@@ -80,7 +74,7 @@ module.exports = async () => {
         // films
         {
             meas: 'magnet-films-top-years',
-            values: getTopFlat({items: filmsItems, firstLevel: 'rutor', secondLevel: 'year', split: '-'}),
+            values: getTopFlat({items: filmsItems, firstLevel: 'rutor', secondLevel: 'year', one: true, split: '-'}),
         },
         {
             meas: 'magnet-films-top-quality',
@@ -92,12 +86,12 @@ module.exports = async () => {
         },
         {
             meas: 'magnet-films-top-countries',
-            values: getTopFlat({items: filmsItems, firstLevel: 'countries', above: 2}),
+            values: getTopFlat({items: filmsItems, firstLevel: 'countries', replace: {re: ' (Китайская Народная Республика)', str: ''}}),
         },
         // shows
         {
             meas: 'magnet-shows-top-years',
-            values: getTopFlat({items: showsItems, firstLevel: 'rutor', secondLevel: 'year', split: '-'}),
+            values: getTopFlat({items: showsItems, firstLevel: 'rutor', secondLevel: 'year', one: true, split: '-'}),
         },
         {
             meas: 'magnet-shows-top-quality',
@@ -109,7 +103,7 @@ module.exports = async () => {
         },
         {
             meas: 'magnet-shows-top-episodes',
-            values: getTopFlat({items: showsItems, firstLevel: 'rutor', secondLevel: 'episodes', one: true}),
+            values: getTopFlat({items: showsItems, firstLevel: 'rutor', secondLevel: 'episodes', one: true, replace: {re: /(.*?) .+/, str: '$1'}}),
         },
         {
             meas: 'magnet-shows-top-networks',

@@ -9,6 +9,8 @@ const timers = {
         router.usage,
     ],
 
+    '*/10 * * * *': [router.clients],
+
     '30 4,5 * * *': magnet.parse,
 };
 
@@ -26,6 +28,7 @@ const hourIntervalCrons = [
     myshows.trends,
     myshows.year,
     pi.update,
+    router.traffic,
 ];
 
 // часовые кроны запускаем не одновременно, а с разницей в минуту

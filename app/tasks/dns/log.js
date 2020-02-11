@@ -20,7 +20,7 @@ module.exports = async () => {
         }
     }
 
-    const domains = new Set(log ? log.split('\n').slice(1) : '');
+    const domains = new Set(log ? log.split('\n').slice(0, -1) : '');
 
     data.forEach(elem => {
         const host = elem.question.host.replace(/^www\./, '');
@@ -40,6 +40,6 @@ module.exports = async () => {
         .sort()
         .map(elem => elem.reverse().join('.'));
 
-    sortedDomains.unshift(`[ ${sortedDomains.length}d — ${ms(new Date().getTime() - start)} ]`);
+    sortedDomains.push(`[ ${sortedDomains.length}d — ${ms(new Date().getTime() - start)} ]`);
     await fs.writeFile(FILE, sortedDomains.join('\n'));
 };

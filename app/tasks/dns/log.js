@@ -6,7 +6,19 @@ const {promises: fs} = require('fs');
 
 module.exports = async () => {
     const start = new Date().getTime();
+
     const FILE = './domains.log';
+    const excludeDomains = `(${[
+        '.arpa',
+        '.c.youtube.com',
+        '.cdn.yandex.net',
+        '.datahound.com',
+        '.dlink',
+        '.googlevideo.com',
+        '.storage.yandex.net',
+        '.strm.yandex.net',
+        '.userapi.com',
+    ].map(elem => elem.replace(/\./g, '\\.')).join('|')})$`;
 
     const {data} = await adg.get('querylog');
 
@@ -28,8 +40,6 @@ module.exports = async () => {
         if (
             elem.reason === 'NotFilteredNotFound'
             && host.includes('.')
-            && !host.endsWith('.dlink')
-            && !host.endsWith('.arpa')
         ) {
             domains.add(host);
         }
@@ -38,7 +48,8 @@ module.exports = async () => {
     const sortedDomains = [...domains]
         .map(elem => elem.split('.').reverse())
         .sort()
-        .map(elem => elem.reverse().join('.'));
+        .map(elem => elem.reverse().join('.'))
+        .filter(elem => !elem.match(excludeDomains));
 
     sortedDomains.push(`[ ${sortedDomains.length}d — ${ms(new Date().getTime() - start)} ]`);
     await fs.writeFile(FILE, sortedDomains.join('\n'));

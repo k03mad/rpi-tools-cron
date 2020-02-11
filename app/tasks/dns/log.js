@@ -9,15 +9,19 @@ module.exports = async () => {
 
     const FILE = './domains.log';
     const excludeDomains = `(${[
+
         '.arpa',
         '.c.youtube.com',
         '.cdn.yandex.net',
         '.datahound.com',
+        '.direct',
         '.dlink',
         '.googlevideo.com',
+        '.local',
         '.storage.yandex.net',
         '.strm.yandex.net',
         '.userapi.com',
+
     ].map(elem => elem.replace(/\./g, '\\.')).join('|')})$`;
 
     const {data} = await adg.get('querylog');

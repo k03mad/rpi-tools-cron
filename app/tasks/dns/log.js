@@ -16,6 +16,7 @@ module.exports = async () => {
         '.datahound.com',
         '.direct',
         '.dlink',
+        '.googleapis.com',
         '.googlevideo.com',
         '.local',
         '.storage.yandex.net',

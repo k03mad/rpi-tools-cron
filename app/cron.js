@@ -9,7 +9,10 @@ const timers = {
         router.usage,
     ],
 
-    '*/10 * * * *': [router.clients],
+    '*/10 * * * *': [
+        dns.log,
+        router.clients,
+    ],
 
     '30 4,5 * * *': magnet.parse,
 };

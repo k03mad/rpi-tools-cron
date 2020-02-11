@@ -11,6 +11,7 @@
 	},
 	"dependencies": {
 		"app-root-path": "3.0.0",
+		"ms": "2.1.2",
 		"oui": "10.0.43",
 		"recron": "1.0.3",
 		"require-all": "3.0.0",
@@ -26,7 +27,7 @@
 		"eslint-plugin-promise": "4.2.1",
 		"eslint-plugin-sonarjs": "0.5.0",
 		"eslint-plugin-sort-requires": "2.1.0",
-		"eslint-plugin-unicorn": "16.0.0",
+		"eslint-plugin-unicorn": "16.1.0",
 		"pre-commit": "1.2.2"
 	},
 	"scripts": {

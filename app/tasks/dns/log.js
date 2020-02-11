@@ -25,7 +25,12 @@ module.exports = async () => {
     data.forEach(elem => {
         const host = elem.question.host.replace(/^www\./, '');
 
-        if (!domains.has(host) && elem.reason === 'NotFilteredNotFound') {
+        if (
+            elem.reason === 'NotFilteredNotFound'
+            && host.includes('.')
+            && !host.endsWith('.dlink')
+            && !host.endsWith('.arpa')
+        ) {
             domains.add(host);
         }
     });

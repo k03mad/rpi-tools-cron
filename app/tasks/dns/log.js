@@ -10,18 +10,7 @@ module.exports = async () => {
     const FILE = './domains.log';
     const excludeDomains = `(${[
 
-        '.arpa',
-        '.c.youtube.com',
-        '.cdn.yandex.net',
-        '.datahound.com',
-        '.direct',
         '.dlink',
-        '.googleapis.com',
-        '.googlevideo.com',
-        '.local',
-        '.storage.yandex.net',
-        '.strm.yandex.net',
-        '.userapi.com',
 
     ].map(elem => elem.replace(/\./g, '\\.')).join('|')})$`;
 

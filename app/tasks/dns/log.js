@@ -8,11 +8,7 @@ module.exports = async () => {
     const start = new Date().getTime();
 
     const FILE = './domains.log';
-    const excludeDomains = `(${[
-
-        '.dlink',
-
-    ].map(elem => elem.replace(/\./g, '\\.')).join('|')})$`;
+    const excludeDomains = `(${['.dlink'].map(elem => elem.replace(/\./g, '\\.')).join('|')})$`;
 
     const {data} = await adg.get('querylog');
 

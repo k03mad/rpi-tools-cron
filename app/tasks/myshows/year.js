@@ -36,7 +36,12 @@ module.exports = async () => {
             }
         }
 
-        const values = Object.fromEntries(Object.entries(series).slice(0, SHOWS_COUNT));
+        const values = Object.fromEntries(
+            Object.entries(series)
+                .sort((a, b) => b[1] - a[1])
+                .slice(0, SHOWS_COUNT),
+        );
+
         await influx.write({meas: `myshows-year-${year}`, values});
     }
 };

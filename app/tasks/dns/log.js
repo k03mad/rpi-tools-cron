@@ -8,7 +8,40 @@ module.exports = async () => {
     const start = new Date().getTime();
 
     const FILE = './domains.log';
-    const excludeDomains = `(${['.dlink'].map(elem => elem.replace(/\./g, '\\.')).join('|')})$`;
+    const excludeDomains = `(${[
+
+        '.arpa',
+        '.cdn.ampproject.org',
+        '.cdn.yandex.net',
+        '.cdninstagram.com',
+        '.com.yandex.net',
+        '.com.yandex.ru',
+        '.datahound.com',
+        '.disk.yandex.net',
+        '.dl.dropboxusercontent.com',
+        '.dlink',
+        '.fbcdn.net',
+        '.googleapis.com',
+        '.googleusercontent.com',
+        '.googlevideo.com',
+        '.gvt1.com',
+        '.ld.yandex.ru',
+        '.market.mi-img.com',
+        '.mycdn.me',
+        '.net.yandex.net',
+        '.net.yandex.ru',
+        '.pearl-bdm.com',
+        '.plex.direct',
+        '.storage.yandex.net',
+        '.stream.highwebmedia.com',
+        '.strm.yandex.net',
+        '.userapi.com',
+        '.video.pscp.tv',
+        '.vkuserlive.com',
+        '.vkuservideo.net',
+        '.yandex-team.ru',
+
+    ].map(elem => elem.replace(/\./g, '\\.')).join('|')})$`;
 
     const {data} = await adg.get('querylog');
 

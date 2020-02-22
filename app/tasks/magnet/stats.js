@@ -25,7 +25,7 @@ module.exports = async () => {
      * @param {object} opts
      * @returns {object}
      */
-    const getTopFlat = ({items, firstLevel, secondLevel, split, one, replace}) => {
+    const getTopFlat = ({items, firstLevel, secondLevel, split, splitLast, one, replace}) => {
         let output = one
             ? items.map(elem => elem[firstLevel][0])
             : items.flatMap(elem => elem[firstLevel]);
@@ -39,7 +39,9 @@ module.exports = async () => {
         }
 
         if (split) {
-            output = output.flatMap(elem => elem.split(split));
+            output = splitLast
+                ? output.map(elem => elem.split(split).pop())
+                : output.flatMap(elem => elem.split(split));
         }
 
         if (replace) {
@@ -74,7 +76,7 @@ module.exports = async () => {
         // films
         {
             meas: 'magnet-films-top-years',
-            values: getTopFlat({items: filmsItems, firstLevel: 'rutor', secondLevel: 'year', one: true, split: '-'}),
+            values: getTopFlat({items: filmsItems, firstLevel: 'rutor', secondLevel: 'year', one: true, split: '-', splitLast: true}),
         },
         {
             meas: 'magnet-films-top-quality',

@@ -1,50 +1,23 @@
 'use strict';
 
 const ms = require('ms');
-const {adg} = require('utils-mad');
+const path = require('path');
+const {adg, array} = require('utils-mad');
 const {promises: fs} = require('fs');
 
 module.exports = async () => {
     const start = new Date().getTime();
 
-    const FILE = './domains.log';
-    const excludeDomains = `(${[
+    const SAVE_TO_FILE = './domains.log';
 
-        'akadns.net',
-        'akamaiedge.net',
-        'ampproject.net',
-        'ampproject.org',
-        'apple.com',
-        'arpa',
-        'cdninstagram.com',
-        'datahound.com',
-        'direct',
-        'dlink',
-        'dropboxusercontent.com',
-        'fbcdn.net',
-        'google.com',
-        'googleapis.com',
-        'googleusercontent.com',
-        'googlevideo.com',
-        'gvt1.com',
-        'highwebmedia.com',
-        'mi-img.com',
-        'microsoft.com',
-        'mycdn.me',
-        'pearl-bdm.com',
-        'pscp.tv',
-        'userapi.com',
-        'vkuserlive.com',
-        'vkuservideo.net',
-        'xboxlive.com',
-        'xiaomi.com',
-        'yandex-team.ru',
-        'yandex.net',
-        'yandex.ru',
+    const excludedDomains = await fs.readFile(
+        path.join(__dirname, './lib/excludeDomains.txt'),
+        {encoding: 'utf-8'},
+    );
 
-    ]
-        .map(elem => `.${elem}`)
-        .map(elem => elem.replace(/\./g, '\\.'))
+    const buildRegex = `(${excludedDomains.split('\n')
+        .filter(Boolean)
+        .map(elem => `.${elem.trim().replace(/\./g, '\\.')}`)
         .join('|')})$`;
 
     const {data} = await adg.get('querylog');
@@ -52,7 +25,7 @@ module.exports = async () => {
     let log;
 
     try {
-        log = await fs.readFile(FILE, {encoding: 'utf-8'});
+        log = await fs.readFile(SAVE_TO_FILE, {encoding: 'utf-8'});
     } catch (err) {
         if (err.code !== 'ENOENT') {
             throw err;
@@ -72,12 +45,9 @@ module.exports = async () => {
         }
     });
 
-    const sortedDomains = [...domains]
-        .map(elem => elem.split('.').reverse())
-        .sort()
-        .map(elem => elem.reverse().join('.'))
-        .filter(elem => !elem.match(excludeDomains));
+    const sortedDomains = array.sortDomains([...domains])
+        .filter(elem => !elem.match(buildRegex));
 
     sortedDomains.push(`[ ${sortedDomains.length}d — ${ms(new Date().getTime() - start)} ]`);
-    await fs.writeFile(FILE, sortedDomains.join('\n'));
+    await fs.writeFile(SAVE_TO_FILE, sortedDomains.join('\n'));
 };

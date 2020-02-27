@@ -15,7 +15,7 @@
 		"oui": "10.0.45",
 		"recron": "1.0.3",
 		"require-all": "3.0.0",
-		"utils-mad": "6.4.3"
+		"utils-mad": "6.4.5"
 	},
 	"devDependencies": {
 		"eslint": "6.8.0",
@@ -31,8 +31,8 @@
 		"pre-commit": "1.2.2"
 	},
 	"scripts": {
-		"lint": "eslint --report-unused-disable-directives ./ --format codeframe && echo '\n\\033[34mESLinted!\\033[39m\n'",
-		"setup": "pnpm i",
+		"lint": "eslint --report-unused-disable-directives ./ --format codeframe",
+		"setup": "pnpm i && pnpm prune",
 		"start": "pm2 start pm2.json",
 		"task": "node runner.js"
 	},

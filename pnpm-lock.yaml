@@ -1,7 +1,7 @@
 dependencies:
   app-root-path: 3.0.0
   ms: 2.1.2
-  oui: 10.0.45
+  oui: 10.0.46
   recron: 1.0.3
   require-all: 3.0.0
   utils-mad: 6.4.5
@@ -1735,7 +1735,7 @@ packages:
       node: '>=0.10.0'
     resolution:
       integrity: sha1-u+Z0BseaqFxc/sdm/lc0VV36EnQ=
-  /oui/10.0.45:
+  /oui/10.0.46:
     dependencies:
       char-spinner: 1.0.1
       country-data: 0.0.31
@@ -1750,7 +1750,7 @@ packages:
       node: '>=8'
     hasBin: true
     resolution:
-      integrity: sha512-fix3we0lCrJplQ5olwMDUjsARqNNZXcOTnfBkqrMWOVHGKJ1I8XqjL/AFHHF95Sf0PmrnzEMBb2ZtTmAGJSvOg==
+      integrity: sha512-1L8TgtwbFOlXNgkYSr+c83Q1Oo+u+8sSi5tr++5bA+ltg9r1urBQ2N9b5ZiMAHCX3SuYO3WoWCL+zcR51MDSRA==
   /p-cancelable/2.0.0:
     dev: false
     engines:
@@ -2512,7 +2512,7 @@ specifiers:
   eslint-plugin-sort-requires: 2.1.0
   eslint-plugin-unicorn: 16.1.1
   ms: 2.1.2
-  oui: 10.0.45
+  oui: 10.0.46
   pre-commit: 1.2.2
   recron: 1.0.3
   require-all: 3.0.0

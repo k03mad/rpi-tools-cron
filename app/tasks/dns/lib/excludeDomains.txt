@@ -1,3 +1,4 @@
+abs.hls.ttvnw.net
 akadns.net
 akamaiedge.net
 alicdn.com
@@ -53,6 +54,7 @@ skype.com
 smi2.net
 userapi.com
 vb17108janenoble.pw
+vkuseraudio.net
 vkuserlive.com
 vkuservideo.net
 whatsapp.net

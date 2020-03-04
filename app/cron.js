@@ -1,17 +1,17 @@
 'use strict';
 
-const {dns, myshows, pi, router, magnet, lastfm} = require('require-all')(`${__dirname}/tasks`);
+const {dns, myshows, pi, mik, magnet, lastfm} = require('require-all')(`${__dirname}/tasks`);
 
 const timers = {
     '* * * * *': [
         pi.apps,
         pi.usage,
-        router.usage,
+        mik.usage,
     ],
 
     '*/10 * * * *': [
         dns.log,
-        router.clients,
+        mik.clients,
     ],
 
     '30 4,5 * * *': magnet.parse,
@@ -31,7 +31,7 @@ const hourIntervalCrons = [
     myshows.trends,
     myshows.year,
     pi.update,
-    router.traffic,
+    mik.traffic,
 ];
 
 // часовые кроны запускаем не одновременно, а с разницей в минуту

@@ -13,10 +13,10 @@ module.exports = async () => {
         interfaces,
         wifiClients,
         dhcpLeases,
-    ] = await mikrotik.get([
-        '/interface/print',
-        '/interface/wireless/registration-table/print',
-        '/ip/dhcp-server/lease/print',
+    ] = await mikrotik.write([
+        ['/interface/print'],
+        ['/interface/wireless/registration-table/print'],
+        ['/ip/dhcp-server/lease/print'],
     ]);
 
     wifiClients.forEach(elem => {

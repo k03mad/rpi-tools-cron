@@ -12,10 +12,10 @@ module.exports = async () => {
         interfaces,
         firewallNat,
         dhcpLeases,
-    ] = await mikrotik.get([
-        '/interface/print',
-        '/ip/firewall/nat/print',
-        '/ip/dhcp-server/lease/print',
+    ] = await mikrotik.write([
+        ['/interface/print'],
+        ['/ip/firewall/nat/print'],
+        ['/ip/dhcp-server/lease/print'],
     ]);
 
     interfaces.forEach(elem => {

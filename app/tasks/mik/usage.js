@@ -9,9 +9,9 @@ module.exports = async () => {
         [usage],
         [, updates],
         ...monitorTraffic
-    ] = await mikrotik.get([
-        '/system/resource/print',
-        '/system/package/update/check-for-updates',
+    ] = await mikrotik.write([
+        ['/system/resource/print'],
+        ['/system/package/update/check-for-updates'],
         ...['wan1', 'ether1', 'ether2', 'ether3', 'ether4', 'pptp1', 'wlan1', 'wlan2']
             .map(elem => ['/interface/monitor-traffic', `=interface=${elem}`, '=once']),
     ]);

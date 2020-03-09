@@ -14,7 +14,8 @@ const timers = {
         mik.clients,
     ],
 
-    '0 2 * * *': dns.generate,
+    '30 2 * * *': dns.generate,
+    '30 3 * * *': pi.prune,
     '30 4,5 * * *': magnet.parse,
 };
 

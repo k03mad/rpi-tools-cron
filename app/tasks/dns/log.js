@@ -2,7 +2,7 @@
 
 const ms = require('ms');
 const path = require('path');
-const {adg, array} = require('utils-mad');
+const {adg, hosts} = require('utils-mad');
 const {promises: fs} = require('fs');
 
 module.exports = async () => {
@@ -32,7 +32,11 @@ module.exports = async () => {
         }
     }
 
-    const domains = new Set(log ? log.split('\n').slice(0, -1) : '');
+    const domains = new Set(
+        log
+            ? log.split('\n').slice(0, -1).filter(elem => elem.includes('.'))
+            : '',
+    );
 
     data.forEach(elem => {
         const host = elem.question.host.replace(/^www\./, '');
@@ -45,8 +49,10 @@ module.exports = async () => {
         }
     });
 
-    const sortedDomains = array.sortDomains([...domains])
-        .filter(elem => !elem.match(buildRegex));
+    const sortedDomains = hosts.comment(
+        hosts.sort(domains).filter(elem => !elem.match(buildRegex)),
+        {comment: ''},
+    );
 
     sortedDomains.push(`[ ${sortedDomains.length}d — ${ms(new Date().getTime() - start)} ]`);
     await fs.writeFile(SAVE_TO_FILE, sortedDomains.join('\n'));

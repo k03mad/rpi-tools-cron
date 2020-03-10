@@ -54,6 +54,6 @@ module.exports = async () => {
         {comment: ''},
     );
 
-    sortedDomains.push(`[ ${sortedDomains.length}d — ${ms(new Date().getTime() - start)} ]`);
+    sortedDomains.push(`\n[ ${sortedDomains.length}d — ${ms(new Date().getTime() - start)} ]`);
     await fs.writeFile(SAVE_TO_FILE, sortedDomains.join('\n'));
 };

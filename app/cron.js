@@ -1,6 +1,6 @@
 'use strict';
 
-const {dns, myshows, pi, mik, magnet, lastfm} = require('require-all')(`${__dirname}/tasks`);
+const {dns, myshows, pi, mik, magnet, lastfm, corona} = require('require-all')(`${__dirname}/tasks`);
 
 const timers = {
     '* * * * *': [
@@ -16,6 +16,8 @@ const timers = {
 };
 
 const hourIntervalCrons = [
+    corona.all,
+    corona.countries,
     dns.lists,
     dns.stats,
     lastfm.artists,
@@ -23,13 +25,13 @@ const hourIntervalCrons = [
     lastfm.songs,
     lastfm.top,
     magnet.stats,
+    mik.traffic,
     myshows.series,
     myshows.stats,
     myshows.status,
     myshows.trends,
     myshows.year,
     pi.update,
-    mik.traffic,
 ];
 
 // часовые кроны запускаем не одновременно, а с разницей в минуту

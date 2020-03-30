@@ -13,10 +13,8 @@ const timers = {
         mik.usage,
     ],
 
-    '*/10 * * * *': [
-        mik.clients,
-        weather.moscow,
-    ],
+    '*/10 * * * *': mik.clients,
+    '*/30 * * * *': weather.moscow,
 
     '30 3 * * *': pi.prune,
     '30 4,5 * * *': magnet.parse,

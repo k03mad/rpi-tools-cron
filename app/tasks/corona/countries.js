@@ -4,7 +4,11 @@ const {getCovidData} = require('../../lib/api');
 const {influx} = require('utils-mad');
 
 module.exports = async () => {
-    const countries = ['russia', 'ukraine', 'belarus'];
+    const countries = [
+        'russia', 'ukraine', 'belarus',
+        'italy', 'spain', 'germany', 'france', 'uk',
+        'china', 'usa',
+    ];
 
     for (const country of countries) {
         const data = await getCovidData(`countries/${country}`);

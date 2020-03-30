@@ -7,7 +7,7 @@ module.exports = async () => {
     const countries = [
         'russia', 'ukraine', 'belarus',
         'italy', 'spain', 'germany', 'france', 'uk',
-        'china', 'usa',
+        'china', 'usa', 'turkey',
     ];
 
     for (const country of countries) {

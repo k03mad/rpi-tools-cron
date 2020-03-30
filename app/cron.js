@@ -1,6 +1,10 @@
 'use strict';
 
-const {dns, myshows, pi, mik, magnet, lastfm, corona} = require('require-all')(`${__dirname}/tasks`);
+const {
+    dns, myshows, pi,
+    mik, magnet, lastfm,
+    corona, weather,
+} = require('require-all')(`${__dirname}/tasks`);
 
 const timers = {
     '* * * * *': [
@@ -9,7 +13,10 @@ const timers = {
         mik.usage,
     ],
 
-    '*/10 * * * *': [mik.clients],
+    '*/10 * * * *': [
+        mik.clients,
+        weather.moscow,
+    ],
 
     '30 3 * * *': pi.prune,
     '30 4,5 * * *': magnet.parse,

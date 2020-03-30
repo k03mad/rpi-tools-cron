@@ -1,6 +1,6 @@
 'use strict';
 
-const {lastfm} = require('../../env');
+const {lastfm, airvisual} = require('../../env');
 const {request, array} = require('utils-mad');
 
 /**
@@ -35,7 +35,25 @@ const getCovidData = async path => {
     return body;
 };
 
+/**
+ * Get airvisual data
+ * @param {object} searchParams
+ */
+const getAirVisualData = async (searchParams = {}) => {
+    const {body} = await request.got('http://api.airvisual.com/v2/city', {
+        searchParams: {
+            country: 'russia',
+            state: 'moscow',
+            city: 'moscow',
+            key: airvisual.key,
+            ...searchParams,
+        },
+    });
+    return body;
+};
+
 module.exports = {
     sendLastFmRequest,
     getCovidData,
+    getAirVisualData,
 };

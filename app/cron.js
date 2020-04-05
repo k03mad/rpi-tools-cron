@@ -11,9 +11,11 @@ const timers = {
         pi.apps,
         pi.usage,
         mik.usage,
+        mik.connections,
     ],
 
-    '*/10 * * * *': mik.clients,
+    '*/10 * * * *': [mik.clients],
+
     '*/30 * * * *': weather.moscow,
 
     '30 3 * * *': pi.prune,

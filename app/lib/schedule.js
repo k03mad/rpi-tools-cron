@@ -1,6 +1,6 @@
 'use strict';
 
-const {array, print} = require('utils-mad');
+const {array, print, promise} = require('utils-mad');
 const {Cron} = require('recron');
 
 module.exports = crons => {
@@ -12,6 +12,7 @@ module.exports = crons => {
             cron.schedule(key, async () => {
                 try {
                     await func();
+                    await promise.delay();
                 } catch (err) {
                     print.ex(err, {afterline: false, exit: true});
                 }

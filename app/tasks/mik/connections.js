@@ -4,7 +4,7 @@ const {influx, mikrotik, request} = require('utils-mad');
 
 module.exports = async () => {
 
-    const minBytesFilter = 512 * 1024;
+    const minBytesFilter = 1024 * 1024;
 
     const [connections, dhcpLeases] = await mikrotik.write([
         ['/ip/firewall/connection/print'],
@@ -46,7 +46,7 @@ module.exports = async () => {
                     ({body} = await request.cache(`https://extreme-ip-lookup.com/json/${elem.dst}`));
                 } catch {}
 
-                elem.dst = `${elem.dst} (${body.ipName || body.org})`;
+                elem.dst = body.ipName || body.org || elem.dst;
             }
 
             filtered[i] = elem;

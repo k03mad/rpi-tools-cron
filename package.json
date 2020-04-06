@@ -31,7 +31,7 @@
   },
   "scripts": {
     "lint": "eslint --report-unused-disable-directives ./ --format codeframe",
-    "setup": "pnpm i && pnpm prune",
+    "setup": "pnpm i",
     "start": "pm2 start pm2.json",
     "task": "node runner.js"
   },

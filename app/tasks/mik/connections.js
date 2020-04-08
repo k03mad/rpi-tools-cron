@@ -4,20 +4,9 @@ const {influx, mikrotik, request} = require('utils-mad');
 
 module.exports = async () => {
 
-    const minBytesFilter = 1024 * 1024;
+    const minBytesFilter = 64 * 1024;
 
-    const [connections, dhcpLeases] = await mikrotik.write([
-        ['/ip/firewall/connection/print'],
-        ['/ip/dhcp-server/lease/print'],
-    ]);
-
-    dhcpLeases.push({
-        address: '192.168.1.100',
-        comment: 'Pi',
-    }, {
-        address: '192.168.1.133',
-        comment: 'Mikrotik',
-    });
+    const connections = await mikrotik.write('/ip/firewall/connection/print');
 
     const filtered = connections
         .map(elem => ({
@@ -29,41 +18,36 @@ module.exports = async () => {
             && elem.bytes >= minBytesFilter);
 
     if (filtered.length > 0) {
-        for (const [i, elem] of filtered.entries()) {
-            const [srcClient] = dhcpLeases.filter(lease => lease.address === elem.src);
-            const [dstClient] = dhcpLeases.filter(lease => lease.address === elem.dst);
+        const data = ['city', 'country', 'ipName', 'isp'];
 
-            if (srcClient) {
-                elem.src = srcClient.comment;
-            }
+        const send = {};
 
-            if (dstClient) {
-                elem.dst = dstClient.comment;
-            } else {
-                let body = {};
+        for (const elem of filtered) {
+            let body = {};
 
-                try {
-                    ({body} = await request.cache(`https://extreme-ip-lookup.com/json/${elem.dst}`));
-                } catch {}
+            try {
+                ({body} = await request.cache(`https://extreme-ip-lookup.com/json/${elem.dst}`));
+            } catch {}
 
-                elem.dst = body.ipName || body.org || elem.dst;
-            }
+            data.forEach(counter => {
+                const name = body[counter];
 
-            filtered[i] = elem;
+                if (name) {
+                    if (send[counter]) {
+                        if (send[counter][name]) {
+                            send[counter][name] += elem.bytes;
+                        } else {
+                            send[counter][name] = elem.bytes;
+                        }
+                    } else {
+                        send[counter] = {[name]: elem.bytes};
+                    }
+                }
+            });
         }
 
-        const values = {};
-
-        filtered.forEach(elem => {
-            const name = `${elem.src} - ${elem.dst}`;
-
-            if (values[name]) {
-                values[name] += elem.bytes;
-            } else {
-                values[name] = elem.bytes;
-            }
-        });
-
-        await influx.append({meas: 'router-connections', values});
+        for (const elem of data) {
+            send[elem] && await influx.write({meas: `router-connections-${elem}`, values: send[elem]});
+        }
     }
 };

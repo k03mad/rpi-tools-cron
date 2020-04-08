@@ -47,7 +47,7 @@ module.exports = async () => {
         }
 
         for (const elem of data) {
-            send[elem] && await influx.write({meas: `router-connections-${elem}`, values: send[elem]});
+            send[elem] && await influx.append({meas: `router-connections-${elem}`, values: send[elem]});
         }
     }
 };

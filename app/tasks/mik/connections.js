@@ -18,7 +18,7 @@ module.exports = async () => {
             && elem.bytes >= minBytesFilter);
 
     if (filtered.length > 0) {
-        const data = ['city', 'country', 'ipName', 'org'];
+        const data = ['country', 'ipName', 'org'];
 
         const send = {};
 

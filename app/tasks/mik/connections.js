@@ -4,7 +4,7 @@ const {influx, mikrotik, request} = require('utils-mad');
 
 module.exports = async () => {
 
-    const minBytesFilter = 512 * 1024;
+    const minBytesFilter = 1024 * 1024;
 
     const connections = await mikrotik.write('/ip/firewall/connection/print');
 

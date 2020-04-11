@@ -18,7 +18,7 @@ module.exports = async () => {
             && elem.bytes >= minBytesFilter);
 
     if (filtered.length > 0) {
-        const data = ['country', 'ipName', 'org'];
+        const sendData = ['ipName'];
 
         const send = {};
 
@@ -29,7 +29,7 @@ module.exports = async () => {
                 ({body} = await request.cache(`https://extreme-ip-lookup.com/json/${elem.dst}`));
             } catch {}
 
-            data.forEach(counter => {
+            sendData.forEach(counter => {
                 const name = body[counter];
 
                 if (name) {
@@ -46,7 +46,7 @@ module.exports = async () => {
             });
         }
 
-        for (const elem of data) {
+        for (const elem of sendData) {
             send[elem] && await influx.append({meas: `router-connections-${elem}`, values: send[elem]});
         }
     }

@@ -7,15 +7,11 @@ const {
 } = require('require-all')(`${__dirname}/tasks`);
 
 const timers = {
-    '*/5 * * * *': [
+    '* * * * *': [
+        mik.clients,
+        mik.usage,
         pi.apps,
         pi.usage,
-        mik.usage,
-    ],
-
-    '*/30 * * * *': [
-        mik.clients,
-        weather.moscow,
     ],
 
     '30 3 * * *': pi.prune,
@@ -41,6 +37,7 @@ const hourIntervalCrons = [
     myshows.trends,
     myshows.year,
     pi.update,
+    weather.moscow,
 ];
 
 // часовые кроны запускаем не одновременно, а с разницей в минуту

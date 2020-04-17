@@ -46,9 +46,6 @@ module.exports = async () => {
             }
         } else {
             const lookup = await ip.lookup(address);
-            console.log('::: ------------------');
-            console.log('::: lookup', lookup);
-            console.log('::: ------------------');
             const clientInfo = [
                 lookup.countrycode,
                 lookup.city,

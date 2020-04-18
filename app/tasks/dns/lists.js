@@ -3,10 +3,10 @@
 const {influx, adg} = require('utils-mad');
 
 module.exports = async () => {
-    const {filters} = await adg.get('filtering/status');
+    const {filters, whitelist_filters: filtersWl} = await adg.get('filtering/status');
     const values = {};
 
-    filters.forEach(elem => {
+    [...filters, ...filtersWl].forEach(elem => {
         values[elem.name] = elem.rules_count;
     });
 

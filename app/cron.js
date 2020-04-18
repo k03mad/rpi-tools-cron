@@ -14,7 +14,10 @@ const timers = {
         mik.connections,
     ],
 
-    '*/10 * * * *': [mik.clients],
+    '*/10 * * * *': [
+        dns.log,
+        mik.clients,
+    ],
 
     '*/30 * * * *': weather.moscow,
 

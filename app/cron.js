@@ -8,18 +8,13 @@ const {
 
 const timers = {
     '* * * * *': [
+        mik.clients,
+        mik.usage,
         pi.apps,
         pi.usage,
-        mik.usage,
-        mik.connections,
     ],
 
-    '*/10 * * * *': [
-        dns.log,
-        mik.clients,
-    ],
-
-    '*/30 * * * *': weather.moscow,
+    '*/10 * * * *': dns.log,
 
     '30 3 * * *': pi.prune,
 
@@ -44,9 +39,9 @@ const hourIntervalCrons = [
     myshows.trends,
     myshows.year,
     pi.update,
+    weather.moscow,
 ];
 
-// часовые кроны запускаем не одновременно, а с разницей в минуту
 hourIntervalCrons.forEach((cron, i) => {
     timers[`${i} */1 * * *`] = cron;
 });

@@ -31,7 +31,7 @@ const sendLastFmRequest = (method, params = {}) => Promise.all(
  * @returns {Promise}
  */
 const getCovidData = async path => {
-    const {body} = await request.got(`https://corona.lmao.ninja/${path}`);
+    const {body} = await request.got(`https://corona.lmao.ninja/v2/${path}`);
     return body;
 };
 

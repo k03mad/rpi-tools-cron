@@ -1,24 +1,12 @@
 'use strict';
 
 const ms = require('ms');
-const path = require('path');
 const {adg, hosts} = require('utils-mad');
 const {promises: fs} = require('fs');
 
 module.exports = async () => {
     const start = new Date().getTime();
-
     const SAVE_TO_FILE = './domains.log';
-
-    const excludedDomains = await fs.readFile(
-        path.join(__dirname, './lib/excludeDomains.txt'),
-        {encoding: 'utf-8'},
-    );
-
-    const buildRegex = `(${excludedDomains.split('\n')
-        .filter(Boolean)
-        .map(elem => `.${elem.trim().replace(/\./g, '\\.')}`)
-        .join('|')})$`;
 
     const {data} = await adg.get('querylog');
 
@@ -50,7 +38,7 @@ module.exports = async () => {
     });
 
     const sortedDomains = hosts.comment(
-        hosts.sort(domains).filter(elem => !elem.match(buildRegex)),
+        hosts.sort(domains),
         {comment: ''},
     );
 

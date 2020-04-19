@@ -14,7 +14,7 @@ module.exports = crons => {
                     await func();
                     await promise.delay();
                 } catch (err) {
-                    print.ex(err, {add: key, afterline: false, exit: true});
+                    print.ex(err, {before: key, afterline: false, exit: true});
                 }
             }, {timezone: 'Europe/Moscow'});
         }

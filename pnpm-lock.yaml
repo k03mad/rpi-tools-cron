@@ -4,7 +4,7 @@ dependencies:
   oui: 11.0.5
   recron: 1.0.3
   require-all: 3.0.0
-  utils-mad: 7.4.6
+  utils-mad: 7.5.0
 devDependencies:
   eslint: 6.8.0
   eslint-config-k03mad: 4.2.0_b5f21fc1e7a3f113338845b5fbdb94f8
@@ -2343,7 +2343,7 @@ packages:
   /util-deprecate/1.0.2:
     resolution:
       integrity: sha1-RQ1Nyfpw3nMnYvvS1KKJgUGaDM8=
-  /utils-mad/7.4.6:
+  /utils-mad/7.5.0:
     dependencies:
       cheerio: 1.0.0-rc.3
       colorette: 1.1.0
@@ -2363,7 +2363,7 @@ packages:
     engines:
       node: '>=13'
     resolution:
-      integrity: sha512-k1WE1Jek28QyaqG6miWnEyWTzXNwxDXxq9sq/PvsDbWnhSDkOAkQ5Mjy0aLnOMemCC9wAlhON39q4epYZsSHCg==
+      integrity: sha512-ynb4oLiEn80a0MDtd4W5uKtVjr248+cYPrhUIRmYRwCsLIxYwnZLRdjV8S5kwt9Vz7HHa/jP7D93OSbPWwrKXg==
   /v8-compile-cache/2.1.0:
     dev: true
     resolution:
@@ -2441,4 +2441,4 @@ specifiers:
   pre-commit: 1.2.2
   recron: 1.0.3
   require-all: 3.0.0
-  utils-mad: 7.4.6
+  utils-mad: 7.5.0

@@ -48,5 +48,5 @@ module.exports = async () => {
     });
 
     await influx.append({meas: 'router-clients-traffic', values: clientsTraffic});
-    await influx.diffBelow(5, {meas: 'router-clients-signal', values: clientsSignal});
+    await influx.diffBelow(10, {meas: 'router-clients-signal', values: clientsSignal});
 };

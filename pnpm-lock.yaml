@@ -4,7 +4,7 @@ dependencies:
   oui: 11.0.5
   recron: 1.0.3
   require-all: 3.0.0
-  utils-mad: 7.5.0
+  utils-mad: 7.5.1
 devDependencies:
   eslint: 6.8.0
   eslint-config-k03mad: 4.2.0_b5f21fc1e7a3f113338845b5fbdb94f8
@@ -1057,7 +1057,7 @@ packages:
       node: '>=8'
     resolution:
       integrity: sha512-7dUi7RvCoT/xast/o/dLN53oqND4yk0nsHkhRgn9w65C4PofCLOoJ39iSOg+qVDdWQPIEj+eszMHQ+aLVwwQSg==
-  /got/11.0.0:
+  /got/11.0.1:
     dependencies:
       '@sindresorhus/is': 2.1.0
       '@szmarczak/http-timer': 4.0.5
@@ -1075,7 +1075,7 @@ packages:
     engines:
       node: '>=10.19.0'
     resolution:
-      integrity: sha512-6PjDdCa2yPMuxhoBp6TIdHUm5gv8rBEfr055vJG9CqznZBw4rFEwNifI5JxfLhu41xVHRrFsVtseFOjrcIy1/w==
+      integrity: sha512-yxoJ0Mo8IV0bcrDaT9OaQ3dB514e26r+0V16TK7cqbcotbAwuOq5IIr2WJl75CvZ3oIRtpHVftYAQLF1lqrC5A==
   /graceful-fs/4.2.3:
     dev: false
     resolution:
@@ -2343,13 +2343,13 @@ packages:
   /util-deprecate/1.0.2:
     resolution:
       integrity: sha1-RQ1Nyfpw3nMnYvvS1KKJgUGaDM8=
-  /utils-mad/7.5.0:
+  /utils-mad/7.5.1:
     dependencies:
       cheerio: 1.0.0-rc.3
       colorette: 1.1.0
       debug: 4.1.1
       del: 5.1.0
-      got: 11.0.0
+      got: 11.0.1
       json-cycle: 1.3.0
       make-dir: 3.0.2
       moment: 2.24.0
@@ -2363,7 +2363,7 @@ packages:
     engines:
       node: '>=13'
     resolution:
-      integrity: sha512-ynb4oLiEn80a0MDtd4W5uKtVjr248+cYPrhUIRmYRwCsLIxYwnZLRdjV8S5kwt9Vz7HHa/jP7D93OSbPWwrKXg==
+      integrity: sha512-0D8NlrUytzaVdGF5o7ydGpKLCKYKgQLhCCYN0MwCxgGA/AFL0LCKB1Tt+f7JDFxKMP+7dSDt5EOngSva4aTalw==
   /v8-compile-cache/2.1.0:
     dev: true
     resolution:
@@ -2441,4 +2441,4 @@ specifiers:
   pre-commit: 1.2.2
   recron: 1.0.3
   require-all: 3.0.0
-  utils-mad: 7.5.0
+  utils-mad: 7.5.1

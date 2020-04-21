@@ -17,9 +17,9 @@ module.exports = async () => {
     ]);
 
     const health = {
-        mem: Number(usage['total-memory']) - Number(usage['free-memory']),
+        mem: Math.round((Number(usage['total-memory']) - Number(usage['free-memory'])) * 1e-6),
+        hdd: Math.round((Number(usage['total-hdd-space']) - Number(usage['free-hdd-space'])) * 1e-6),
         cpu: Number(usage['cpu-load']),
-        hdd: Number(usage['total-hdd-space']) - Number(usage['free-hdd-space']),
         uptime: usage.uptime,
         updates: `current: ${updates['installed-version']}</br>latest: ${updates['latest-version']}`,
     };

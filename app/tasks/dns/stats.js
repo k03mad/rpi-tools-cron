@@ -61,8 +61,8 @@ module.exports = async () => {
         {meas: 'dns-stats-common', values: {avg_processing_time, num_blocked_filtering, num_dns_queries}},
         {meas: 'dns-stats-clients-internal', values: internal},
         {meas: 'dns-stats-clients-external', values: external},
-        {meas: 'dns-stats-domains-q', values: array.mergeObj(top_queried_domains.slice(0, DOMAINS_COUNT))},
-        {meas: 'dns-stats-domains-b', values: array.mergeObj(top_blocked_domains.slice(0, DOMAINS_COUNT))},
+        {meas: 'dns-stats-domains-q', values: array.mergeCol(top_queried_domains.slice(0, DOMAINS_COUNT))},
+        {meas: 'dns-stats-domains-b', values: array.mergeCol(top_blocked_domains.slice(0, DOMAINS_COUNT))},
     ]);
 
 };

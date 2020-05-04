@@ -14,8 +14,6 @@ const timers = {
         pi.usage,
     ],
 
-    '30 3 * * *': pi.prune,
-
     '15 4,5 * * *': mik.pptp,
     '30 4,5 * * *': magnet.parse,
 };

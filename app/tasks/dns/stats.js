@@ -50,7 +50,6 @@ module.exports = async () => {
                 lookup.countrycode,
                 lookup.city,
                 lookup.isp,
-                address,
             ].join(IP_SEPARATOR);
 
             object.count(external, clientInfo, count);

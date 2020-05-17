@@ -20,11 +20,7 @@ module.exports = async () => {
         return JSON.parse(data);
     }));
 
-    /**
-     * Получить топы торрентов
-     * @param {object} opts
-     * @returns {object}
-     */
+    // eslint-disable-next-line jsdoc/require-jsdoc
     const getTopFlat = ({items, firstLevel, secondLevel, split, splitLast, one, replace}) => {
         let output = one
             ? items.map(elem => elem[firstLevel][0])

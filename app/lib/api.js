@@ -38,6 +38,7 @@ const getCovidData = async path => {
 /**
  * Get airvisual data
  * @param {object} searchParams
+ * @returns {object}
  */
 const getAirVisualData = async (searchParams = {}) => {
     const {body} = await request.got('http://api.airvisual.com/v2/city', {

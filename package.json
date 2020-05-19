@@ -12,16 +12,16 @@
   "dependencies": {
     "app-root-path": "3.0.0",
     "ms": "2.1.2",
-    "oui": "11.0.14",
+    "oui": "11.0.15",
     "recron": "1.0.3",
     "require-all": "3.0.0",
-    "utils-mad": "7.7.0"
+    "utils-mad": "8.0.1"
   },
   "devDependencies": {
     "eslint": "7.0.0",
-    "eslint-config-k03mad": "4.2.2",
+    "eslint-config-k03mad": "4.3.0",
     "eslint-plugin-const-case": "1.2.2",
-    "eslint-plugin-jsdoc": "25.4.1",
+    "eslint-plugin-jsdoc": "25.4.2",
     "eslint-plugin-node": "11.1.0",
     "eslint-plugin-promise": "4.2.1",
     "eslint-plugin-sonarjs": "0.5.0",

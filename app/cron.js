@@ -15,7 +15,7 @@ const timers = {
     ],
 
     '15 4,5 * * *': mik.pptp,
-    '30 4,5 * * *': magnet.parse,
+    '0,25 4 * * *': magnet.parse,
 };
 
 const hourIntervalCrons = [

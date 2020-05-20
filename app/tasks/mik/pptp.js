@@ -1,5 +1,5 @@
 'use strict';
 
-const {repo} = require('utils-mad');
+const {shell} = require('utils-mad');
 
-module.exports = () => repo.run('mikrotik-pptp-hidemy-ip', 'script');
+module.exports = () => shell.run('mad-pptp');

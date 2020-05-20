@@ -14,8 +14,8 @@ const timers = {
         pi.usage,
     ],
 
-    '15 4,5 * * *': mik.pptp,
-    '0,25 4 * * *': magnet.parse,
+    '0,20 4 * * *': mik.pptp,
+    '5,25 4 * * *': magnet.parse,
 };
 
 const hourIntervalCrons = [

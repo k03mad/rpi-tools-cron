@@ -3,6 +3,7 @@
 const oui = require('oui');
 const {influx, mikrotik} = require('utils-mad');
 
+/** */
 module.exports = async () => {
     const SEPARATOR = ' :: ';
 

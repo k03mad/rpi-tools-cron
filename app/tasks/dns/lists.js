@@ -2,6 +2,7 @@
 
 const {influx, adg} = require('utils-mad');
 
+/** */
 module.exports = async () => {
     const {filters, whitelist_filters: filtersWl} = await adg.get('filtering/status');
     const values = {};

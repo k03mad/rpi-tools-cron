@@ -2,6 +2,7 @@
 
 const {shell, influx} = require('utils-mad');
 
+/** */
 module.exports = async () => {
     const apt = await shell.run([
         'sudo apt-get update',

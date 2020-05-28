@@ -3,6 +3,7 @@
 const {array} = require('utils-mad');
 const {influx, date, parse, ua} = require('utils-mad');
 
+/** */
 module.exports = async () => {
     const SHOWS_COUNT = 20;
     const current = Number(date.now('YYYY'));

@@ -3,6 +3,7 @@
 const {getAirVisualData} = require('../../lib/api');
 const {influx} = require('utils-mad');
 
+/** */
 module.exports = async () => {
     const {data} = await getAirVisualData();
     const {weather, pollution} = data.current;

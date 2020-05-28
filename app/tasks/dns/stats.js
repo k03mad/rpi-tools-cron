@@ -2,6 +2,7 @@
 
 const {influx, array, adg, ip, object} = require('utils-mad');
 
+/** */
 module.exports = async () => {
     const DOMAINS_COUNT = 100;
     const IP_SEPARATOR = ' :: ';

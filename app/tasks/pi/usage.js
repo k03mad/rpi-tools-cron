@@ -2,6 +2,7 @@
 
 const {shell, influx} = require('utils-mad');
 
+/** */
 module.exports = async () => {
     const [uptime, temp, disk, ram] = await Promise.all([
         shell.run('uptime'),

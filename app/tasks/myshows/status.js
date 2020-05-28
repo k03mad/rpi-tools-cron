@@ -2,6 +2,7 @@
 
 const {influx, array, myshows} = require('utils-mad');
 
+/** */
 module.exports = async () => {
     const body = await myshows.get({method: 'profile.Shows'});
     const values = array.count(body.map(elem => elem.watchStatus));

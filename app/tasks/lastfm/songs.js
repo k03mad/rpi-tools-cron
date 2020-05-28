@@ -3,6 +3,7 @@
 const {influx} = require('utils-mad');
 const {sendLastFmRequest} = require('../../lib/api');
 
+/** */
 module.exports = async () => {
     const body = await sendLastFmRequest('user.gettoptracks', {
         period: '1month',
@@ -19,6 +20,8 @@ module.exports = async () => {
     });
 
     for (const user of Object.keys(top)) {
-        await influx.write({meas: `lastfm-songs-${user}`, values: top[user]});
+        if (Object.keys(top[user]).length > 0) {
+            await influx.write({meas: `lastfm-songs-${user}`, values: top[user]});
+        }
     }
 };

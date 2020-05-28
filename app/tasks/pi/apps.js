@@ -2,6 +2,7 @@
 
 const {shell, influx} = require('utils-mad');
 
+/** */
 module.exports = async () => {
     const log = await shell.run('pm2 jlist');
 

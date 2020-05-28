@@ -3,6 +3,7 @@
 const {array, print, promise} = require('utils-mad');
 const {Cron} = require('recron');
 
+/** @param {object} crons */
 module.exports = crons => {
     const cron = new Cron();
     cron.start();

@@ -4,6 +4,7 @@ const appRoot = require('app-root-path');
 const {influx, array} = require('utils-mad');
 const {promises: fs} = require('fs');
 
+/** */
 module.exports = async () => {
     const NAME = 'magnet-co-parser';
 

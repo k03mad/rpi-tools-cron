@@ -3,6 +3,7 @@
 const {influx} = require('utils-mad');
 const {sendLastFmRequest} = require('../../lib/api');
 
+/** */
 module.exports = async () => {
     const body = await sendLastFmRequest('library.getartists');
 

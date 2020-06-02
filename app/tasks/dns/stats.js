@@ -51,7 +51,7 @@ module.exports = async () => {
                 lookup.countrycode,
                 lookup.city,
                 lookup.isp,
-            ].join(IP_SEPARATOR);
+            ].filter(Boolean).join(IP_SEPARATOR);
 
             object.count(external, clientInfo, count);
         }

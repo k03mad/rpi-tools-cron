@@ -16,7 +16,7 @@ const tasks = {
             'sudo apt-get upgrade -u -s',
         ]);
 
-        await influx.write({meas: 'pi-update', values: {
+        await influx.write({meas: 'pi-updates', values: {
             updates: apt.split('\n').filter(el => el.includes('Inst')).length,
         }});
     },

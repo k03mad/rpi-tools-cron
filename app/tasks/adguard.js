@@ -7,8 +7,7 @@ module.exports = async () => {
     const DOMAINS_COUNT = 20;
     const IP_SEPARATOR = ' :: ';
 
-    const internal = {};
-    const external = {};
+    const clientsInfo = {};
     const lists = {};
 
     const {
@@ -33,7 +32,7 @@ module.exports = async () => {
 
             for (const client of clients) {
                 if (client.ids.includes(address)) {
-                    internal[address + IP_SEPARATOR + client.name] = count;
+                    clientsInfo[address + IP_SEPARATOR + client.name] = count;
 
                     found = true;
                     break;
@@ -41,7 +40,7 @@ module.exports = async () => {
             }
 
             if (!found) {
-                internal[address] = count;
+                clientsInfo[address] = count;
             }
         } else {
             const lookup = await ip.lookup(address);
@@ -51,19 +50,15 @@ module.exports = async () => {
                 lookup.isp,
             ].filter(Boolean).join(IP_SEPARATOR);
 
-            object.count(external, clientInfo, count);
+            object.count(clientsInfo, clientInfo, count);
         }
     }
 
     await influx.write([
-        {meas: 'adguard-clients-internal', values: internal},
+        {meas: 'adguard-clients', values: clientsInfo},
         {meas: 'adguard-domains-blocked', values: array.mergeCol(top_blocked_domains.slice(0, DOMAINS_COUNT))},
         {meas: 'adguard-domains-queried', values: array.mergeCol(top_queried_domains.slice(0, DOMAINS_COUNT))},
         {meas: 'adguard-lists', values: lists},
         {meas: 'adguard-stats', values: {avg_processing_time, num_blocked_filtering, num_dns_queries}},
-
-        Object.keys(external).length > 0
-            ? {meas: 'adguard-clients-external', values: external}
-            : '',
-    ].filter(Boolean));
+    ]);
 };

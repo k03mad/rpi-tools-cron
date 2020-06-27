@@ -17,7 +17,7 @@ const tasks = {
         ]);
 
         await influx.write({meas: 'pi-updates', values: {
-            updates: apt.split('\n').filter(el => el.includes('Inst')).length,
+            count: apt.split('\n').filter(el => el.includes('Inst')).length,
         }});
     },
 

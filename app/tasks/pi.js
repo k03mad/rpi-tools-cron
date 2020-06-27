@@ -29,9 +29,9 @@ module.exports = async () => {
     };
 
     await influx.write([
-        {meas: 'pi-apps-cpu', values: cpu},
-        {meas: 'pi-apps-memory', values: memory},
-        {meas: 'pi-apps-restarts', values: restarts},
+        {meas: 'pi-node-cpu', values: cpu},
+        {meas: 'pi-node-memory', values: memory},
+        {meas: 'pi-node-restarts', values: restarts},
         {meas: 'pi-usage', values: usage},
     ]);
 };

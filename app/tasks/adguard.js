@@ -24,7 +24,8 @@ module.exports = async () => {
         lists[elem.name] = elem.rules_count;
     });
 
-    await Promise.all(top_clients.map(async elem => {
+    // eslint-disable-next-line camelcase
+    for (const elem of top_clients) {
         const [[address, count]] = Object.entries(elem);
 
         if (address.match(/^(127|192|10)\./)) {
@@ -52,17 +53,17 @@ module.exports = async () => {
 
             object.count(external, clientInfo, count);
         }
-    }));
+    }
 
     await influx.write([
-        {meas: 'dns-block-lists', values: lists},
-        {meas: 'dns-stats-clients-internal', values: internal},
-        {meas: 'dns-stats-common', values: {avg_processing_time, num_blocked_filtering, num_dns_queries}},
-        {meas: 'dns-stats-domains-b', values: array.mergeCol(top_blocked_domains.slice(0, DOMAINS_COUNT))},
-        {meas: 'dns-stats-domains-q', values: array.mergeCol(top_queried_domains.slice(0, DOMAINS_COUNT))},
-    ]);
+        {meas: 'adguard-clients-internal', values: internal},
+        {meas: 'adguard-domains-blocked', values: array.mergeCol(top_blocked_domains.slice(0, DOMAINS_COUNT))},
+        {meas: 'adguard-domains-queried', values: array.mergeCol(top_queried_domains.slice(0, DOMAINS_COUNT))},
+        {meas: 'adguard-lists', values: lists},
+        {meas: 'adguard-stats', values: {avg_processing_time, num_blocked_filtering, num_dns_queries}},
 
-    if (Object.keys(external).length > 0) {
-        await influx.write({meas: 'dns-stats-clients-external', values: external});
-    }
+        Object.keys(external).length > 0
+            ? {meas: 'adguard-clients-external', values: external}
+            : '',
+    ].filter(Boolean));
 };

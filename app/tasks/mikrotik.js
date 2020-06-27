@@ -9,8 +9,8 @@ module.exports = async () => {
 
     const clientsSignal = {};
     const clientsTraffic = {};
-    const interfaceSpeed = {};
-    const interfaceTraffic = {};
+    const interfacesSpeed = {};
+    const interfacesTraffic = {};
     const natTraffic = {};
 
     const [
@@ -34,13 +34,13 @@ module.exports = async () => {
     );
 
     monitorTraffic.forEach(([obj]) => {
-        interfaceSpeed[`${obj.name}_rx`] = Number(obj['rx-bits-per-second']);
-        interfaceSpeed[`${obj.name}_tx`] = Number(obj['tx-bits-per-second']);
+        interfacesSpeed[`${obj.name}_rx`] = Number(obj['rx-bits-per-second']);
+        interfacesSpeed[`${obj.name}_tx`] = Number(obj['tx-bits-per-second']);
     });
 
     interfaces.forEach(elem => {
-        interfaceTraffic[`${elem.name}_rx`] = Number(elem['rx-byte']);
-        interfaceTraffic[`${elem.name}_tx`] = Number(elem['tx-byte']);
+        interfacesTraffic[`${elem.name}_rx`] = Number(elem['rx-byte']);
+        interfacesTraffic[`${elem.name}_tx`] = Number(elem['tx-byte']);
 
         const sum = Number(elem['rx-byte']) + Number(elem['tx-byte']);
 
@@ -112,14 +112,14 @@ module.exports = async () => {
     };
 
     await influx.write([
-        {meas: 'router-clients-signal', values: clientsSignal},
-        {meas: 'router-interface-speed', values: interfaceSpeed},
-        {meas: 'router-usage', values: health},
+        {meas: 'mikrotik-clients-signal', values: clientsSignal},
+        {meas: 'mikrotik-interfaces-speed', values: interfacesSpeed},
+        {meas: 'mikrotik-usage', values: health},
     ]);
 
     await influx.append([
-        {meas: 'router-clients-traffic', values: clientsTraffic},
-        {meas: 'router-interface-traffic', values: interfaceTraffic},
-        {meas: 'router-nat-traffic', values: natTraffic},
+        {meas: 'mikrotik-clients-traffic', values: clientsTraffic},
+        {meas: 'mikrotik-interfaces-traffic', values: interfacesTraffic},
+        {meas: 'mikrotik-nat-traffic', values: natTraffic},
     ]);
 };

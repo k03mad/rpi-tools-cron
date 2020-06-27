@@ -1,45 +1,41 @@
 'use strict';
 
-const {
-    dns, myshows, pi,
-    mik, magnet, lastfm,
-    corona, weather,
-} = require('require-all')(`${__dirname}/tasks`);
+const {array, print, repo, shell, influx} = require('utils-mad');
+const {Cron} = require('recron');
 
-const timers = {
+const tasks = {
     '* * * * *': [
-        mik.clients,
-        mik.usage,
-        pi.apps,
-        pi.usage,
+        require('./tasks/adguard'),
+        require('./tasks/mikrotik'),
+        require('./tasks/pi'),
     ],
 
-    '0 4,5 * * *': mik.pptp,
-    '30 4,5 * * *': magnet.parse,
+    '* */6 * * *': async () => {
+        const apt = await shell.run([
+            'sudo apt-get update',
+            'sudo apt-get upgrade -u -s',
+        ]);
+
+        await influx.write({meas: 'pi-update', values: {
+            updates: apt.split('\n').filter(el => el.includes('Inst')).length,
+        }});
+    },
+
+    '0 4,5 * * *': () => shell.run('mad-pptp'),
+    '30 4,5 * * *': () => repo.run('magnet-co-parser', 'start'),
 };
 
-const hourIntervalCrons = [
-    corona.all,
-    corona.countries,
-    dns.lists,
-    dns.stats,
-    lastfm.artists,
-    lastfm.plays,
-    lastfm.songs,
-    lastfm.top,
-    magnet.stats,
-    mik.traffic,
-    myshows.series,
-    myshows.stats,
-    myshows.status,
-    myshows.trends,
-    myshows.year,
-    pi.update,
-    weather.moscow,
-];
+const cron = new Cron();
+cron.start();
 
-hourIntervalCrons.forEach((cron, i) => {
-    timers[`${i} */1 * * *`] = cron;
-});
-
-require('./lib/schedule')(timers);
+for (const [key, value] of Object.entries(tasks)) {
+    for (const func of array.convert(value)) {
+        cron.schedule(key, async () => {
+            try {
+                await func();
+            } catch (err) {
+                print.ex(err, {before: key, afterline: false, exit: true});
+            }
+        }, {timezone: 'Europe/Moscow'});
+    }
+}

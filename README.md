@@ -1,3 +1,1 @@
-My Raspberry Pi crons
-
-(⌐■_■)
+# My RPi crons

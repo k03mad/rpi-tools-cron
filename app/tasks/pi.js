@@ -25,7 +25,7 @@ module.exports = async () => {
         cpuTemp: Number(temp) / 1000,
         diskUsage: Number(disk.match(/\/dev\/root +\d+ +(\d+)/)[1]),
         ramUsage: Number(ram.match(/Mem: +\d+ +(\d+)/)[1]),
-        uptime: uptime.match(/up(.+?),/)[1],
+        uptime: `Uptime: ${uptime.match(/up(.+?),/)[1]}`,
     };
 
     await influx.write([

@@ -16,9 +16,8 @@ const tasks = {
             'sudo apt-get upgrade -u -s',
         ]);
 
-        await influx.write({meas: 'pi-updates', values: {
-            count: apt.split('\n').filter(el => el.includes('Inst')).length,
-        }});
+        const updates = apt.split('\n').filter(el => el.includes('Inst')).length;
+        await influx.write({meas: 'pi-updates', values: {count: `Updates: ${updates}`}});
     },
 
     '0 4,5 * * *': () => shell.run('mad-pptp'),

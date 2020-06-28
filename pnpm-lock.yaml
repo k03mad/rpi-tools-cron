@@ -1,7 +1,7 @@
 dependencies:
-  oui: 11.0.23
+  oui: 11.0.24
   recron: 1.0.3
-  utils-mad: 8.0.5
+  utils-mad: 8.1.0
 devDependencies:
   eslint: 7.3.1
   eslint-config-k03mad: 5.0.1_caaa8fded837c02bdce8b032231be532
@@ -926,6 +926,15 @@ packages:
       node: '>=8'
     resolution:
       integrity: sha512-EykJT/Q1KjTWctppgIAgfSO0tKVuZUjhgMr17kqTumMl6Afv3EISleU7qZUzoXDFTAHTDC4NOoG/ZxU3EvlMPQ==
+  /hasha/5.2.0:
+    dependencies:
+      is-stream: 2.0.0
+      type-fest: 0.8.1
+    dev: false
+    engines:
+      node: '>=8'
+    resolution:
+      integrity: sha512-2W+jKdQbAdSIrggA8Q35Br8qKadTrqCTC8+XZvBWepKDK6m9XkX6Iz1a2yh2KP01kzAR/dpuMeUnocoLYDcskw==
   /hosted-git-info/2.8.8:
     dev: true
     resolution:
@@ -1106,10 +1115,20 @@ packages:
       node: '>= 0.4'
     resolution:
       integrity: sha512-z7bbREymOqt2CCaZVly8aC4ML3Xhfi0ekuOnjO2L8vKdl+CttdVoGZQhd4adMFAsxQ5VeRVwORs4tU8RH+HFtQ==
+  /is-stream/2.0.0:
+    dev: false
+    engines:
+      node: '>=8'
+    resolution:
+      integrity: sha512-XCoy+WlUr7d1+Z8GgSuXmpuUFC9fOhRXglJMx+dwLKTkL44Cjd4W1Z5P+BQZpr+cR93aGP4S/s7Ftw6Nd/kiEw==
   /isexe/2.0.0:
     dev: true
     resolution:
       integrity: sha1-6PvzdNxVb/iUehDcsFctYz8s+hA=
+  /js-base64/2.6.2:
+    dev: false
+    resolution:
+      integrity: sha512-1hgLrLIrmCgZG+ID3VoLNLOSwjGnoZa8tyrUdEteMeIzsT6PH7PMLyUvbDwzNE56P3PNxyvuIOx4Uh2E5rzQIw==
   /js-tokens/4.0.0:
     dev: true
     resolution:
@@ -1133,12 +1152,6 @@ packages:
     dev: false
     resolution:
       integrity: sha512-4bV5BfR2mqfQTJm+V5tPPdf+ZpuhiIvTuAB5g8kcrXOZpTT/QwwVRWBywX1ozr6lEuPdbHxwaJlm9G6mI2sfSQ==
-  /json-cycle/1.3.0:
-    dev: false
-    engines:
-      node: '>= 4'
-    resolution:
-      integrity: sha512-FD/SedD78LCdSvJaOUQAXseT8oQBb5z6IVYaQaCrVUlu9zOAr1BDdKyVYQaSD/GDsAMrXpKcOyBD4LIl8nfjHw==
   /json-parse-better-errors/1.0.2:
     dev: true
     resolution:
@@ -1413,7 +1426,7 @@ packages:
       node: '>= 0.8.0'
     resolution:
       integrity: sha512-74RlY5FCnhq4jRxVUPKDaRwrVNXMqsGsiW6AJw4XK8hmtm10wC0ypZBLw5IIp85NZMr91+qd1RvvENwg7jjRFw==
-  /oui/11.0.23:
+  /oui/11.0.24:
     dependencies:
       char-spinner: 1.0.1
       country-data: 0.0.31
@@ -1427,7 +1440,7 @@ packages:
       node: '>= 10'
     hasBin: true
     resolution:
-      integrity: sha512-oIRtT5nrx7NmqYRxhuXKip6nnB//Dat3YNfF8L045fiiGkRe1YKZoiiexKXBi5BEzmSKAKTHY+b6asl0in0tLg==
+      integrity: sha512-Lc0wXiEM8aEBpXXls96WsmiVWyFiMvDY/8juQcazebuN46pSVaFd8rXx1l9t50aGgv0JcDE11+Nbf1JLEeEuYQ==
   /p-cancelable/2.0.0:
     dev: false
     engines:
@@ -1936,7 +1949,6 @@ packages:
     resolution:
       integrity: sha512-q+MB8nYR1KDLrgr4G5yemftpMC7/QLqVndBmEEdqzmNj5dcFOO4Oo8qlwZE3ULT3+Zim1F8Kq4cBnikNhlCMlg==
   /type-fest/0.8.1:
-    dev: true
     engines:
       node: '>=8'
     resolution:
@@ -1967,13 +1979,14 @@ packages:
     dev: false
     resolution:
       integrity: sha1-RQ1Nyfpw3nMnYvvS1KKJgUGaDM8=
-  /utils-mad/8.0.5:
+  /utils-mad/8.1.0:
     dependencies:
       cheerio: 1.0.0-rc.3
       colorette: 1.2.0
       debug: 4.1.1
       got: 11.3.0
-      json-cycle: 1.3.0
+      hasha: 5.2.0
+      js-base64: 2.6.2
       moment: 2.27.0
       nano-time: 1.0.0
       node-routeros: 1.6.8
@@ -1985,7 +1998,7 @@ packages:
     engines:
       node: '>=14'
     resolution:
-      integrity: sha512-BkS8c8SgF/4HpVrTNgtSdTXixxurf4v3andoB0CFqUPWst2ArX0hoAaYxQB4eX4fd6WMMkPA+/0g3/RBr7XFNA==
+      integrity: sha512-DnmZJisHsy9iJjYzcL4Lsk4T/E0j2499EkdHmonj8Y2585RpBeCfBLDtbRMUVQWq1pWdbK63J+Nau693d/2mfg==
   /v8-compile-cache/2.1.1:
     dev: true
     resolution:
@@ -2058,6 +2071,6 @@ specifiers:
   eslint-plugin-sort-requires: 2.1.0
   eslint-plugin-unicorn: 20.1.0
   husky: 4.2.5
-  oui: 11.0.23
+  oui: 11.0.24
   recron: 1.0.3
-  utils-mad: 8.0.5
+  utils-mad: 8.1.0

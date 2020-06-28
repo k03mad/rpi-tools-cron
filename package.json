@@ -10,9 +10,9 @@
 		"node": ">=14"
 	},
 	"dependencies": {
-		"utils-mad": "8.0.5",
+		"utils-mad": "8.1.0",
 		"recron": "1.0.3",
-		"oui": "11.0.23"
+		"oui": "11.0.24"
 	},
 	"devDependencies": {
 		"eslint": "7.3.1",

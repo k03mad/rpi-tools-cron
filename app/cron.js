@@ -20,8 +20,7 @@ const tasks = {
         await influx.write({meas: 'pi-updates', values: {count: `Updates: ${updates}`}});
     },
 
-    '0 4,5 * * *': () => shell.run('mad-pptp'),
-    '30 4,5 * * *': () => repo.run('magnet-co-parser', 'start'),
+    '0 5 * * *': () => repo.run('magnet-co-parser', 'start'),
 };
 
 const cron = new Cron();

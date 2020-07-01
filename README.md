@@ -1,1 +1,1 @@
-# My RPi crons
+# My crons

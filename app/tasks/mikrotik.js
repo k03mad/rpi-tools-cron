@@ -15,7 +15,7 @@ module.exports = async () => {
     };
 
     const lookupConcurrency = 3;
-    const connectionsMinBytes = 10 * 1024;
+    const connectionsMinKBytes = 100 * 1024;
 
     const clientsSignal = {};
     const clientsSignalToNoise = {};
@@ -122,7 +122,7 @@ module.exports = async () => {
         const address = elem['dst-address'].replace(/:.+/, '');
         const bytes = Number(elem['orig-bytes']) + Number(elem['repl-bytes']);
 
-        if (bytes > connectionsMinBytes) {
+        if (bytes > connectionsMinKBytes) {
             const {hostname} = await ip.info(address);
 
             if (hostname) {

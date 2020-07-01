@@ -13,6 +13,12 @@ module.exports = async () => {
     const interfacesTraffic = {};
     const natTraffic = {};
 
+    const etherDevices = {
+        ether1: 'Pi',
+        ether2: 'XBoxLan',
+        ether3: 'PhiTVLan',
+    };
+
     const [
         interfaces,
         firewallNat,
@@ -45,7 +51,7 @@ module.exports = async () => {
         const sum = Number(elem['rx-byte']) + Number(elem['tx-byte']);
 
         if (elem.name.includes('ether') && sum > 0) {
-            clientsTraffic[elem.name] = sum;
+            clientsTraffic[etherDevices[elem.name] || elem.name] = sum;
         }
     });
 

@@ -1,17 +1,12 @@
 'use strict';
 
 const oui = require('oui');
-const {influx, mikrotik} = require('utils-mad');
+const pMap = require('p-map');
+const {influx, mikrotik, object, ip} = require('utils-mad');
 
 /** */
 module.exports = async () => {
     const SEPARATOR = ' :: ';
-
-    const clientsSignal = {};
-    const clientsTraffic = {};
-    const interfacesSpeed = {};
-    const interfacesTraffic = {};
-    const natTraffic = {};
 
     const etherDevices = {
         ether1: 'Pi',
@@ -19,9 +14,21 @@ module.exports = async () => {
         ether3: 'PhiTVLan',
     };
 
+    const lookupConcurrency = 3;
+    const connectionsMinBytes = 10 * 1024;
+
+    const clientsSignal = {};
+    const clientsSignalToNoise = {};
+    const clientsTraffic = {};
+    const interfacesSpeed = {};
+    const interfacesTraffic = {};
+    const natTraffic = {};
+    const connectionsDomains = {};
+
     const [
         interfaces,
         firewallNat,
+        firewallConnections,
         dhcpLeases,
         wifiClients,
         [usage],
@@ -29,6 +36,7 @@ module.exports = async () => {
     ] = await mikrotik.write([
         ['/interface/print'],
         ['/ip/firewall/nat/print'],
+        ['/ip/firewall/connection/print'],
         ['/ip/dhcp-server/lease/print'],
         ['/interface/wireless/registration-table/print'],
         ['/system/resource/print'],
@@ -107,7 +115,22 @@ module.exports = async () => {
 
         clientsTraffic[key] = Number(elem.bytes.replace(',', '.'));
         clientsSignal[key] = Number(elem['signal-strength'].replace(/@.+/, ''));
+        clientsSignalToNoise[key] = Number(elem['signal-to-noise']);
     });
+
+    await pMap(firewallConnections, async elem => {
+        const address = elem['dst-address'].replace(/:.+/, '');
+        const bytes = Number(elem['orig-bytes']) + Number(elem['repl-bytes']);
+
+        if (bytes > connectionsMinBytes) {
+            const {hostname} = await ip.info(address);
+
+            if (hostname) {
+                const domain = hostname.split('.').slice(-2).join('.');
+                object.count(connectionsDomains, domain, bytes);
+            }
+        }
+    }, {concurrency: lookupConcurrency});
 
     const health = {
         mem: Number(usage['total-memory']) - Number(usage['free-memory']),
@@ -119,12 +142,14 @@ module.exports = async () => {
 
     await influx.write([
         {meas: 'mikrotik-clients-signal', values: clientsSignal},
+        {meas: 'mikrotik-clients-signal-to-noise', values: clientsSignalToNoise},
         {meas: 'mikrotik-interfaces-speed', values: interfacesSpeed},
         {meas: 'mikrotik-usage', values: health},
     ]);
 
     await influx.append([
         {meas: 'mikrotik-clients-traffic', values: clientsTraffic},
+        {meas: 'mikrotik-connections-traffic', values: connectionsDomains},
         {meas: 'mikrotik-interfaces-traffic', values: interfacesTraffic},
         {meas: 'mikrotik-nat-traffic', values: natTraffic},
     ]);

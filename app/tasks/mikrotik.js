@@ -120,14 +120,17 @@ module.exports = async () => {
 
     await pMap(firewallConnections, async elem => {
         const address = elem['dst-address'].replace(/:.+/, '');
-        const bytes = Number(elem['orig-bytes']) + Number(elem['repl-bytes']);
 
-        if (bytes > connectionsMinKBytes) {
-            const {hostname} = await ip.info(address);
+        if (!address.match(/^(127|192\.168|10|172\.1[6-9]|172\.2\d|172\.3[01])\./)) {
+            const bytes = Number(elem['orig-bytes']) + Number(elem['repl-bytes']);
 
-            if (hostname) {
-                const domain = hostname.split('.').slice(-2).join('.');
-                object.count(connectionsDomains, domain, bytes);
+            if (bytes > connectionsMinKBytes) {
+                const {hostname} = await ip.info(address);
+
+                if (hostname) {
+                    const domain = hostname.split('.').slice(-2).join('.');
+                    object.count(connectionsDomains, domain, bytes);
+                }
             }
         }
     }, {concurrency: lookupConcurrency});

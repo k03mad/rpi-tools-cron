@@ -1,6 +1,6 @@
 'use strict';
 
-const {influx, array, adg, ip, object} = require('utils-mad');
+const {influx, array, adg, ip, object, string} = require('utils-mad');
 
 /** */
 module.exports = async () => {
@@ -27,7 +27,7 @@ module.exports = async () => {
     for (const elem of top_clients) {
         const [[address, count]] = Object.entries(elem);
 
-        if (address.match(/^(127|192|10)\./)) {
+        if (string.isLocalIp(address)) {
             let found;
 
             for (const client of clients) {

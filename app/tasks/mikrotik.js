@@ -18,7 +18,6 @@ module.exports = async () => {
     const connectionsMinKBytes = 100 * 1024;
 
     const clientsSignal = {};
-    const clientsSignalToNoise = {};
     const clientsTraffic = {};
     const interfacesSpeed = {};
     const interfacesTraffic = {};
@@ -115,7 +114,6 @@ module.exports = async () => {
 
         clientsTraffic[key] = Number(elem.bytes.replace(',', '.'));
         clientsSignal[key] = Number(elem['signal-strength'].replace(/@.+/, ''));
-        clientsSignalToNoise[key] = Number(elem['signal-to-noise']);
     });
 
     await pMap(firewallConnections, async elem => {
@@ -145,7 +143,6 @@ module.exports = async () => {
 
     await influx.write([
         {meas: 'mikrotik-clients-signal', values: clientsSignal},
-        {meas: 'mikrotik-clients-signal-to-noise', values: clientsSignalToNoise},
         {meas: 'mikrotik-interfaces-speed', values: interfacesSpeed},
         {meas: 'mikrotik-usage', values: health},
     ]);

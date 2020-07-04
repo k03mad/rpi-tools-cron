@@ -2,7 +2,7 @@ dependencies:
   oui: 11.0.24
   p-map: 4.0.0
   recron: 1.0.3
-  utils-mad: 8.2.7
+  utils-mad: 8.2.8
 devDependencies:
   eslint: 7.4.0
   eslint-config-k03mad: 5.0.1_076127b32fd94258a634f834e77fd7e0
@@ -1976,7 +1976,7 @@ packages:
     dev: false
     resolution:
       integrity: sha1-RQ1Nyfpw3nMnYvvS1KKJgUGaDM8=
-  /utils-mad/8.2.7:
+  /utils-mad/8.2.8:
     dependencies:
       cheerio: 1.0.0-rc.3
       colorette: 1.2.0
@@ -1994,7 +1994,7 @@ packages:
     engines:
       node: '>=14'
     resolution:
-      integrity: sha512-XBF6JrQpunO253rtx50DDtT3xW7mTlnyViVjkSYSquwO/mvdrb5Myjae42R7LbQMMaafB7PeJMZZw06ymce5mA==
+      integrity: sha512-Wu1irroDgyL5cRCuSik0m0XdjSKMUP0zDvRceKERclXwt2M+p9CfQmL1YRXP7OOcPcM3xdtvRyMqULQB99BfRA==
   /v8-compile-cache/2.1.1:
     dev: true
     resolution:
@@ -2070,4 +2070,4 @@ specifiers:
   oui: 11.0.24
   p-map: 4.0.0
   recron: 1.0.3
-  utils-mad: 8.2.7
+  utils-mad: 8.2.8

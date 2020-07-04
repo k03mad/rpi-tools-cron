@@ -1,5 +1,8 @@
 'use strict';
 
+const globby = require('globby');
+const os = require('os');
+const path = require('path');
 const {shell, influx} = require('utils-mad');
 
 /** */
@@ -13,6 +16,7 @@ module.exports = async () => {
     const disk = await shell.run('df');
     const ram = await shell.run('free -m');
     const log = await shell.run('pm2 jlist');
+    const cacheFiles = await globby(path.join(os.tmpdir(), 'utils-mad'));
 
     JSON.parse(log).forEach(elem => {
         memory[elem.name] = elem.monit.memory;
@@ -26,6 +30,7 @@ module.exports = async () => {
         diskUsage: Number(disk.match(/\/dev\/root +\d+ +(\d+)/)[1]),
         ramUsage: Number(ram.match(/Mem: +\d+ +(\d+)/)[1]),
         uptime: `Uptime: ${uptime.match(/up(.+?),/)[1]}`,
+        nodeCache: cacheFiles.length,
     };
 
     await influx.write([

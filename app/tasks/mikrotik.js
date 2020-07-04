@@ -2,7 +2,7 @@
 
 const oui = require('oui');
 const pMap = require('p-map');
-const {influx, mikrotik, object, ip, string} = require('utils-mad');
+const {influx, mikrotik, object, ip} = require('utils-mad');
 
 /** */
 module.exports = async () => {
@@ -119,7 +119,7 @@ module.exports = async () => {
     await pMap(firewallConnections, async elem => {
         const address = elem['dst-address'].replace(/:.+/, '');
 
-        if (!string.isLocalIp(address)) {
+        if (!ip.isLocal(address)) {
             const bytes = Number(elem['orig-bytes']) + Number(elem['repl-bytes']);
 
             if (bytes > connectionsMinKBytes) {

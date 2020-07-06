@@ -11,10 +11,10 @@
 	},
 	"dependencies": {
 		"globby": "11.0.1",
-		"oui": "11.0.24",
+		"oui": "11.0.25",
 		"p-map": "4.0.0",
 		"recron": "1.0.3",
-		"utils-mad": "9.0.0"
+		"utils-mad": "9.0.1"
 	},
 	"devDependencies": {
 		"eslint": "7.4.0",

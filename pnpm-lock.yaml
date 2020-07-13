@@ -3,10 +3,10 @@ dependencies:
   oui: 11.0.26
   p-map: 4.0.0
   recron: 1.0.3
-  utils-mad: 9.1.1
+  utils-mad: 9.1.2
 devDependencies:
   eslint: 7.4.0
-  eslint-config-k03mad: 5.0.2_19e09ea1b517a3c59ceec0d19612d94f
+  eslint-config-k03mad: 5.0.2_8b712e15b82b3f71d9ff8175a66961fd
   eslint-plugin-jsdoc: 29.2.0_eslint@7.4.0
   eslint-plugin-node: 11.1.0_eslint@7.4.0
   eslint-plugin-promise: 4.2.1
@@ -688,12 +688,14 @@ packages:
       node: '>=4'
     resolution:
       integrity: sha512-otzzTim2/1+lVrlH19EfQQJEhVJSu0zOb9ygb3iapN6UlyaDtyRq4b5U1FuW0v1lRa9Fp/GJyHkSwm6NqABgCA==
-  /eslint-config-k03mad/5.0.2_19e09ea1b517a3c59ceec0d19612d94f:
+  /eslint-config-k03mad/5.0.2_8b712e15b82b3f71d9ff8175a66961fd:
     dependencies:
       eslint: 7.4.0
       eslint-plugin-jsdoc: 29.2.0_eslint@7.4.0
       eslint-plugin-node: 11.1.0_eslint@7.4.0
+      eslint-plugin-promise: 4.2.1
       eslint-plugin-sonarjs: 0.5.0_eslint@7.4.0
+      eslint-plugin-sort-requires: 2.1.0
       eslint-plugin-unicorn: 20.1.0_eslint@7.4.0
     dev: true
     peerDependencies:
@@ -2206,7 +2208,7 @@ packages:
     dev: false
     resolution:
       integrity: sha1-RQ1Nyfpw3nMnYvvS1KKJgUGaDM8=
-  /utils-mad/9.1.1:
+  /utils-mad/9.1.2:
     dependencies:
       cheerio: 1.0.0-rc.3
       colorette: 1.2.1
@@ -2224,7 +2226,7 @@ packages:
     engines:
       node: '>=14'
     resolution:
-      integrity: sha512-Gpry40SkZGPHc9NzcMhZ9wKeyfCXhRxLYCy/w4vX+sN1jp/VBluJHyMdVFHcCwDeFPONEl53EyLC56Tkb9VBaA==
+      integrity: sha512-KMCkDnNn/XErV2kt8QXWPnLI54PJfqZ39slKIxjmVl+hDpbnks8xZlZ7GOXVTG3rv8oSEofCLRZtkCrbkjFNOg==
   /v8-compile-cache/2.1.1:
     dev: true
     resolution:
@@ -2301,4 +2303,4 @@ specifiers:
   oui: 11.0.26
   p-map: 4.0.0
   recron: 1.0.3
-  utils-mad: 9.1.1
+  utils-mad: 9.1.2

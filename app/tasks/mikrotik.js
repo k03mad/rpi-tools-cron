@@ -82,7 +82,7 @@ module.exports = async () => {
             const matchedIp = name.match(REGEXP_IP);
 
             if (matchedIp) {
-                const [client] = dhcpLeases.filter(lease => lease.address === matchedIp[0]);
+                const client = dhcpLeases.find(lease => lease.address === matchedIp[0]);
 
                 if (client && client.comment) {
                     name = name.replace(REGEXP_IP, `${client.comment + SEPARATOR}$1`);
@@ -101,7 +101,7 @@ module.exports = async () => {
 
     wifiClients.forEach(elem => {
         const mac = elem['mac-address'];
-        const [client] = dhcpLeases.filter(lease => lease['mac-address'] === mac);
+        const client = dhcpLeases.find(lease => lease['mac-address'] === mac);
 
         let key;
 

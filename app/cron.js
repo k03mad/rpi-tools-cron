@@ -11,6 +11,8 @@ const tasks = {
     },
 
     '* */6 * * *': {
+
+        /** @returns {Promise} */
         apt: async () => {
             const apt = await shell.run([
                 'sudo apt-get update',
@@ -18,11 +20,13 @@ const tasks = {
             ]);
 
             const updates = apt.split('\n').filter(el => el.includes('Inst')).length;
-            await influx.write({meas: 'pi-updates', values: {count: `Updates: ${updates}`}});
+            return influx.write({meas: 'pi-updates', values: {count: `Updates: ${updates}`}});
         },
     },
 
     '0 5 * * *': {
+
+        /** @returns {Promise} */
         parse: () => repo.run('magnet-co-parser', 'start'),
     },
 };

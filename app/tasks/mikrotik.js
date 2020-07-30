@@ -15,7 +15,8 @@ module.exports = async () => {
     };
 
     const lookupConcurrency = 3;
-    const connectionsMinKBytes = 100 * 1024;
+    // 1 MB
+    const connectionsMinBytes = 1048576;
 
     const clientsSignal = {};
     const clientsTraffic = {};
@@ -122,12 +123,20 @@ module.exports = async () => {
         if (!ip.isLocal(address)) {
             const bytes = Number(elem['orig-bytes']) + Number(elem['repl-bytes']);
 
-            if (bytes > connectionsMinKBytes) {
-                const {hostname} = await ip.info(address);
+            if (bytes > connectionsMinBytes) {
+                try {
+                    const {hostname} = await ip.info(address);
 
-                if (hostname) {
-                    const domain = hostname.split('.').slice(-2).join('.');
-                    object.count(connectionsDomains, domain, bytes);
+                    if (hostname) {
+                        const domain = hostname.split('.').slice(-2).join('.');
+                        object.count(connectionsDomains, domain, bytes);
+                    }
+                } catch (err) {
+                    if (err.response && err.response.statusCode === 429) {
+                        return;
+                    }
+
+                    throw err;
                 }
             }
         }

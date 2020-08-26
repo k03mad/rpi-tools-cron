@@ -10,6 +10,7 @@
 		"node": ">=14"
 	},
 	"dependencies": {
+		"colorette": "1.2.1",
 		"globby": "11.0.1",
 		"oui": "11.0.32",
 		"p-map": "4.0.0",
@@ -19,7 +20,7 @@
 	"devDependencies": {
 		"eslint": "7.7.0",
 		"eslint-config-k03mad": "5.0.2",
-		"eslint-plugin-jsdoc": "30.2.4",
+		"eslint-plugin-jsdoc": "30.3.0",
 		"eslint-plugin-node": "11.1.0",
 		"eslint-plugin-promise": "4.2.1",
 		"eslint-plugin-sonarjs": "0.5.0",
@@ -31,7 +32,8 @@
 		"lint": "eslint ./ --report-unused-disable-directives --format=codeframe --ignore-pattern='!.*'",
 		"setup": "pnpm i",
 		"start": "pm2 start pm2.json",
-		"task": "node runner.js"
+		"task": "node runner.js",
+		"postinstall": "node patch.js"
 	},
 	"license": "Unlicense"
 }

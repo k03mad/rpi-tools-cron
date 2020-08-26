@@ -4,7 +4,7 @@ dependencies:
   oui: 11.0.32
   p-map: 4.0.0
   recron: 1.0.3
-  utils-mad: 9.2.3
+  utils-mad: 9.3.0
 devDependencies:
   eslint: 7.7.0
   eslint-config-k03mad: 5.0.2_98cf8afe327055a029f61704f86a6913
@@ -473,10 +473,6 @@ packages:
   /color-name/1.1.4:
     resolution:
       integrity: sha512-dOy+3AuW3a2wNbZHIuMZpTcgjGuLU/uBL/ubcZF9OXbDo8ff4O8yVp5Bf0efS8uEoYo5q4Fx7dY9OgQGXgAsQA==
-  /colorette/1.2.1:
-    dev: false
-    resolution:
-      integrity: sha512-puCDz0CzydiSYOrnXpz/PKd69zRrribezjtE9yd4zvytoRc8+RY/KJPvtPFKZS3E3wP6neGyMe0vOTlHO5L3Pw==
   /comment-parser/0.7.6:
     dev: true
     engines:
@@ -2189,10 +2185,10 @@ packages:
     dev: false
     resolution:
       integrity: sha1-RQ1Nyfpw3nMnYvvS1KKJgUGaDM8=
-  /utils-mad/9.2.3:
+  /utils-mad/9.3.0:
     dependencies:
+      chalk: 4.1.0
       cheerio: 1.0.0-rc.3
-      colorette: 1.2.1
       debug: 4.1.1
       got: 11.5.2
       hasha: 5.2.0
@@ -2206,7 +2202,7 @@ packages:
     engines:
       node: '>=14'
     resolution:
-      integrity: sha512-3q0OPqDG5yy/hDAtppqTSxDPjxa+VtuqJ042qOjdP5NWTPSL0vqNnEA5Hn5rCUQzMp8D/ZPaZv4tQrLGojLnXw==
+      integrity: sha512-0tR/k5xi0qcDknXyu5PDcdkTCG8KvaNSqipr+tIBhPvW8EZhRAbaJYd3jD4gx6xsILpn4qF+brGOaUk9EmK9tQ==
   /v8-compile-cache/2.1.1:
     dev: true
     resolution:
@@ -2280,4 +2276,4 @@ specifiers:
   oui: 11.0.32
   p-map: 4.0.0
   recron: 1.0.3
-  utils-mad: 9.2.3
+  utils-mad: 9.3.0

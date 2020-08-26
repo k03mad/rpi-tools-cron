@@ -1,10 +1,10 @@
 dependencies:
-  colorette: 1.2.1
+  chalk: 4.1.0
   globby: 11.0.1
   oui: 11.0.32
   p-map: 4.0.0
   recron: 1.0.3
-  utils-mad: 9.2.2
+  utils-mad: 9.2.3
 devDependencies:
   eslint: 7.7.0
   eslint-config-k03mad: 5.0.2_98cf8afe327055a029f61704f86a6913
@@ -162,7 +162,6 @@ packages:
     resolution:
       integrity: sha512-ykFq2zmBGOCbpIXtoVbz4SKY5QriWPh3AjyU4G74RYbtt5yOc5OfaY75ftjg7mikMOla1CTGpX3lLbuJh8DTrQ==
   /@types/color-name/1.1.1:
-    dev: true
     resolution:
       integrity: sha512-rr+OQyAjxze7GgWrSaJwydHStIhHq2lvY3BOC2Mj7KnzI7XK0Uw1TOOdI9lDoajEbSWLiYgoo4f1R51erQfhPQ==
   /@types/http-cache-semantics/4.0.0:
@@ -274,7 +273,6 @@ packages:
     dependencies:
       '@types/color-name': 1.1.1
       color-convert: 2.0.1
-    dev: true
     engines:
       node: '>=8'
     resolution:
@@ -404,7 +402,6 @@ packages:
     dependencies:
       ansi-styles: 4.2.1
       supports-color: 7.1.0
-    dev: true
     engines:
       node: '>=10'
     resolution:
@@ -465,7 +462,6 @@ packages:
   /color-convert/2.0.1:
     dependencies:
       color-name: 1.1.4
-    dev: true
     engines:
       node: '>=7.0.0'
     resolution:
@@ -475,7 +471,6 @@ packages:
     resolution:
       integrity: sha1-p9BVi9icQveV3UIyj3QIMcpTvCU=
   /color-name/1.1.4:
-    dev: true
     resolution:
       integrity: sha512-dOy+3AuW3a2wNbZHIuMZpTcgjGuLU/uBL/ubcZF9OXbDo8ff4O8yVp5Bf0efS8uEoYo5q4Fx7dY9OgQGXgAsQA==
   /colorette/1.2.1:
@@ -1096,7 +1091,6 @@ packages:
     resolution:
       integrity: sha1-tdRU3CGZriJWmfNGfloH87lVuv0=
   /has-flag/4.0.0:
-    dev: true
     engines:
       node: '>=8'
     resolution:
@@ -2105,7 +2099,6 @@ packages:
   /supports-color/7.1.0:
     dependencies:
       has-flag: 4.0.0
-    dev: true
     engines:
       node: '>=8'
     resolution:
@@ -2196,7 +2189,7 @@ packages:
     dev: false
     resolution:
       integrity: sha1-RQ1Nyfpw3nMnYvvS1KKJgUGaDM8=
-  /utils-mad/9.2.2:
+  /utils-mad/9.2.3:
     dependencies:
       cheerio: 1.0.0-rc.3
       colorette: 1.2.1
@@ -2213,7 +2206,7 @@ packages:
     engines:
       node: '>=14'
     resolution:
-      integrity: sha512-YIUPfgJ5peGZZvsEYXWjtC95Vm0NCb1wxhNsw7oTKPsNKX7H+AIMucmb7mMX3NXYQncPB8fMKOMuf1PPqnk14w==
+      integrity: sha512-3q0OPqDG5yy/hDAtppqTSxDPjxa+VtuqJ042qOjdP5NWTPSL0vqNnEA5Hn5rCUQzMp8D/ZPaZv4tQrLGojLnXw==
   /v8-compile-cache/2.1.1:
     dev: true
     resolution:
@@ -2273,7 +2266,7 @@ packages:
     resolution:
       integrity: sha512-yr2icI4glYaNG+KWONODapy2/jDdMSDnrONSjblABjD9B4Z5LgiircSt8m8sRZFNi08kG9Sm0uSHtEmP3zaEGg==
 specifiers:
-  colorette: 1.2.1
+  chalk: 4.1.0
   eslint: 7.7.0
   eslint-config-k03mad: 5.0.2
   eslint-plugin-jsdoc: 30.3.0
@@ -2287,4 +2280,4 @@ specifiers:
   oui: 11.0.32
   p-map: 4.0.0
   recron: 1.0.3
-  utils-mad: 9.2.2
+  utils-mad: 9.2.3

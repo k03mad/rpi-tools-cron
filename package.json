@@ -10,12 +10,12 @@
 		"node": ">=14"
 	},
 	"dependencies": {
-		"colorette": "1.2.1",
+		"chalk": "4.1.0",
 		"globby": "11.0.1",
 		"oui": "11.0.32",
 		"p-map": "4.0.0",
 		"recron": "1.0.3",
-		"utils-mad": "9.2.2"
+		"utils-mad": "9.2.3"
 	},
 	"devDependencies": {
 		"eslint": "7.7.0",

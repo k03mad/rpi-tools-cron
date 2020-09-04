@@ -12,15 +12,15 @@
 	"dependencies": {
 		"chalk": "4.1.0",
 		"globby": "11.0.1",
-		"oui": "11.0.32",
+		"oui": "11.0.33",
 		"p-map": "4.0.0",
 		"recron": "1.0.3",
 		"utils-mad": "9.3.0"
 	},
 	"devDependencies": {
-		"eslint": "7.7.0",
+		"eslint": "7.8.1",
 		"eslint-config-k03mad": "5.0.2",
-		"eslint-plugin-jsdoc": "30.3.0",
+		"eslint-plugin-jsdoc": "30.3.1",
 		"eslint-plugin-node": "11.1.0",
 		"eslint-plugin-promise": "4.2.1",
 		"eslint-plugin-sonarjs": "0.5.0",

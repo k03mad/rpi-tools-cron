@@ -6,7 +6,7 @@ const {dim, blue} = require('chalk');
 const {promises: fs} = require('fs');
 
 const patches = {
-    '/node_modules/.pnpm/node-routeros@1.6.8/node_modules/node-routeros/dist/connector/Receiver.js': {
+    '/node_modules/node-routeros/dist/connector/Receiver.js': {
         original: "throw new RosException_1.RosException('UNREGISTEREDTAG');",
         patch: "throw new Error('UNREGISTEREDTAG');",
     },

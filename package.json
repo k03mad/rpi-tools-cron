@@ -16,7 +16,7 @@
 		"oui": "11.0.35",
 		"p-map": "4.0.0",
 		"recron": "1.1.0",
-		"utils-mad": "9.4.1"
+		"utils-mad": "9.5.0"
 	},
 	"devDependencies": {
 		"eslint": "7.9.0",

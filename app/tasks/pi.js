@@ -1,6 +1,7 @@
 'use strict';
 
 const globby = require('globby');
+const hasha = require('hasha');
 const os = require('os');
 const path = require('path');
 const {shell, influx} = require('utils-mad');
@@ -16,7 +17,7 @@ module.exports = async () => {
     const disk = await shell.run('df');
     const ram = await shell.run('free -m');
     const log = await shell.run('pm2 jlist');
-    const cacheFiles = await globby(path.join(os.tmpdir(), 'utils-mad'));
+    const cacheFiles = await globby(path.join(os.tmpdir(), hasha('')));
 
     JSON.parse(log).forEach(elem => {
         memory[elem.name] = elem.monit.memory;

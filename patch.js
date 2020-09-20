@@ -8,7 +8,7 @@ const {promises: fs} = require('fs');
 const patches = {
     '/node_modules/node-routeros/dist/connector/Receiver.js': {
         original: "throw new RosException_1.RosException('UNREGISTEREDTAG');",
-        patch: "throw new Error('UNREGISTEREDTAG');",
+        patch: "throw 'UNREGISTEREDTAG';",
     },
 };
 

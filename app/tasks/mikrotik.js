@@ -8,12 +8,6 @@ const {influx, mikrotik, object, ip} = require('utils-mad');
 module.exports = async () => {
     const SEPARATOR = ' :: ';
 
-    const etherDevices = {
-        ether1: 'Pi',
-        ether2: 'XBoxLan',
-        ether3: 'PhiTVLan',
-    };
-
     const lookupConcurrency = 3;
     // 1 MB
     const connectionsMinBytes = 1048576;
@@ -59,7 +53,7 @@ module.exports = async () => {
         const sum = Number(elem['rx-byte']) + Number(elem['tx-byte']);
 
         if (elem.name.includes('ether') && sum > 0) {
-            clientsTraffic[etherDevices[elem.name] || elem.name] = sum;
+            clientsTraffic[elem.name] = sum;
         }
     });
 

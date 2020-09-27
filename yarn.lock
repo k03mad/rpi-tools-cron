@@ -1015,14 +1015,6 @@ has-flag@^4.0.0:
   resolved "https://registry.yarnpkg.com/has-flag/-/has-flag-4.0.0.tgz#944771fd9c81c81265c4d6941860da06bb59479b"
   integrity sha512-EykJT/Q1KjTWctppgIAgfSO0tKVuZUjhgMr17kqTumMl6Afv3EISleU7qZUzoXDFTAHTDC4NOoG/ZxU3EvlMPQ==
 
-hasha@5.2.0:
-  version "5.2.0"
-  resolved "https://registry.yarnpkg.com/hasha/-/hasha-5.2.0.tgz#33094d1f69c40a4a6ac7be53d5fe3ff95a269e0c"
-  integrity sha512-2W+jKdQbAdSIrggA8Q35Br8qKadTrqCTC8+XZvBWepKDK6m9XkX6Iz1a2yh2KP01kzAR/dpuMeUnocoLYDcskw==
-  dependencies:
-    is-stream "^2.0.0"
-    type-fest "^0.8.0"
-
 hasha@5.2.1:
   version "5.2.1"
   resolved "https://registry.yarnpkg.com/hasha/-/hasha-5.2.1.tgz#0e5b492aa40de3819e80955f221d2fccef55b5aa"
@@ -1933,16 +1925,16 @@ util-deprecate@^1.0.1:
   resolved "https://registry.yarnpkg.com/util-deprecate/-/util-deprecate-1.0.2.tgz#450d4dc9fa70de732762fbd2d4a28981419a0ccf"
   integrity sha1-RQ1Nyfpw3nMnYvvS1KKJgUGaDM8=
 
-utils-mad@9.5.4:
-  version "9.5.4"
-  resolved "https://registry.yarnpkg.com/utils-mad/-/utils-mad-9.5.4.tgz#4c8d6a7aa144d00caf3e9d4cbfe2e74c2a24abc5"
-  integrity sha512-QgvoaIWUUbpHZQtRpWTDORgiTZj0SNzxiBEw43qgvxAG1ukFSbhzT4+bQoyqjpyO0rStL0MytAYa1uvlCeey2A==
+utils-mad@9.5.5:
+  version "9.5.5"
+  resolved "https://registry.yarnpkg.com/utils-mad/-/utils-mad-9.5.5.tgz#fbeb5842b0992e3f804c4935f7a9fb59b6947ad7"
+  integrity sha512-ejkIJ2ENQsjb4bpj60UF7DfvSZMAGPJcB2HndZLOqKbrcduWpdWA2TqZSTuqAg4Nr6uHOJnr/AgFTImo+l/3HQ==
   dependencies:
     chalk "4.1.0"
     cheerio "1.0.0-rc.3"
     debug "4.2.0"
     got "11.7.0"
-    hasha "5.2.0"
+    hasha "5.2.1"
     moment "2.29.0"
     nano-time "1.0.0"
     node-routeros "1.6.8"

@@ -148,8 +148,8 @@ module.exports = async () => {
         mem: Number(usage['total-memory']) - Number(usage['free-memory']),
         hdd: Number(usage['total-hdd-space']) - Number(usage['free-hdd-space']),
         cpu: Number(usage['cpu-load']),
-        uptime: `Uptime: ${usage.uptime}`,
-        updates: `Version: ${updates['installed-version']}/${updates['latest-version']}`,
+        uptime: usage.uptime,
+        updates: `${updates['installed-version']}/${updates['latest-version']}`,
     };
 
     await influx.write([

@@ -33,6 +33,7 @@ module.exports = async () => {
         wifiClients,
         [usage],
         [, updates],
+        lists,
     ] = await mikrotik.write([
         ['/interface/print'],
         ['/ip/firewall/nat/print'],
@@ -41,6 +42,7 @@ module.exports = async () => {
         ['/interface/wireless/registration-table/print'],
         ['/system/resource/print'],
         ['/system/package/update/check-for-updates'],
+        ['/ip/firewall/address-list/print'],
     ]);
 
     const monitorTraffic = await mikrotik.write(
@@ -142,6 +144,12 @@ module.exports = async () => {
         }
     }, {concurrency: lookupConcurrency});
 
+    const addressLists = {};
+
+    lists.forEach(elem => {
+        object.count(addressLists, elem.list, 1);
+    });
+
     const health = {
         mem: Number(usage['total-memory']) - Number(usage['free-memory']),
         hdd: Number(usage['total-hdd-space']) - Number(usage['free-hdd-space']),
@@ -153,6 +161,7 @@ module.exports = async () => {
     await influx.write([
         {meas: 'mikrotik-clients-signal', values: clientsSignal},
         {meas: 'mikrotik-interfaces-speed', values: interfacesSpeed},
+        {meas: 'mikrotik-address-lists', values: addressLists},
         {meas: 'mikrotik-usage', values: health},
     ]);
 

@@ -105,7 +105,7 @@ module.exports = async () => {
         if (client && client.comment) {
             key = client.comment;
         } else {
-            const [vendor] = oui(mac).split('\n')[0].match(/^(\w+( \w+)?)/);
+            const [vendor] = oui(mac).split('\n')[0].match(/^([\w-]+( \w+)?)/);
             key = vendor + SEPARATOR + mac;
         }
 

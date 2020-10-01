@@ -72,8 +72,15 @@ module.exports = async () => {
         }
     });
 
+    let firewallFilterLastComment;
     firewallFilter.forEach(({comment, bytes}) => {
-        if (comment && !comment.includes('dummy rule')) {
+        if (comment) {
+            firewallFilterLastComment = comment;
+        } else {
+            comment = firewallFilterLastComment;
+        }
+
+        if (!comment.includes('dummy rule')) {
             if (filterTraffic[comment]) {
                 filterTraffic[comment] += Number(bytes);
             } else {

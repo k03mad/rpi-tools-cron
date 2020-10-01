@@ -62,23 +62,24 @@ module.exports = async () => {
         }
     });
 
+    let firewallFilterLastComment, firewallNatLastComment;
+
     firewallNat.forEach(({comment, bytes}) => {
-        if (comment) {
-            if (natTraffic[comment]) {
-                natTraffic[comment] += Number(bytes);
-            } else {
-                natTraffic[comment] = Number(bytes);
-            }
+        comment
+            ? firewallNatLastComment = comment
+            : comment = firewallNatLastComment;
+
+        if (natTraffic[comment]) {
+            natTraffic[comment] += Number(bytes);
+        } else {
+            natTraffic[comment] = Number(bytes);
         }
     });
 
-    let firewallFilterLastComment;
     firewallFilter.forEach(({comment, bytes}) => {
-        if (comment) {
-            firewallFilterLastComment = comment;
-        } else {
-            comment = firewallFilterLastComment;
-        }
+        comment
+            ? firewallFilterLastComment = comment
+            : comment = firewallFilterLastComment;
 
         if (!comment.includes('dummy rule')) {
             if (filterTraffic[comment]) {

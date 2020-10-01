@@ -17,6 +17,7 @@ module.exports = async () => {
     const interfacesSpeed = {};
     const interfacesTraffic = {};
     const natTraffic = {};
+    const filterTraffic = {};
     const connectionsDomains = {};
 
     const [
@@ -28,6 +29,7 @@ module.exports = async () => {
         [usage],
         [, updates],
         lists,
+        firewallFilter,
     ] = await mikrotik.write([
         ['/interface/print'],
         ['/ip/firewall/nat/print'],
@@ -37,6 +39,7 @@ module.exports = async () => {
         ['/system/resource/print'],
         ['/system/package/update/check-for-updates'],
         ['/ip/firewall/address-list/print'],
+        ['/ip/firewall/filter/print'],
     ]);
 
     const monitorTraffic = await mikrotik.write(
@@ -59,39 +62,22 @@ module.exports = async () => {
         }
     });
 
-    firewallNat.forEach((elem, i) => {
-        let name;
-
-        for (let j = i; j <= i; i--) {
-            const {comment, 'dst-port': port} = firewallNat[i];
-
-            if (comment) {
-                name = port
-                    ? port + SEPARATOR + comment
-                    : `noport${SEPARATOR + comment}`;
-
-                break;
+    firewallNat.forEach(({comment, bytes}) => {
+        if (comment) {
+            if (natTraffic[comment]) {
+                natTraffic[comment] += Number(bytes);
+            } else {
+                natTraffic[comment] = Number(bytes);
             }
         }
+    });
 
-        if (name && !name.includes('defconf')) {
-            const REGEXP_IP = /((?:\d{1,3}\.){3}\d{1,3})/;
-            const matchedIp = name.match(REGEXP_IP);
-
-            if (matchedIp) {
-                const client = dhcpLeases.find(lease => lease.address === matchedIp[0]);
-
-                if (client && client.comment) {
-                    name = name.replace(REGEXP_IP, `${client.comment + SEPARATOR}$1`);
-                }
-            }
-
-            name = name.replace(/(\d): /g, `$1${SEPARATOR}`);
-
-            if (natTraffic[name]) {
-                natTraffic[name] += Number(elem.bytes);
+    firewallFilter.forEach(({comment, bytes}) => {
+        if (comment && !comment.includes('dummy rule')) {
+            if (filterTraffic[comment]) {
+                filterTraffic[comment] += Number(bytes);
             } else {
-                natTraffic[name] = Number(elem.bytes);
+                filterTraffic[comment] = Number(bytes);
             }
         }
     });
@@ -164,5 +150,6 @@ module.exports = async () => {
         {meas: 'mikrotik-connections-traffic', values: connectionsDomains},
         {meas: 'mikrotik-interfaces-traffic', values: interfacesTraffic},
         {meas: 'mikrotik-nat-traffic', values: natTraffic},
+        {meas: 'mikrotik-filter-traffic', values: filterTraffic},
     ]);
 };

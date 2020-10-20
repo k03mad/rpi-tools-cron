@@ -5,20 +5,36 @@ const hasha = require('hasha');
 const os = require('os');
 const path = require('path');
 const {shell, influx} = require('utils-mad');
+const oui = require('oui');
 
 /** */
 module.exports = async () => {
     const memory = {};
     const cpu = {};
     const restarts = {};
+    const wifiSignal = {};
+    const wifiChannel = {};
 
     const uptime = await shell.run('uptime');
     const temp = await shell.run('cat /sys/class/thermal/thermal_zone0/temp');
     const disk = await shell.run('df');
     const ram = await shell.run('free -m');
     const log = await shell.run('pm2 jlist');
+    const networks = await shell.run('sudo iwlist wlan0 scan');
     const cacheFiles = await globby(path.join(os.tmpdir(), hasha('')));
 
+    //console.log(
+        networks
+            .split(/Cell \d+/)
+            .map(elem => elem.match(/Channel:(?<channel>.+)[\s\S]+Signal level=(?<signal>.+) dBm[\s\S]+ESSID:"(?<essid>.+)"/))
+            .filter(Boolean)
+            .forEach(({groups}) => {
+                wifiSignal[groups.essid] = Number(groups.signal);
+                wifiChannel[groups.essid] = Number(groups.channel);
+            })
+    //)
+
+console.log(wifiSignal, wifiChannel);
     JSON.parse(log).forEach(elem => {
         memory[elem.name] = elem.monit.memory;
         cpu[elem.name] = elem.monit.cpu;

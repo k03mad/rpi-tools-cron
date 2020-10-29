@@ -6,7 +6,7 @@ const os = require('os');
 const path = require('path');
 const {shell, influx} = require('utils-mad');
 
-/** */
+/***/
 module.exports = async () => {
     const memory = {};
     const cpu = {};

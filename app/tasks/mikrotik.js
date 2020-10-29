@@ -4,7 +4,7 @@ const oui = require('oui');
 const pMap = require('p-map');
 const {influx, mikrotik, object, ip} = require('utils-mad');
 
-/** */
+/***/
 module.exports = async () => {
     const SEPARATOR = ' :: ';
 

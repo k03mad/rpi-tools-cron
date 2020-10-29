@@ -1,7 +1,7 @@
 'use strict';
 
 const {Cron} = require('recron');
-const {print, repo, shell, influx} = require('utils-mad');
+const {print} = require('utils-mad');
 
 const tasks = {
     '* * * * *': {
@@ -10,23 +10,11 @@ const tasks = {
     },
 
     '* */6 * * *': {
-
-        /** @returns {Promise} */
-        apt: async () => {
-            const apt = await shell.run([
-                'sudo apt-get update',
-                'sudo apt-get upgrade -u -s',
-            ]);
-
-            const updates = apt.split('\n').filter(el => el.includes('Inst')).length;
-            return influx.write({meas: 'pi-updates', values: {count: `Updates: ${updates}`}});
-        },
+        apt: require('./tasks/apt'),
     },
 
     '0 5 * * *': {
-
-        /** @returns {Promise} */
-        parse: () => repo.run('magnet-co-parser', 'start'),
+        magnet: require('./tasks/magnet'),
     },
 };
 

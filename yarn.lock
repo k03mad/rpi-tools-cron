@@ -1930,10 +1930,10 @@ util-deprecate@^1.0.1:
   resolved "https://registry.yarnpkg.com/util-deprecate/-/util-deprecate-1.0.2.tgz#450d4dc9fa70de732762fbd2d4a28981419a0ccf"
   integrity sha1-RQ1Nyfpw3nMnYvvS1KKJgUGaDM8=
 
-utils-mad@9.6.5:
-  version "9.6.5"
-  resolved "https://registry.yarnpkg.com/utils-mad/-/utils-mad-9.6.5.tgz#24a0ec04d504ce5799f91c041c31f9cdbce5f8d2"
-  integrity sha512-IepelwSsHVoRB/awEmlB+vpF4OgkyapS4kja7aQ0Y0tfuc8pZptomRPBKk4aeOUwXGQ3y1efrr4da5Ncldpfow==
+utils-mad@9.6.6:
+  version "9.6.6"
+  resolved "https://registry.yarnpkg.com/utils-mad/-/utils-mad-9.6.6.tgz#4f77e18ad54427db892106920fa221f129ed73ee"
+  integrity sha512-/d/yM6driUsHI5HYshdqDWPuowUsMogyFRYdklPY2oE0EwId79pf00J357v638ohL7KE6e73pq2ok9YFmZGrrg==
   dependencies:
     chalk "4.1.0"
     cheerio "1.0.0-rc.3"

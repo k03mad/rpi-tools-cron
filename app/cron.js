@@ -5,7 +5,6 @@ const {print, repo, shell, influx} = require('utils-mad');
 
 const tasks = {
     '* * * * *': {
-        adg: require('./tasks/adguard'),
         mik: require('./tasks/mikrotik'),
         pi: require('./tasks/pi'),
     },

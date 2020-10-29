@@ -38,7 +38,7 @@ module.exports = async () => {
     });
 
     const usage = {
-        cpuLoad: Number(uptime.match(/load average: ([\d,]+),/)[1].replace(',', '.')),
+        cpuLoad: Number(uptime.match(/load average: (\d\.\d\d)/)[1].replace(',', '.')),
         cpuTemp: Number(temp) / 1000,
         diskUsage: Number(disk.match(/\/dev\/root +\d+ +(\d+)/)[1]),
         ramUsage: Number(ram.match(/Mem: +\d+ +(\d+)/)[1]),

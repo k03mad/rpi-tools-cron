@@ -29,6 +29,7 @@ module.exports = async () => {
         [usage],
         [, updates],
         firewallFilter,
+        dnsCache,
     ] = await mikrotik.write([
         ['/interface/print'],
         ['/ip/firewall/nat/print'],
@@ -38,6 +39,7 @@ module.exports = async () => {
         ['/system/resource/print'],
         ['/system/package/update/check-for-updates'],
         ['/ip/firewall/filter/print'],
+        ['/ip/dns/cache/print'],
     ]);
 
     const monitorTraffic = await mikrotik.write(
@@ -136,6 +138,7 @@ module.exports = async () => {
         cpu: Number(usage['cpu-load']),
         uptime: usage.uptime,
         updates: `${updates['installed-version']}/${updates['latest-version']}`,
+        dnsCache: dnsCache.length,
     };
 
     await influx.write([

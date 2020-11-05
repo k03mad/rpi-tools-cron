@@ -30,7 +30,7 @@
 	},
 	"scripts": {
 		"lint": "eslint ./ --report-unused-disable-directives --format=codeframe --ignore-pattern='!.*'",
-		"setup": "npm install",
+		"setup": "npm i",
 		"start": "pm2 start pm2.json",
 		"task": "node runner.js",
 		"postinstall": "node patch.js"

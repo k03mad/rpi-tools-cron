@@ -7,7 +7,7 @@
 	],
 	"repository": "k03mad/rpi-tools-cron",
 	"engines": {
-		"node": ">=14"
+		"node": ">=15"
 	},
 	"dependencies": {
 		"chalk": "4.1.0",
@@ -30,7 +30,7 @@
 	},
 	"scripts": {
 		"lint": "eslint ./ --report-unused-disable-directives --format=codeframe --ignore-pattern='!.*'",
-		"setup": "yarn install",
+		"setup": "npm install",
 		"start": "pm2 start pm2.json",
 		"task": "node runner.js",
 		"postinstall": "node patch.js"

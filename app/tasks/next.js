@@ -28,6 +28,7 @@ module.exports = async () => {
         topDomainsResolved,
         counters,
         queries,
+        ips,
     ] = await pMap([
         'traffic_destination_countries',
         'gafam',
@@ -40,6 +41,7 @@ module.exports = async () => {
         'top_domains/resolved',
         'counters',
         'queries_chart',
+        'top_client_ips',
     ], req => next.get(req), {concurrency});
 
     const topCountriesToValues = Object.fromEntries(
@@ -71,4 +73,6 @@ module.exports = async () => {
             timestamp: `${data.name}000000000`,
         });
     }
+
+    console.log(ips);
 };

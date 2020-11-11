@@ -9,6 +9,10 @@ const tasks = {
         pi: require('./tasks/pi'),
     },
 
+    '*/10 * * * *': {
+        next: require('./tasks/next'),
+    },
+
     '* */6 * * *': {
         apt: require('./tasks/apt'),
     },

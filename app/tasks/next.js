@@ -11,7 +11,7 @@ const mapValues = (
 
 /***/
 module.exports = async () => {
-    const concurrency = 3;
+    const concurrency = 2;
     const topCountriesLen = 20;
 
     const lists = await next.get('', {route: 'privacy'});

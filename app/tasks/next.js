@@ -1,5 +1,6 @@
 'use strict';
 
+const converter = require('i18n-iso-countries');
 const pMap = require('p-map');
 const {influx, next} = require('utils-mad');
 
@@ -11,8 +12,9 @@ const mapValues = (
 
 /***/
 module.exports = async () => {
-    const concurrency = 2;
-    const topCountriesLen = 20;
+    const concurrency = 3;
+    const topCountriesLen = 15;
+    const topCountriesNameMaxLen = 15;
 
     const lists = await next.get('', {route: 'privacy'});
 
@@ -27,7 +29,7 @@ module.exports = async () => {
         topDomainsBlocked,
         topDomainsResolved,
         counters,
-        queries,
+        queriesPerDay,
         ips,
     ] = await pMap([
         'traffic_destination_countries',
@@ -44,10 +46,22 @@ module.exports = async () => {
         'top_client_ips',
     ], req => next.get(req), {concurrency});
 
+    topDomainsBlocked.forEach(elem => {
+        elem.queries = -elem.queries;
+    });
+
     const topCountriesToValues = Object.fromEntries(
         Object
             .entries(topCountries)
-            .map(elem => [elem[0], elem[1].queries])
+            .map(elem => {
+                let name = converter.getName(elem[0], 'en');
+
+                if (name.length > topCountriesNameMaxLen) {
+                    name = converter.alpha2ToAlpha3(elem[0]);
+                }
+
+                return [name, elem[1].queries];
+            })
             .sort((a, b) => b[1] - a[1])
             .slice(0, topCountriesLen),
     );
@@ -62,17 +76,16 @@ module.exports = async () => {
         {meas: 'next-top-devices', values: mapValues(topDevices)},
         {meas: 'next-top-domains-blocked', values: mapValues(topDomainsBlocked)},
         {meas: 'next-top-domains-resolved', values: mapValues(topDomainsResolved)},
+        {meas: 'next-top-ips', values: mapValues(ips, {key: 'ip'})},
         {meas: 'next-top-lists', values: mapValues(topLists)},
         {meas: 'next-top-root', values: mapValues(topRoot)},
     ]);
 
-    for (const data of queries) {
+    for (const data of queriesPerDay) {
         await influx.write({
             meas: 'next-queries',
             values: {queries: data.queries, blocked: data.blockedQueries},
             timestamp: `${data.name}000000000`,
         });
     }
-
-    console.log(ips);
 };

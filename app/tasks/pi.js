@@ -12,7 +12,6 @@ module.exports = async () => {
     const cpu = {};
     const restarts = {};
     const wifiSignal = {};
-    const wifiChannel = {};
 
     const uptime = await shell.run('uptime');
     const temp = await shell.run('cat /sys/class/thermal/thermal_zone0/temp');
@@ -28,7 +27,6 @@ module.exports = async () => {
         .filter(Boolean)
         .forEach(({groups}) => {
             wifiSignal[groups.essid] = Number(groups.signal);
-            wifiChannel[groups.essid] = Number(groups.channel);
         });
 
     JSON.parse(log).forEach(elem => {
@@ -52,6 +50,5 @@ module.exports = async () => {
         {meas: 'pi-node-restarts', values: restarts},
         {meas: 'pi-usage', values: usage},
         {meas: 'pi-wifi-signal', values: wifiSignal},
-        {meas: 'pi-wifi-channel', values: wifiChannel},
     ]);
 };

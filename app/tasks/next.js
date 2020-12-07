@@ -50,6 +50,10 @@ module.exports = async () => {
         elem.queries = -elem.queries;
     });
 
+    topLists.forEach(list => {
+        list.id = lists.blocklists.find(elem => elem.name === list.name).id;
+    });
+
     const topCountriesToValues = Object.fromEntries(
         Object
             .entries(topCountries)
@@ -77,7 +81,7 @@ module.exports = async () => {
         {meas: 'next-top-domains-blocked', values: mapValues(topDomainsBlocked)},
         {meas: 'next-top-domains-resolved', values: mapValues(topDomainsResolved)},
         {meas: 'next-top-ips', values: mapValues(ips, {key: 'ip'})},
-        {meas: 'next-top-lists', values: mapValues(topLists)},
+        {meas: 'next-top-lists', values: mapValues(topLists, {key: 'id'})},
         {meas: 'next-top-root', values: mapValues(topRoot)},
     ]);
 

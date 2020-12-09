@@ -19,7 +19,7 @@ module.exports = async () => {
     const ram = await shell.run('free -m');
     const log = await shell.run('pm2 jlist');
     const networks = await shell.run('sudo iwlist wlan0 scan');
-    const cacheFiles = await globby(path.join(os.tmpdir(), hasha('')));
+    const cacheFiles = await globby(path.join(os.tmpdir(), hasha('').slice(0, 10)));
 
     networks
         .split(/Cell \d+/)

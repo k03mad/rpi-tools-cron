@@ -7,7 +7,9 @@ const {influx, next} = require('utils-mad');
 const mapValues = (
     data, {key = 'name', value = 'queries'} = {},
 ) => Object.fromEntries(
-    data.map(elem => [elem[key], elem[value]]),
+    data
+        .filter(elem => elem[key])
+        .map(elem => [elem[key], elem[value]]),
 );
 
 /***/
@@ -51,7 +53,7 @@ module.exports = async () => {
     });
 
     topLists.forEach(list => {
-        list.id = lists.blocklists.find(elem => elem.name === list.name).id;
+        list.id = lists.blocklists.find(elem => elem.name === list.name)?.id;
     });
 
     const topCountriesToValues = Object.fromEntries(

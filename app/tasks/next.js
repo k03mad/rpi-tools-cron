@@ -18,7 +18,7 @@ module.exports = async () => {
     const topCountriesLen = 15;
     const topCountriesNameMaxLen = 15;
 
-    const lists = await next.get({path: 'privacy'});
+    const lists = await next.query({path: 'privacy'});
 
     const [
         topCountries,
@@ -46,7 +46,7 @@ module.exports = async () => {
         'counters',
         'queries_chart',
         'top_client_ips',
-    ], req => next.get({path: `analytics/${req}`}), {concurrency});
+    ], req => next.query({path: `analytics/${req}`}), {concurrency});
 
     topDomainsBlocked.forEach(elem => {
         elem.queries = -elem.queries;

@@ -17,7 +17,7 @@
 		"oui": "11.0.46",
 		"p-map": "4.0.0",
 		"recron": "1.1.0",
-		"utils-mad": "9.9.2"
+		"utils-mad": "9.10.0"
 	},
 	"devDependencies": {
 		"eslint": "7.15.0",
@@ -27,7 +27,7 @@
 		"eslint-plugin-promise": "4.2.1",
 		"eslint-plugin-sort-requires": "2.1.0",
 		"eslint-plugin-unicorn": "23.0.0",
-		"husky": "4.3.5"
+		"husky": "4.3.6"
 	},
 	"scripts": {
 		"lint": "eslint ./ --report-unused-disable-directives --format=codeframe --ignore-pattern='!.*'",

@@ -13,20 +13,20 @@
 		"chalk": "4.1.0",
 		"globby": "11.0.1",
 		"hasha": "5.2.2",
-		"i18n-iso-countries": "6.3.0",
-		"oui": "11.0.46",
+		"i18n-iso-countries": "6.4.0",
+		"oui": "11.0.48",
 		"p-map": "4.0.0",
 		"recron": "1.1.0",
-		"utils-mad": "9.10.0"
+		"utils-mad": "9.10.9"
 	},
 	"devDependencies": {
-		"eslint": "7.15.0",
-		"eslint-config-k03mad": "6.0.2",
-		"eslint-plugin-jsdoc": "30.7.8",
+		"eslint": "7.17.0",
+		"eslint-config-k03mad": "6.0.3",
+		"eslint-plugin-jsdoc": "30.7.13",
 		"eslint-plugin-node": "11.1.0",
 		"eslint-plugin-promise": "4.2.1",
 		"eslint-plugin-sort-requires": "2.1.0",
-		"eslint-plugin-unicorn": "23.0.0",
+		"eslint-plugin-unicorn": "25.0.1",
 		"husky": "4.3.6"
 	},
 	"scripts": {

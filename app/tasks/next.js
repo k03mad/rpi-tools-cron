@@ -46,7 +46,14 @@ module.exports = async () => {
         'counters',
         'queries_chart',
         'top_client_ips',
-    ], req => next.query({path: `analytics/${req}`}), {concurrency});
+    ], req => next.query({
+        path: `analytics/${req}`,
+        searchParams: {
+            from: '-30d',
+            timezoneOffset: '-180',
+            selector: true,
+        },
+    }), {concurrency});
 
     topDomainsBlocked.forEach(elem => {
         elem.queries = -elem.queries;

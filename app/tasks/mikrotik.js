@@ -110,7 +110,7 @@ module.exports = async () => {
     await pMap(firewallConnections, async elem => {
         const address = elem['dst-address'].replace(/:.+/, '');
 
-        if (!ip.isLocal(address) && !ip.includes('255')) {
+        if (!ip.isLocal(address) && !address?.includes('255')) {
             const bytes = Number(elem['orig-bytes']) + Number(elem['repl-bytes']);
 
             if (bytes > connectionsMinBytes) {

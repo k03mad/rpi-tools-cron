@@ -11,13 +11,13 @@
 	},
 	"dependencies": {
 		"chalk": "4.1.0",
-		"globby": "11.0.1",
+		"globby": "11.0.2",
 		"hasha": "5.2.2",
 		"i18n-iso-countries": "6.4.0",
 		"oui": "11.0.48",
 		"p-map": "4.0.0",
 		"recron": "1.1.0",
-		"utils-mad": "9.11.1"
+		"utils-mad": "9.11.3"
 	},
 	"devDependencies": {
 		"eslint": "7.17.0",
@@ -27,7 +27,7 @@
 		"eslint-plugin-promise": "4.2.1",
 		"eslint-plugin-sort-requires": "2.1.0",
 		"eslint-plugin-unicorn": "25.0.1",
-		"husky": "4.3.6"
+		"husky": "4.3.7"
 	},
 	"scripts": {
 		"lint": "eslint ./ --report-unused-disable-directives --format=codeframe --ignore-pattern='!.*'",

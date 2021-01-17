@@ -8,7 +8,7 @@ const {promises: fs} = require('fs');
 
 /***/
 module.exports = async () => {
-    const requestFiles = await globby(path.join(os.tmpdir(), '_req_influx'));
+    const requestFiles = await globby(path.join(os.tmpdir(), '_req_stats'));
 
     for (const file of requestFiles) {
         const content = await fs.readFile(file, {encoding: 'utf-8'});

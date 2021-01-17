@@ -9,6 +9,10 @@ const tasks = {
         pi: require('./tasks/pi'),
     },
 
+    '*/5 * * * *': {
+        request: require('./tasks/request'),
+    },
+
     '*/10 * * * *': {
         next: require('./tasks/next'),
     },

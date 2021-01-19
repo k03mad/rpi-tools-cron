@@ -101,4 +101,15 @@ module.exports = async () => {
             timestamp: `${data.name}000000000`,
         });
     }
+
+    for (const [i, {id, name}] of topDevices.entries()) {
+        const {logs} = await next.query({
+            path: 'logs',
+            searchParams: {device: id, simple: 1, lng: 'en'},
+        });
+
+        for (const log of logs) {
+            await influx.write({meas: 'next-req-devices', values: {[name]: i + 1}, timestamp: `${log.timestamp}000000`});
+        }
+    }
 };

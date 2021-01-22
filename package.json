@@ -10,6 +10,7 @@
 		"node": ">=15"
 	},
 	"dependencies": {
+		"chalk": "4.1.0",
 		"globby": "11.0.2",
 		"hasha": "5.2.2",
 		"i18n-iso-countries": "6.4.0",
@@ -29,8 +30,9 @@
 		"husky": "4.3.8"
 	},
 	"scripts": {
+		"postinstall": "node patch.js",
 		"lint": "eslint ./ --report-unused-disable-directives --format=codeframe --ignore-pattern='!.*'",
-		"setup": "pnpm i",
+		"setup": "npm i",
 		"start": "pm2 start pm2.json",
 		"task": "node runner.js"
 	},

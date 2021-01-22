@@ -10,7 +10,6 @@
 		"node": ">=15"
 	},
 	"dependencies": {
-		"chalk": "4.1.0",
 		"globby": "11.0.2",
 		"hasha": "5.2.2",
 		"i18n-iso-countries": "6.4.0",

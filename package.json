@@ -1,6 +1,6 @@
 {
 	"name": "rpi-tools-cron",
-	"version": "1.0.0",
+	"version": "2.0.0",
 	"description": "Raspberry Pi 3 Cron",
 	"maintainers": [
 		"Kirill Molchanov <k03.mad@gmail.com"

@@ -15,6 +15,7 @@ const mapValues = (
 /***/
 module.exports = async () => {
     const concurrency = 3;
+
     const topCountriesLen = 15;
     const topCountriesNameMaxLen = 15;
 
@@ -48,11 +49,7 @@ module.exports = async () => {
         'top_client_ips',
     ], req => next.query({
         path: `analytics/${req}`,
-        searchParams: {
-            from: '-30d',
-            timezoneOffset: '-180',
-            selector: true,
-        },
+        searchParams: {from: '-30d', timezoneOffset: '-180', selector: true},
     }), {concurrency});
 
     topDomainsBlocked.forEach(elem => {
@@ -79,6 +76,19 @@ module.exports = async () => {
             .slice(0, topCountriesLen),
     );
 
+    const devicesRequests = await pMap([...topDevices.entries()], async ([i, {id, name}]) => {
+        const {logs} = await next.query({
+            path: 'logs',
+            searchParams: {device: id, simple: 1, lng: 'en'},
+        });
+
+        return logs.map(log => ({
+            meas: 'next-req-devices',
+            values: {[name]: i + 1},
+            timestamp: `${log.timestamp}000000`,
+        }));
+    }, {concurrency});
+
     await influx.write([
         {meas: 'next-counters', values: counters},
         {meas: 'next-dnssec', values: dnssec},
@@ -92,24 +102,13 @@ module.exports = async () => {
         {meas: 'next-top-ips', values: mapValues(ips, {key: 'ip'})},
         {meas: 'next-top-lists', values: mapValues(topLists, {key: 'id'})},
         {meas: 'next-top-root', values: mapValues(topRoot)},
-    ]);
 
-    for (const data of queriesPerDay) {
-        await influx.write({
+        queriesPerDay.map(elem => ({
             meas: 'next-queries',
-            values: {queries: data.queries, blocked: data.blockedQueries},
-            timestamp: `${data.name}000000000`,
-        });
-    }
+            values: {queries: elem.queries, blocked: elem.blockedQueries},
+            timestamp: `${elem.name}000000000`,
+        })),
 
-    for (const [i, {id, name}] of topDevices.entries()) {
-        const {logs} = await next.query({
-            path: 'logs',
-            searchParams: {device: id, simple: 1, lng: 'en'},
-        });
-
-        for (const log of logs) {
-            await influx.write({meas: 'next-req-devices', values: {[name]: i + 1}, timestamp: `${log.timestamp}000000`});
-        }
-    }
+        devicesRequests,
+    ].flat(Number.POSITIVE_INFINITY));
 };

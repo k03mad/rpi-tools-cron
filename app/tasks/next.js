@@ -2,7 +2,7 @@
 
 const converter = require('i18n-iso-countries');
 const pMap = require('p-map');
-const {influx, next} = require('utils-mad');
+const {influx, next, ip} = require('utils-mad');
 
 const mapValues = (
     data, {key = 'name', value = 'queries'} = {},
@@ -76,17 +76,27 @@ module.exports = async () => {
             .slice(0, topCountriesLen),
     );
 
-    const devicesRequests = await pMap([...topDevices.entries()], async ([i, {id, name}]) => {
+    const devicesRequestsIsp = await pMap([...topDevices.entries()], async ([i, {id, name}]) => {
         const {logs} = await next.query({
             path: 'logs',
             searchParams: {device: id, simple: 1, lng: 'en'},
         });
 
-        return logs.map(log => ({
-            meas: 'next-req-devices',
-            values: {[name]: i + 1},
-            timestamp: `${log.timestamp}000000`,
-        }));
+        return pMap(logs, async log => {
+            const geo = await ip.lookup(log.clientIp);
+            const key = `${name} :: ${
+                geo.isp
+                    .replace('Net By Net Holding LLC', 'NBN')
+                    .replace(/\s*LLC\s*/, '')
+                    .trim()
+            }`;
+
+            return {
+                meas: 'next-req-devices-isp',
+                values: {[key]: i + 1},
+                timestamp: `${log.timestamp}000000`,
+            };
+        }, {concurrency});
     }, {concurrency});
 
     await influx.write([
@@ -109,6 +119,6 @@ module.exports = async () => {
             timestamp: `${elem.name}000000000`,
         })),
 
-        devicesRequests,
+        devicesRequestsIsp,
     ].flat(Number.POSITIVE_INFINITY));
 };

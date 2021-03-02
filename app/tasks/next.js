@@ -100,7 +100,7 @@ module.exports = async () => {
                 geo.isp
                     .replace('Net By Net Holding LLC', 'NBN')
                     .replace('T2 Mobile', 'Tele2')
-                    .replace(/\s*(LLC|AO|JSC|Bank)\s*/g, '')
+                    .replace(/\s*(LLC|AO|JSC|Bank|Limited|Liability|Company)\s*/g, '')
                     .trim()
             }`;
 

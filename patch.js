@@ -1,7 +1,7 @@
 'use strict';
 
 const path = require('path');
-const {array, print} = require('utils-mad');
+const {array, print} = require('@k03mad/utils');
 const {dim, blue} = require('chalk');
 const {promises: fs} = require('fs');
 

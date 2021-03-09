@@ -1,6 +1,6 @@
 'use strict';
 
-const {print} = require('utils-mad');
+const {print} = require('@k03mad/utils');
 
 require(`./app/tasks/${process.env.npm_config_name}`)()
     .then(msg => print.log(msg))

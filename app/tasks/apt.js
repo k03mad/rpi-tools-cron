@@ -1,6 +1,6 @@
 'use strict';
 
-const {shell, influx} = require('utils-mad');
+const {shell, influx} = require('@k03mad/utils');
 
 /***/
 module.exports = async () => {

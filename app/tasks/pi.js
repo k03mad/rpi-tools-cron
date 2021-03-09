@@ -4,7 +4,7 @@ const globby = require('globby');
 const hasha = require('hasha');
 const os = require('os');
 const path = require('path');
-const {shell, influx} = require('utils-mad');
+const {shell, influx} = require('@k03mad/utils');
 
 /***/
 module.exports = async () => {

@@ -2,7 +2,7 @@
 
 const converter = require('i18n-iso-countries');
 const pMap = require('p-map');
-const {influx, next, ip} = require('utils-mad');
+const {influx, next, ip} = require('@k03mad/utils');
 
 const mapValues = (
     data, {key = 'name', value = 'queries'} = {},

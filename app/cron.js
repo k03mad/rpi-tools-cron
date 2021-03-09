@@ -1,7 +1,7 @@
 'use strict';
 
 const {Cron} = require('recron');
-const {print} = require('utils-mad');
+const {print} = require('@k03mad/utils');
 
 const tasks = {
     '* * * * *': {

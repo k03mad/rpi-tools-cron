@@ -1,40 +1,41 @@
 {
-	"name": "rpi-tools-cron",
-	"version": "2.0.0",
-	"description": "Raspberry Pi 3 Cron",
-	"maintainers": [
-		"Kirill Molchanov <k03.mad@gmail.com"
-	],
-	"repository": "k03mad/rpi-tools-cron",
-	"engines": {
-		"node": ">=15"
-	},
-	"dependencies": {
-		"chalk": "4.1.0",
-		"globby": "11.0.2",
-		"hasha": "5.2.2",
-		"i18n-iso-countries": "6.5.0",
-		"oui": "11.0.55",
-		"p-map": "4.0.0",
-		"recron": "1.1.0",
-		"utils-mad": "13.0.4"
-	},
-	"devDependencies": {
-		"eslint": "7.20.0",
-		"eslint-config-k03mad": "7.0.3",
-		"eslint-plugin-jsdoc": "32.2.0",
-		"eslint-plugin-node": "11.1.0",
-		"eslint-plugin-promise": "4.3.1",
-		"eslint-plugin-sort-requires": "2.1.0",
-		"eslint-plugin-unicorn": "28.0.2",
-		"husky": "4.3.8"
-	},
-	"scripts": {
-		"postinstall": "node patch.js",
-		"lint": "eslint ./ --report-unused-disable-directives --format=codeframe --ignore-pattern='!.*'",
-		"setup": "npm i",
-		"start": "pm2 start pm2.json",
-		"task": "node runner.js"
-	},
-	"license": "Unlicense"
+  "name": "rpi-tools-cron",
+  "version": "2.0.0",
+  "description": "Raspberry Pi 3 Cron",
+  "maintainers": [
+    "Kirill Molchanov <k03.mad@gmail.com"
+  ],
+  "repository": "k03mad/rpi-tools-cron",
+  "license": "MIT",
+  "private": true,
+  "engines": {
+    "node": ">=15"
+  },
+  "dependencies": {
+    "@k03mad/utils": "14.0.0",
+    "chalk": "4.1.0",
+    "globby": "11.0.2",
+    "hasha": "5.2.2",
+    "i18n-iso-countries": "6.5.0",
+    "oui": "11.0.58",
+    "p-map": "4.0.0",
+    "recron": "1.1.0"
+  },
+  "devDependencies": {
+    "@k03mad/eslint-config": "8.0.0",
+    "eslint": "7.21.0",
+    "eslint-plugin-jsdoc": "32.2.0",
+    "eslint-plugin-node": "11.1.0",
+    "eslint-plugin-promise": "4.3.1",
+    "eslint-plugin-sort-requires": "2.1.0",
+    "eslint-plugin-unicorn": "28.0.2",
+    "husky": "4.3.8"
+  },
+  "scripts": {
+    "postinstall": "node patch.js",
+    "lint": "eslint ./ --report-unused-disable-directives --format=codeframe --ignore-pattern='!.*'",
+    "setup": "npm i",
+    "start": "pm2 start pm2.json",
+    "task": "node runner.js"
+  }
 }

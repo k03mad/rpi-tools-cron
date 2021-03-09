@@ -2,7 +2,7 @@
 
 const oui = require('oui');
 const pMap = require('p-map');
-const {influx, mikrotik, object, ip} = require('utils-mad');
+const {influx, mikrotik, object, ip} = require('@k03mad/utils');
 
 /***/
 module.exports = async () => {

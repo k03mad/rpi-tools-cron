@@ -4,6 +4,7 @@ const globby = require('globby');
 const os = require('os');
 const path = require('path');
 const {influx} = require('@k03mad/utils');
+const {print} = require('@k03mad/utils');
 const {promises: fs} = require('fs');
 
 /***/
@@ -12,8 +13,16 @@ module.exports = async () => {
 
     for (const file of requestFiles) {
         const content = await fs.readFile(file, {encoding: 'utf-8'});
-        const {statusCode, method, domain, timing, date} = JSON.parse(content);
+        let parsed;
 
+        try {
+            parsed = JSON.parse(content);
+        } catch (err) {
+            print.ex(err, {before: `Cannot parse request data\n${file}`});
+            continue;
+        }
+
+        const {statusCode, method, domain, timing, date} = parsed;
         await influx.write({
             meas: 'pi-node-request',
             values: {[`${statusCode} ${method} ${domain}`]: timing},

@@ -17,6 +17,10 @@ const tasks = {
         next: require('./tasks/next'),
     },
 
+    '* */1 * * *': {
+        st: require('./tasks/st'),
+    },
+
     '* */6 * * *': {
         apt: require('./tasks/apt'),
     },

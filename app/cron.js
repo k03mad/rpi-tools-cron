@@ -17,7 +17,7 @@ const tasks = {
         next: require('./tasks/next'),
     },
 
-    '*/5 * * * *': {
+    '0 */1 * * *': {
         st: require('./tasks/st'),
     },
 

@@ -4,23 +4,25 @@ const {shell, influx} = require('@k03mad/utils');
 
 /***/
 module.exports = async () => {
-    const st = await shell.run('speed-test -v -j');
+    const st = await shell.run('speed-test -v');
+    const matched = st.match(/ping\s+(?<ping>\d+)[\S\s]+download\s+(?<download>\d+)[\S\s]+upload\s+(?<upload>\d+)[\S\s]+location\s+(?<location>.+) [\S\s]+distance\s+(?<distance>[\d.]+)/i);
 
-    const parsed = JSON.parse(st);
+    if (!matched) {
+        throw new Error(`Speed-Test results doesn't match to regexp\n\n${st}`);
+    }
 
-    const {download, upload, ping, data} = parsed;
-    const {location, distance} = data.server;
+    const {download, upload, ping, location, distance} = matched.groups;
 
     const locSantzd = location.replace('tischi', 'tishchi');
 
     await influx.write([
         {meas: 'pi-speed-test-mbps', values: {
-            [` ↓ ${locSantzd}`]: download,
-            [` ↑ ${locSantzd}`]: upload,
+            [` ↓ ${locSantzd}`]: Number(download),
+            [` ↑ ${locSantzd}`]: Number(upload),
         }},
         {meas: 'pi-speed-test-data', values: {
-            ping,
-            distance,
+            ping: Number(ping),
+            distance: Number(distance),
         }},
     ]);
 };

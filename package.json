@@ -12,31 +12,32 @@
     "node": ">=15"
   },
   "dependencies": {
-    "@k03mad/utils": "14.1.0",
+    "@k03mad/utils": "14.1.1",
     "chalk": "4.1.0",
     "globby": "11.0.3",
     "hasha": "5.2.2",
-    "i18n-iso-countries": "6.6.0",
-    "oui": "11.0.61",
+    "i18n-iso-countries": "6.7.0",
+    "oui": "11.0.63",
     "p-map": "4.0.0",
     "recron": "1.1.0",
     "strip-ansi": "6.0.0"
   },
   "devDependencies": {
     "@k03mad/eslint-config": "8.0.0",
-    "eslint": "7.23.0",
+    "eslint": "7.24.0",
     "eslint-plugin-jsdoc": "32.3.0",
     "eslint-plugin-node": "11.1.0",
-    "eslint-plugin-promise": "4.3.1",
+    "eslint-plugin-promise": "5.1.0",
     "eslint-plugin-sort-requires": "2.1.0",
     "eslint-plugin-unicorn": "29.0.0",
-    "husky": "4.3.8"
+    "husky": "6.0.0"
   },
   "scripts": {
     "postinstall": "node patch.js",
     "lint": "eslint ./ --report-unused-disable-directives --format=codeframe --ignore-pattern='!.*'",
     "setup": "npm i",
     "start": "pm2 start pm2.json",
-    "task": "node runner.js"
+    "task": "node runner.js",
+    "prepare": "husky install"
   }
 }

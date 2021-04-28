@@ -76,19 +76,7 @@ module.exports = async () => {
             .slice(0, topCountriesLen),
     );
 
-    const devicesSorted = topDevices.sort((a, b) => {
-        if (a.name < b.name) {
-            return -1;
-        }
-
-        if (a.name > b.name) {
-            return 1;
-        }
-
-        return 0;
-    });
-
-    const devicesRequestsIsp = await pMap(devicesSorted, async ({id, name}, i) => {
+    const devicesRequestsIsp = await pMap(topDevices, async ({id, name}, i) => {
         const {logs} = await next.query({
             path: 'logs',
             searchParams: {device: id, simple: 1, lng: 'en'},
@@ -100,7 +88,7 @@ module.exports = async () => {
                 geo.isp
                     .replace('Net By Net Holding LLC', 'NBN')
                     .replace('T2 Mobile', 'Tele2')
-                    .replace(/\s*(LLC|AO|JSC|Bank|Limited|Liability|Company)\s*/g, '')
+                    .replace(/\s*(LLC|AO|OOO|JSC|ltd|Bank|Limited|Liability|Company)\s*/g, '')
                     .trim()
             }`;
 

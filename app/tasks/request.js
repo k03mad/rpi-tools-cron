@@ -3,8 +3,7 @@
 const globby = require('globby');
 const os = require('os');
 const path = require('path');
-const {influx} = require('@k03mad/utils');
-const {print} = require('@k03mad/utils');
+const {influx, print} = require('@k03mad/utils');
 const {promises: fs} = require('fs');
 
 /***/

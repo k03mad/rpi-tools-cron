@@ -19,6 +19,7 @@ const tasks = {
 
     '0 */1 * * *': {
         st: require('./tasks/st'),
+        nextSync: require('./tasks/next-sync'),
     },
 
     '0 */6 * * *': {

@@ -10,7 +10,7 @@ module.exports = async () => {
 
     const lookupConcurrency = 3;
     // 1 MB
-    const connectionsMinBytes = 1048576;
+    const connectionsMinBytes = 1_048_576;
 
     const clientsSignal = {};
     const clientsTraffic = {};

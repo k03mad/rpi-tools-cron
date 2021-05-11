@@ -12,24 +12,24 @@
     "node": ">=16"
   },
   "dependencies": {
-    "@k03mad/utils": "14.2.1",
+    "@k03mad/utils": "14.3.0",
     "chalk": "4.1.1",
     "globby": "11.0.3",
     "hasha": "5.2.2",
     "i18n-iso-countries": "6.7.0",
-    "oui": "11.0.66",
+    "oui": "11.0.67",
     "p-map": "4.0.0",
     "recron": "1.1.0",
     "strip-ansi": "6.0.0"
   },
   "devDependencies": {
     "@k03mad/eslint-config": "8.0.3",
-    "eslint": "7.25.0",
-    "eslint-plugin-jsdoc": "33.1.0",
+    "eslint": "7.26.0",
+    "eslint-plugin-jsdoc": "34.0.1",
     "eslint-plugin-node": "11.1.0",
     "eslint-plugin-promise": "5.1.0",
     "eslint-plugin-sort-requires": "2.1.0",
-    "eslint-plugin-unicorn": "31.0.0",
+    "eslint-plugin-unicorn": "32.0.1",
     "husky": "6.0.0"
   },
   "scripts": {

@@ -23,17 +23,12 @@ module.exports = async () => {
                 tickers[`yield-${expectedYield.currency}`] = {[ticker]: {}};
             }
 
-            if (!tickers[`price-${averagePositionPrice.currency}`]) {
-                tickers[`price-${averagePositionPrice.currency}`] = {[ticker]: {}};
-            }
-
             if (!balance[averagePositionPrice.currency]) {
                 balance[averagePositionPrice.currency] = 0;
             }
 
             tickers[`yield-${expectedYield.currency}`][ticker] = expectedYield.value;
-            tickers[`price-${averagePositionPrice.currency}`][ticker] = averagePositionPrice.value;
-            balance[averagePositionPrice.currency] += lots * averagePositionPrice.value;
+            balance[averagePositionPrice.currency] += (lots * averagePositionPrice.value) + expectedYield.value;
         }
     });
 

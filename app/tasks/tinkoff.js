@@ -9,15 +9,14 @@ module.exports = async () => {
     const tickerUsdToRub = 'USD000UTSTOM';
 
     const {body} = await request.got('https://api-invest.tinkoff.ru/openapi/portfolio', {
-        headers: {
-            Authorization: `Bearer ${tokens.tinkoff}`,
-        },
+        headers: {Authorization: `Bearer ${tokens.tinkoff}`},
     });
 
     let usdToRubPrice;
 
     const tickers = {};
     const balance = {};
+    const yieldTotal = {};
 
     body.payload.positions.forEach(({
         instrumentType, ticker, lots,
@@ -32,13 +31,19 @@ module.exports = async () => {
                 balance[averagePositionPrice.currency] = 0;
             }
 
+            if (!yieldTotal[averagePositionPrice.currency]) {
+                yieldTotal[averagePositionPrice.currency] = 0;
+            }
+
             tickers[`yield-${expectedYield.currency}`][ticker] = expectedYield.value;
+            yieldTotal[averagePositionPrice.currency] += expectedYield.value;
             balance[averagePositionPrice.currency] += (lots * averagePositionPrice.value) + expectedYield.value;
         } else if (ticker === tickerUsdToRub) {
             usdToRubPrice = averagePositionPrice.value;
         }
     });
 
+    yieldTotal.total = yieldTotal.RUB + (yieldTotal.USD * usdToRubPrice);
     balance.total = balance.RUB + (balance.USD * usdToRubPrice);
 
     const formatted = [
@@ -46,6 +51,7 @@ module.exports = async () => {
             .entries(tickers)
             .map(([meas, values]) => ({meas: `tinkoff-${meas}`, values})),
 
+        {meas: 'tinkoff-yield-total', values: yieldTotal},
         {meas: 'tinkoff-balance', values: balance},
     ];
 

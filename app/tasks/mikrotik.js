@@ -2,7 +2,7 @@
 
 const oui = require('oui');
 const pMap = require('p-map');
-const {influx, mikrotik, object, ip} = require('@k03mad/utils');
+const {influx, mikrotik, object, ip, array} = require('@k03mad/utils');
 
 /***/
 module.exports = async () => {
@@ -30,6 +30,7 @@ module.exports = async () => {
         [, updates],
         firewallFilter,
         dnsCache,
+        scripts,
     ] = await mikrotik.write([
         ['/interface/print'],
         ['/ip/firewall/nat/print'],
@@ -40,6 +41,7 @@ module.exports = async () => {
         ['/system/package/update/check-for-updates'],
         ['/ip/firewall/filter/print'],
         ['/ip/dns/cache/print'],
+        ['/system/script/print'],
     ]);
 
     const monitorTraffic = await mikrotik.write(
@@ -141,10 +143,13 @@ module.exports = async () => {
         dnsCache: dnsCache.length,
     };
 
+    const scriptsRun = array.mergeCol(scripts.map(elem => ({[elem.name]: Number(elem['run-count'])})));
+
     await influx.write([
         {meas: 'mikrotik-clients-signal', values: clientsSignal},
         {meas: 'mikrotik-interfaces-speed', values: interfacesSpeed},
         {meas: 'mikrotik-usage', values: health},
+        {meas: 'mikrotik-scripts-run', values: scriptsRun},
     ]);
 
     await influx.append([

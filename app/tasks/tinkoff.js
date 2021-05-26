@@ -3,14 +3,22 @@
 const {request, influx} = require('@k03mad/utils');
 const {tokens} = require('../../env');
 
+const porfolioHandler = 'https://api-invest.tinkoff.ru/openapi/portfolio';
+const requestParams = {headers: {Authorization: `Bearer ${tokens.tinkoff}`}};
+// /openapi/portfolio/currencies
+
 /***/
 module.exports = async () => {
     const filterInstruments = '^(Etf|Stock)$';
     const tickerUsdToRub = 'USD000UTSTOM';
 
-    const {body} = await request.got('https://api-invest.tinkoff.ru/openapi/portfolio', {
-        headers: {Authorization: `Bearer ${tokens.tinkoff}`},
-    });
+    const [
+        {body: portfolio},
+        {body: money},
+    ] = await Promise.all([
+        request.got(porfolioHandler, requestParams),
+        request.got(`${porfolioHandler}/currencies`, requestParams),
+    ]);
 
     let usdToRubPrice;
 
@@ -18,7 +26,7 @@ module.exports = async () => {
     const balance = {};
     const yieldTotal = {};
 
-    body.payload.positions.forEach(({
+    portfolio.payload.positions.forEach(({
         instrumentType, ticker, lots,
         expectedYield, averagePositionPrice,
     }) => {
@@ -40,6 +48,12 @@ module.exports = async () => {
             balance[averagePositionPrice.currency] += (lots * averagePositionPrice.value) + expectedYield.value;
         } else if (ticker === tickerUsdToRub) {
             usdToRubPrice = averagePositionPrice.value;
+        }
+    });
+
+    money.payload.currencies.forEach(elem => {
+        if (balance[elem.currency]) {
+            balance[elem.currency] += elem.balance;
         }
     });
 

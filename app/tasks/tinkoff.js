@@ -5,7 +5,7 @@ const {tokens} = require('../../env');
 
 /***/
 module.exports = async () => {
-    const etfInstrument = 'Etf';
+    const filterInstruments = '^(Etf|Stock)$';
     const tickerUsdToRub = 'USD000UTSTOM';
 
     const {body} = await request.got('https://api-invest.tinkoff.ru/openapi/portfolio', {
@@ -22,7 +22,7 @@ module.exports = async () => {
         instrumentType, ticker, lots,
         expectedYield, averagePositionPrice,
     }) => {
-        if (instrumentType === etfInstrument) {
+        if (instrumentType.match(filterInstruments)) {
             if (!tickers[`yield-${expectedYield.currency}`]) {
                 tickers[`yield-${expectedYield.currency}`] = {[ticker]: {}};
             }

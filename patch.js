@@ -25,7 +25,7 @@ const patches = {
                 fileContent = fileContent.replace(original, patch);
 
                 if (!fileContent.includes(patch)) {
-                    errors.push(`\nsomething goes wrong while patch ${file}:\nfrom: ${original}\nto: ${patch}`);
+                    errors.push(`\nSomething goes wrong while patch ${file}:\nfrom: ${original}\nto: ${patch}`);
                 }
             });
 

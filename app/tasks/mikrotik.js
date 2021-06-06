@@ -31,6 +31,7 @@ module.exports = async () => {
         firewallFilter,
         dnsCache,
         scripts,
+        scheduler,
     ] = await mikrotik.write([
         ['/interface/print'],
         ['/ip/firewall/nat/print'],
@@ -42,6 +43,7 @@ module.exports = async () => {
         ['/ip/firewall/filter/print'],
         ['/ip/dns/cache/print'],
         ['/system/script/print'],
+        ['/system/scheduler/print'],
     ]);
 
     const monitorTraffic = await mikrotik.write(
@@ -144,12 +146,13 @@ module.exports = async () => {
     };
 
     const scriptsRun = array.mergeCol(scripts.map(elem => ({[elem.name]: Number(elem['run-count'])})));
+    const schedulerRun = array.mergeCol(scheduler.map(elem => ({[elem.name]: Number(elem['run-count'])})));
 
     await influx.write([
         {meas: 'mikrotik-clients-signal', values: clientsSignal},
         {meas: 'mikrotik-interfaces-speed', values: interfacesSpeed},
         {meas: 'mikrotik-usage', values: health},
-        {meas: 'mikrotik-scripts-run', values: scriptsRun},
+        {meas: 'mikrotik-scripts-run', values: {...scriptsRun, ...schedulerRun}},
     ]);
 
     await influx.append([

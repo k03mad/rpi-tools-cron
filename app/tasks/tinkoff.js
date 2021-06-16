@@ -7,7 +7,7 @@ const tgPreviousYield = {};
 
 /***/
 module.exports = async () => {
-    const alertChangeNum = 1;
+    const alertChangeNum = 2;
 
     const instruments = {
         etf: 'Etf',

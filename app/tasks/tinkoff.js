@@ -67,21 +67,17 @@ module.exports = async () => {
             balance[averagePositionPrice.currency] += (lots * averagePositionPrice.value) + expectedYield.value;
 
             if (instrumentType === instruments.stock) {
-                const previousYield = Math.trunc(tgPreviousYield[ticker]);
-                const currentYield = Math.trunc(expectedYield.value);
+                const previousYield = tgPreviousYield[ticker];
+                const currentYield = expectedYield.value;
 
-                const isPriceChangedBy = num => previousYield
-                    ? Math.abs(previousYield - currentYield) >= num
-                    : true;
+                const isPriceChangedBy = num => Math.abs(previousYield - currentYield) >= num;
 
                 if (isPriceChangedBy(1)) {
-                    const char = tgPreviousYield[ticker] > expectedYield.value
-                        ? '↓'
-                        : '↑';
-
-                    tgMessage.push([ticker, char, expectedYield.value]);
-                    tgPreviousYield[ticker] = expectedYield.value;
+                    const arrow = previousYield > currentYield ? '↓' : '↑';
+                    tgMessage.push([arrow, ticker, previousYield, '→', currentYield]);
                 }
+
+                tgPreviousYield[ticker] = currentYield;
             }
         } else if (ticker === tickerUsdToRub) {
             usdToRubPrice = averagePositionPrice.value;
@@ -107,7 +103,7 @@ module.exports = async () => {
     ];
 
     if (tgMessage.length > 0) {
-        const text = `\`\`\`\n${asTable(tgMessage.sort((a, b) => b[2] - a[2]))}\n\`\`\``;
+        const text = `\`\`\`\n${asTable(tgMessage.sort((a, b) => b[4] - a[4]))}\n\`\`\``;
         await request.got(telegramHandler, telegramParams(text));
     }
 

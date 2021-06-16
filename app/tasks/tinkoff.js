@@ -7,11 +7,15 @@ const tgPreviousYield = {};
 
 /***/
 module.exports = async () => {
-    const alertChangeNum = 2;
-
-    const instruments = {
-        etf: 'Etf',
-        stock: 'Stock',
+    const alertChangeYield = {
+        Stock: {
+            USD: 2,
+            RUB: 50,
+        },
+        Etf: {
+            USD: 5,
+            RUB: 50,
+        },
     };
 
     const tickerUsdToRub = 'USD000UTSTOM';
@@ -29,11 +33,12 @@ module.exports = async () => {
         instrumentType, ticker, lots,
         expectedYield, averagePositionPrice,
     }) => {
-        if (Object.values(instruments).includes(instrumentType)) {
+        if (Object.keys(alertChangeYield).includes(instrumentType)) {
             const currentYield = expectedYield.value;
+            const currentYieldCur = expectedYield.currency;
 
-            if (!tickers[`yield-${expectedYield.currency}`]) {
-                tickers[`yield-${expectedYield.currency}`] = {[ticker]: {}};
+            if (!tickers[`yield-${currentYieldCur}`]) {
+                tickers[`yield-${currentYieldCur}`] = {[ticker]: {}};
             }
 
             if (!balance[averagePositionPrice.currency]) {
@@ -44,18 +49,19 @@ module.exports = async () => {
                 yieldTotal[averagePositionPrice.currency] = 0;
             }
 
-            tickers[`yield-${expectedYield.currency}`][ticker] = currentYield;
+            tickers[`yield-${currentYieldCur}`][ticker] = currentYield;
             yieldTotal[averagePositionPrice.currency] += currentYield;
             balance[averagePositionPrice.currency] += (lots * averagePositionPrice.value) + currentYield;
 
-            if (instrumentType === instruments.stock) {
-                const previousYield = tgPreviousYield[ticker];
+            if (!tgPreviousYield[ticker]) {
+                tgPreviousYield[ticker] = currentYield;
+            }
 
-                if (Math.abs(previousYield - currentYield) >= alertChangeNum) {
-                    const arrow = previousYield > currentYield ? '▼' : '▲';
-                    tgMessage.push([arrow, ticker, currentYield, '⟸', previousYield]);
-                }
+            const previousYield = tgPreviousYield[ticker];
 
+            if (Math.abs(previousYield - currentYield) >= alertChangeYield[instrumentType][currentYieldCur]) {
+                const arrow = previousYield > currentYield ? '▼' : '▲';
+                tgMessage.push([arrow, ticker, currentYield, currentYieldCur]);
                 tgPreviousYield[ticker] = currentYield;
             }
         } else if (ticker === tickerUsdToRub) {

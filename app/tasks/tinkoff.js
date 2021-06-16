@@ -30,6 +30,8 @@ module.exports = async () => {
         expectedYield, averagePositionPrice,
     }) => {
         if (Object.values(instruments).includes(instrumentType)) {
+            const currentYield = expectedYield.value;
+
             if (!tickers[`yield-${expectedYield.currency}`]) {
                 tickers[`yield-${expectedYield.currency}`] = {[ticker]: {}};
             }
@@ -42,13 +44,12 @@ module.exports = async () => {
                 yieldTotal[averagePositionPrice.currency] = 0;
             }
 
-            tickers[`yield-${expectedYield.currency}`][ticker] = expectedYield.value;
-            yieldTotal[averagePositionPrice.currency] += expectedYield.value;
-            balance[averagePositionPrice.currency] += (lots * averagePositionPrice.value) + expectedYield.value;
+            tickers[`yield-${expectedYield.currency}`][ticker] = currentYield;
+            yieldTotal[averagePositionPrice.currency] += currentYield;
+            balance[averagePositionPrice.currency] += (lots * averagePositionPrice.value) + currentYield;
 
             if (instrumentType === instruments.stock) {
                 const previousYield = tgPreviousYield[ticker];
-                const currentYield = expectedYield.value;
 
                 if (Math.abs(previousYield - currentYield) >= alertChangeNum) {
                     const arrow = previousYield > currentYield ? '↓' : '↑';

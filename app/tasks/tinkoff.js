@@ -82,7 +82,9 @@ module.exports = async () => {
     ];
 
     if (tgMessage.length > 0) {
-        const text = `\`\`\`\n${asTable(tgMessage.sort((a, b) => b[2] - a[2]))}\n\`\`\``;
+        const table = asTable(tgMessage.sort((a, b) => b[2] - a[2]));
+        const text = `\`\`\`\n${table}\n\`\`\``;
+
         await tinkoff.notify({text});
     }
 

@@ -52,8 +52,8 @@ module.exports = async () => {
                 const previousYield = tgPreviousYield[ticker];
 
                 if (Math.abs(previousYield - currentYield) >= alertChangeNum) {
-                    const arrow = previousYield > currentYield ? '↓' : '↑';
-                    tgMessage.push([arrow, ticker, currentYield, '(', 'prev:', previousYield, ')']);
+                    const arrow = previousYield > currentYield ? '▼' : '▲';
+                    tgMessage.push([arrow, ticker, currentYield, '⟸', previousYield]);
                 }
 
                 tgPreviousYield[ticker] = currentYield;

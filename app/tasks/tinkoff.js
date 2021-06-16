@@ -1,27 +1,14 @@
 'use strict';
 
 const asTable = require('as-table');
-const env = require('../../env');
-const {request, influx} = require('@k03mad/utils');
-
-const tinkoffHandler = 'https://api-invest.tinkoff.ru/openapi/portfolio';
-const tinkoffParams = {headers: {Authorization: `Bearer ${env.tinkoff.token}`}};
-
-const telegramHandler = `https://api.telegram.org/bot${env.tinkoff.tg}/sendMessage`;
-const telegramParams = text => ({
-    method: 'POST',
-    json: {
-        chat_id: env.telegram.me,
-        parse_mode: 'Markdown',
-        disable_web_page_preview: true,
-        text,
-    },
-});
+const {influx, tinkoff} = require('@k03mad/utils');
 
 const tgPreviousYield = {};
 
 /***/
 module.exports = async () => {
+    const alertChangeNum = 1;
+
     const instruments = {
         etf: 'Etf',
         stock: 'Stock',
@@ -29,23 +16,16 @@ module.exports = async () => {
 
     const tickerUsdToRub = 'USD000UTSTOM';
 
-    const [
-        {body: portfolio},
-        {body: money},
-    ] = await Promise.all([
-        request.got(tinkoffHandler, tinkoffParams),
-        request.got(`${tinkoffHandler}/currencies`, tinkoffParams),
-    ]);
-
     let usdToRubPrice;
 
     const tickers = {};
     const balance = {};
     const yieldTotal = {};
-
     const tgMessage = [];
 
-    portfolio.payload.positions.forEach(({
+    const {portfolio, currencies} = await tinkoff.portfolio();
+
+    portfolio.forEach(({
         instrumentType, ticker, lots,
         expectedYield, averagePositionPrice,
     }) => {
@@ -70,9 +50,7 @@ module.exports = async () => {
                 const previousYield = tgPreviousYield[ticker];
                 const currentYield = expectedYield.value;
 
-                const isPriceChangedBy = num => Math.abs(previousYield - currentYield) >= num;
-
-                if (isPriceChangedBy(1)) {
+                if (Math.abs(previousYield - currentYield) >= alertChangeNum) {
                     const arrow = previousYield > currentYield ? '↓' : '↑';
                     tgMessage.push([arrow, ticker, previousYield, '→', currentYield]);
                 }
@@ -84,7 +62,7 @@ module.exports = async () => {
         }
     });
 
-    money.payload.currencies.forEach(elem => {
+    currencies.forEach(elem => {
         if (balance[elem.currency]) {
             balance[elem.currency] += elem.balance;
         }
@@ -104,7 +82,7 @@ module.exports = async () => {
 
     if (tgMessage.length > 0) {
         const text = `\`\`\`\n${asTable(tgMessage.sort((a, b) => b[4] - a[4]))}\n\`\`\``;
-        await request.got(telegramHandler, telegramParams(text));
+        await tinkoff.notify({text});
     }
 
     await influx.write(formatted);

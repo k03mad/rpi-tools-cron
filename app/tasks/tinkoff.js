@@ -52,7 +52,7 @@ module.exports = async () => {
 
                 if (Math.abs(previousYield - currentYield) >= alertChangeNum) {
                     const arrow = previousYield > currentYield ? '↓' : '↑';
-                    tgMessage.push([arrow, ticker, previousYield, '→', currentYield]);
+                    tgMessage.push([arrow, ticker, currentYield, '(', 'prev:', previousYield, ')']);
                 }
 
                 tgPreviousYield[ticker] = currentYield;
@@ -81,7 +81,7 @@ module.exports = async () => {
     ];
 
     if (tgMessage.length > 0) {
-        const text = `\`\`\`\n${asTable(tgMessage.sort((a, b) => b[4] - a[4]))}\n\`\`\``;
+        const text = `\`\`\`\n${asTable(tgMessage.sort((a, b) => b[2] - a[2]))}\n\`\`\``;
         await tinkoff.notify({text});
     }
 

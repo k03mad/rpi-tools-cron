@@ -7,11 +7,11 @@ const tasks = {
     '* * * * *': {
         mik: require('./tasks/mikrotik'),
         pi: require('./tasks/pi'),
+        tinkoff: require('./tasks/tinkoff'),
     },
 
     '*/5 * * * *': {
         request: require('./tasks/request'),
-        tinkoff: require('./tasks/tinkoff'),
     },
 
     '*/10 * * * *': {

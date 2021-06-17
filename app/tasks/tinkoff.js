@@ -61,7 +61,7 @@ module.exports = async () => {
 
             if (Math.abs(previousYield - currentYield) >= alertChangeYield[instrumentType][currentYieldCur]) {
                 const arrow = previousYield > currentYield ? '▼' : '▲';
-                tgMessage.push([arrow, ticker, currentYield, currentYieldCur]);
+                tgMessage.push([arrow, ticker, currentYield, currentYieldCur, `(${previousYield})`]);
                 tgPreviousYield[ticker] = currentYield;
             }
         } else if (ticker === tickerUsdToRub) {

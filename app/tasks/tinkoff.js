@@ -38,6 +38,7 @@ module.exports = async () => {
             const currentYieldCur = expectedYield.currency;
             const currentValue = (lots * averagePositionPrice.value) + currentYield;
             const currentPrice = currentValue / lots;
+            const isCurrencyRub = currentYieldCur === 'RUB';
 
             if (!tickers[`yield-${currentYieldCur}`]) {
                 tickers[`yield-${currentYieldCur}`] = {[ticker]: {}};
@@ -64,13 +65,13 @@ module.exports = async () => {
             if (Math.abs(previousYield - currentYield) >= alertChangeYield[instrumentType][currentYieldCur]) {
                 const arrow = previousYield > currentYield ? '▼' : '▲';
                 tgMessage.push({
-                    '': arrow,
-                    ticker,
-                    'yield': currentYield,
-                    '-prev': previousYield,
-                    'price': Number(currentPrice.toFixed(2)),
-                    'total': Math.round(currentValue),
-                    'cur': currentYieldCur,
+                    '': `${arrow} ${ticker}`,
+                    'yield': isCurrencyRub ? Math.round(currentYield) : currentYield,
+                    'prev': isCurrencyRub ? Math.round(previousYield) : previousYield,
+                    'one': isCurrencyRub ? Math.round(currentPrice) : Number(currentPrice.toFixed(2)),
+                    '​': currentYieldCur
+                        .replace('RUB', 'Р')
+                        .replace('USD', '$'),
                 });
                 tgPreviousYield[ticker] = currentYield;
             }

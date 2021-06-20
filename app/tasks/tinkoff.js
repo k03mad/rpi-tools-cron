@@ -36,6 +36,8 @@ module.exports = async () => {
         if (Object.keys(alertChangeYield).includes(instrumentType)) {
             const currentYield = expectedYield.value;
             const currentYieldCur = expectedYield.currency;
+            const currentValue = (lots * averagePositionPrice.value) + currentYield;
+            const currentPrice = currentValue / lots;
 
             if (!tickers[`yield-${currentYieldCur}`]) {
                 tickers[`yield-${currentYieldCur}`] = {[ticker]: {}};
@@ -51,7 +53,7 @@ module.exports = async () => {
 
             tickers[`yield-${currentYieldCur}`][ticker] = currentYield;
             yieldTotal[averagePositionPrice.currency] += currentYield;
-            balance[averagePositionPrice.currency] += (lots * averagePositionPrice.value) + currentYield;
+            balance[averagePositionPrice.currency] += currentValue;
 
             if (!tgPreviousYield[ticker]) {
                 tgPreviousYield[ticker] = currentYield;
@@ -61,7 +63,15 @@ module.exports = async () => {
 
             if (Math.abs(previousYield - currentYield) >= alertChangeYield[instrumentType][currentYieldCur]) {
                 const arrow = previousYield > currentYield ? '▼' : '▲';
-                tgMessage.push([arrow, ticker, currentYield, currentYieldCur, `(${previousYield})`]);
+                tgMessage.push({
+                    '': arrow,
+                    ticker,
+                    'yield': currentYield,
+                    '-prev': previousYield,
+                    'price': Number(currentPrice.toFixed(2)),
+                    'total': Math.round(currentValue),
+                    'cur': currentYieldCur,
+                });
                 tgPreviousYield[ticker] = currentYield;
             }
         } else if (ticker === tickerUsdToRub) {
@@ -88,7 +98,7 @@ module.exports = async () => {
     ];
 
     if (tgMessage.length > 0) {
-        const table = asTable(tgMessage.sort((a, b) => b[2] - a[2]));
+        const table = asTable(tgMessage.sort((a, b) => b.yield - a.yield));
         const text = `\`\`\`\n${table}\n\`\`\``;
 
         await tinkoff.notify({text});

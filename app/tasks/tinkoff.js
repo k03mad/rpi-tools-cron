@@ -64,15 +64,12 @@ module.exports = async () => {
 
             if (Math.abs(previousYield - currentYield) >= alertChangeYield[instrumentType][currentYieldCur]) {
                 const arrow = previousYield > currentYield ? '▼' : '▲';
-                tgMessage.push({
-                    '': `${arrow} ${ticker}`,
-                    'yield': isCurrencyRub ? Math.round(currentYield) : currentYield,
-                    'prev': isCurrencyRub ? Math.round(previousYield) : previousYield,
-                    'one': isCurrencyRub ? Math.round(currentPrice) : Number(currentPrice.toFixed(2)),
-                    '​': currentYieldCur
-                        .replace('RUB', 'Р')
-                        .replace('USD', '$'),
-                });
+                tgMessage.push([
+                    `${arrow} ${ticker}`,
+                    isCurrencyRub ? Math.round(currentYield) : currentYield,
+                    isCurrencyRub ? Math.round(previousYield) : previousYield,
+                    `${currentYieldCur} ${isCurrencyRub ? Math.round(currentPrice) : Number(currentPrice.toFixed(2))}`,
+                ]);
                 tgPreviousYield[ticker] = currentYield;
             }
         } else if (ticker === tickerUsdToRub) {
@@ -99,7 +96,7 @@ module.exports = async () => {
     ];
 
     if (tgMessage.length > 0) {
-        const table = asTable(tgMessage.sort((a, b) => b.yield - a.yield));
+        const table = asTable(tgMessage.sort((a, b) => b[1] - a[1]));
         const text = `\`\`\`\n${table}\n\`\`\``;
 
         await tinkoff.notify({text});

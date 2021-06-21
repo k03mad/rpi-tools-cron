@@ -68,7 +68,11 @@ module.exports = async () => {
                     `${arrow} ${ticker}`,
                     isCurrencyRub ? Math.round(currentYield) : currentYield,
                     isCurrencyRub ? Math.round(previousYield) : previousYield,
-                    `${currentYieldCur} ${isCurrencyRub ? Math.round(currentPrice) : Number(currentPrice.toFixed(2))}`,
+                    `${
+                        currentYieldCur.replace('RUB', 'Р').replace('USD', '$')
+                    } ${
+                        isCurrencyRub ? Math.round(currentPrice) : Number(currentPrice.toFixed(2))
+                    }`,
                 ]);
                 tgPreviousYield[ticker] = currentYield;
             }

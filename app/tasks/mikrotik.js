@@ -140,6 +140,7 @@ module.exports = async () => {
         mem: Number(usage['total-memory']) - Number(usage['free-memory']),
         hdd: Number(usage['total-hdd-space']) - Number(usage['free-hdd-space']),
         cpu: Number(usage['cpu-load']),
+        cpuFreq: Number(usage['cpu-frequency']),
         uptime: usage.uptime,
         updates: `${updates['installed-version']}/${updates['latest-version']}`,
         dnsCache: dnsCache.length,

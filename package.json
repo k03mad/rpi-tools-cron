@@ -12,21 +12,21 @@
     "node": ">=16"
   },
   "dependencies": {
-    "@k03mad/utils": "14.4.0",
+    "@k03mad/utils": "14.5.0",
     "as-table": "1.0.55",
     "chalk": "4.1.1",
     "globby": "11.0.4",
     "hasha": "5.2.2",
     "i18n-iso-countries": "6.8.0",
-    "oui": "11.0.71",
+    "oui": "11.0.72",
     "p-map": "4.0.0",
     "recron": "1.1.1",
     "strip-ansi": "6.0.0"
   },
   "devDependencies": {
     "@k03mad/eslint-config": "8.2.2",
-    "eslint": "7.28.0",
-    "eslint-plugin-jsdoc": "35.3.0",
+    "eslint": "7.29.0",
+    "eslint-plugin-jsdoc": "35.4.0",
     "eslint-plugin-node": "11.1.0",
     "eslint-plugin-promise": "5.1.0",
     "eslint-plugin-sort-requires": "2.1.0",

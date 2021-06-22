@@ -44,6 +44,14 @@ module.exports = async () => {
                 tickers[`yield-${currentYieldCur}`] = {[ticker]: {}};
             }
 
+            if (!tickers[`price-${currentYieldCur}`]) {
+                tickers[`price-${currentYieldCur}`] = {[ticker]: {}};
+            }
+
+            if (!tickers[`price-total-${currentYieldCur}`]) {
+                tickers[`price-total-${currentYieldCur}`] = {[ticker]: {}};
+            }
+
             if (!balance[averagePositionPrice.currency]) {
                 balance[averagePositionPrice.currency] = 0;
             }
@@ -53,6 +61,8 @@ module.exports = async () => {
             }
 
             tickers[`yield-${currentYieldCur}`][ticker] = currentYield;
+            tickers[`price-${currentYieldCur}`][ticker] = currentPrice;
+            tickers[`price-total-${currentYieldCur}`][ticker] = currentValue;
             yieldTotal[averagePositionPrice.currency] += currentYield;
             balance[averagePositionPrice.currency] += currentValue;
 

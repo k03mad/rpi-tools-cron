@@ -18,6 +18,7 @@ module.exports = async () => {
         },
     };
 
+    const instrumentTypes = new Set(['Stock', 'Etf']);
     const tickerUsdToRub = 'USD000UTSTOM';
 
     let usdToRubPrice;
@@ -33,7 +34,7 @@ module.exports = async () => {
         instrumentType, ticker, lots,
         expectedYield, averagePositionPrice,
     }) => {
-        if (Object.keys(alertChangeYield).includes(instrumentType)) {
+        if (instrumentTypes.has(instrumentType)) {
             const currentYield = expectedYield.value;
             const currentYieldCur = expectedYield.currency;
             const currentValue = (lots * averagePositionPrice.value) + currentYield;

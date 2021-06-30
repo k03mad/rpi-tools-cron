@@ -9,7 +9,7 @@ const tgPreviousYield = {};
 module.exports = async () => {
     const alertChangeYield = {
         Stock: {
-            USD: 5,
+            USD: 10,
             RUB: 100,
         },
         Etf: {

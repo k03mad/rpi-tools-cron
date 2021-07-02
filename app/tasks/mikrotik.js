@@ -4,6 +4,24 @@ const oui = require('oui');
 const pMap = require('p-map');
 const {influx, mikrotik, object, ip, array} = require('@k03mad/utils');
 
+const fillFirewallData = (data, fill) => {
+    let lastComment;
+
+    data.forEach(({comment, bytes}) => {
+        comment
+            ? lastComment = comment
+            : comment = lastComment;
+
+        if (!comment.includes('dummy rule')) {
+            if (fill[comment]) {
+                fill[comment] += Number(bytes);
+            } else {
+                fill[comment] = Number(bytes);
+            }
+        }
+    });
+};
+
 /***/
 module.exports = async () => {
     const SEPARATOR = ' :: ';
@@ -18,33 +36,43 @@ module.exports = async () => {
     const interfacesTraffic = {};
     const natTraffic = {};
     const filterTraffic = {};
+    const rawTraffic = {};
     const connectionsDomains = {};
 
     const [
         interfaces,
-        firewallNat,
-        firewallConnections,
-        dhcpLeases,
         wifiClients,
-        [usage],
-        [, updates],
-        firewallFilter,
+        dhcpLeases,
         dnsCache,
-        scripts,
+        adressList,
+        firewallConnections,
+        firewallFilter,
+        firewallNat,
+        firewallRaw,
+        [, updates],
+        [usage],
         scheduler,
+        scripts,
+
     ] = await mikrotik.write([
         ['/interface/print'],
-        ['/ip/firewall/nat/print'],
-        ['/ip/firewall/connection/print'],
-        ['/ip/dhcp-server/lease/print'],
         ['/interface/wireless/registration-table/print'],
-        ['/system/resource/print'],
-        ['/system/package/update/check-for-updates'],
-        ['/ip/firewall/filter/print'],
+        ['/ip/dhcp-server/lease/print'],
         ['/ip/dns/cache/print'],
-        ['/system/script/print'],
+        ['/ip/firewall/address-list/print'],
+        ['/ip/firewall/connection/print'],
+        ['/ip/firewall/filter/print'],
+        ['/ip/firewall/nat/print'],
+        ['/ip/firewall/raw/print'],
+        ['/system/package/update/check-for-updates'],
+        ['/system/resource/print'],
         ['/system/scheduler/print'],
+        ['/system/script/print'],
     ]);
+
+    fillFirewallData(firewallNat, natTraffic);
+    fillFirewallData(firewallFilter, filterTraffic);
+    fillFirewallData(firewallRaw, rawTraffic);
 
     const monitorTraffic = await mikrotik.write(
         interfaces.map(elem => ['/interface/monitor-traffic', `=interface=${elem.name}`, '=once']),
@@ -63,34 +91,6 @@ module.exports = async () => {
 
         if (elem.name.includes('ether') && sum > 0) {
             clientsTraffic[elem.name] = sum;
-        }
-    });
-
-    let firewallFilterLastComment, firewallNatLastComment;
-
-    firewallNat.forEach(({comment, bytes}) => {
-        comment
-            ? firewallNatLastComment = comment
-            : comment = firewallNatLastComment;
-
-        if (natTraffic[comment]) {
-            natTraffic[comment] += Number(bytes);
-        } else {
-            natTraffic[comment] = Number(bytes);
-        }
-    });
-
-    firewallFilter.forEach(({comment, bytes}) => {
-        comment
-            ? firewallFilterLastComment = comment
-            : comment = firewallFilterLastComment;
-
-        if (!comment.includes('dummy rule')) {
-            if (filterTraffic[comment]) {
-                filterTraffic[comment] += Number(bytes);
-            } else {
-                filterTraffic[comment] = Number(bytes);
-            }
         }
     });
 
@@ -154,6 +154,7 @@ module.exports = async () => {
         {meas: 'mikrotik-interfaces-speed', values: interfacesSpeed},
         {meas: 'mikrotik-usage', values: health},
         {meas: 'mikrotik-scripts-run', values: {...scriptsRun, ...schedulerRun}},
+        {meas: 'mikrotik-adress-list', values: array.count(adressList.map(elem => elem.list))},
     ]);
 
     await influx.append([
@@ -162,5 +163,6 @@ module.exports = async () => {
         {meas: 'mikrotik-interfaces-traffic', values: interfacesTraffic},
         {meas: 'mikrotik-nat-traffic', values: natTraffic},
         {meas: 'mikrotik-filter-traffic', values: filterTraffic},
+        {meas: 'mikrotik-raw-traffic', values: rawTraffic},
     ]);
 };

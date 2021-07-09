@@ -18,7 +18,7 @@ module.exports = async () => {
 
         if (lastCheck !== online) {
             const status = online ? 'UP' : 'DOWN';
-            await pinger.notify({text: `pi ping: \`${status}\` ${option.join(':')}`});
+            await pinger.notify({text: `\`${status}\` ${option.join(':')} (from pi)`});
 
             lastCheck = online;
         }

@@ -8,6 +8,7 @@ const tasks = {
         mik: require('./tasks/mikrotik'),
         pi: require('./tasks/pi'),
         tinkoff: require('./tasks/tinkoff'),
+        pinger: require('./tasks/pinger'),
     },
 
     '*/5 * * * *': {

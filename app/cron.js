@@ -44,7 +44,6 @@ for (const [key, value] of Object.entries(tasks)) {
                 print.ex(err, {
                     before: `${key} :: ${name}`,
                     afterline: false,
-                    exitAfter: 30,
                 });
             }
         }, {timezone: 'Europe/Moscow'});

@@ -15,19 +15,13 @@ const tasks = {
     },
 
     '@every 5m': {
+        next: require('./tasks/next'),
         request: require('./tasks/request'),
     },
 
-    '@every 10m': {
-        next: require('./tasks/next'),
-    },
-
     '@every 1h': {
-        st: require('./tasks/st'),
-    },
-
-    '@every 6h': {
         apt: require('./tasks/apt'),
+        st: require('./tasks/st'),
     },
 
     '@every 12h': {

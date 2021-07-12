@@ -4,11 +4,14 @@ const {Cron} = require('recron');
 const {print} = require('@k03mad/utils');
 
 const tasks = {
+    '@every 10s': {
+        pinger: require('./tasks/pinger'),
+    },
+
     '@every 1m': {
         mik: require('./tasks/mikrotik'),
         pi: require('./tasks/pi'),
         tinkoff: require('./tasks/tinkoff'),
-        pinger: require('./tasks/pinger'),
     },
 
     '@every 5m': {

@@ -5,7 +5,7 @@ const {pinger} = require('@k03mad/utils');
 
 /***/
 module.exports = async () => {
-    const cloudPorts = [cloud.port, 53, 68, 80, 443];
+    const cloudPorts = [cloud.port, 80, 443];
 
     await pinger.check([
         ...cloudPorts.map(port => ({domain: cloud.domain, port})),

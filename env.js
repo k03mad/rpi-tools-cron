@@ -3,6 +3,6 @@
 module.exports = {
     cloud: {
         domain: process.env.CLOUD_DOMAIN,
-        port: Number(process.env.CLOUD_PORT),
+        port: process.env.CLOUD_PORT,
     },
 };

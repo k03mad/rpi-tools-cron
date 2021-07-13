@@ -20,7 +20,7 @@
 		"oui": "11.0.75",
 		"p-map": "4.0.0",
 		"recron": "1.1.1",
-		"strip-ansi": "6.0.0"
+		"strip-ansi": "7.0.0"
 	},
 	"devDependencies": {
 		"@k03mad/eslint-config": "8.2.2",

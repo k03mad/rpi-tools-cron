@@ -21,7 +21,7 @@ const tasks = {
         st: require('./tasks/st'),
     },
 
-    '@every 12h': {
+    '0 5 * * *': {
         magnet: require('./tasks/magnet'),
     },
 };

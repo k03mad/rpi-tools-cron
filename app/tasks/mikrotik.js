@@ -136,9 +136,14 @@ module.exports = async () => {
         }
     }, {concurrency: lookupConcurrency});
 
+    const memTotal = Number(usage['total-memory']);
+    const hddTotal = Number(usage['total-hdd-space']);
+
     const health = {
-        mem: Number(usage['total-memory']) - Number(usage['free-memory']),
-        hdd: Number(usage['total-hdd-space']) - Number(usage['free-hdd-space']),
+        mem: memTotal - Number(usage['free-memory']),
+        memTotal,
+        hdd: hddTotal - Number(usage['free-hdd-space']),
+        hddTotal,
         cpu: Number(usage['cpu-load']),
         cpuFreq: Number(usage['cpu-frequency']),
         uptime: usage.uptime,

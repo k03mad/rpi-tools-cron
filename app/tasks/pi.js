@@ -35,11 +35,16 @@ module.exports = async () => {
         restarts[elem.name] = elem.pm2_env.restart_time;
     });
 
+    const [, ramTotal, ramUsage] = ram
+        .match(/Mem: +(\d+) +(\d+)/)
+        .map(Number);
+
     const usage = {
+        ramUsage,
+        ramTotal,
         cpuLoad: Number(uptime.match(/load average: (\d\.\d\d)/)[1].replace(',', '.')),
         cpuTemp: Number(temp) / 1000,
         diskUsage: Number(disk.match(/\/dev\/root +\d+ +(\d+)/)[1]),
-        ramUsage: Number(ram.match(/Mem: +\d+ +(\d+)/)[1]),
         uptime: `Uptime: ${uptime.match(/up(.+?),/)[1]}`,
         nodeCache: cacheFiles.length,
     };

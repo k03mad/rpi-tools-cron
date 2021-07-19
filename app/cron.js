@@ -31,6 +31,7 @@ cron.start();
 
 for (const [key, value] of Object.entries(tasks)) {
     for (const [name, func] of Object.entries(value)) {
+        print.log(name);
         cron.schedule(key, async () => {
             try {
                 await func();

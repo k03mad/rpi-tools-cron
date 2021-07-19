@@ -4,19 +4,19 @@ const {Cron} = require('recron');
 const {print} = require('@k03mad/utils');
 
 const tasks = {
-    '* * * * *': {
+    '@every 1m': {
         mik: require('./tasks/mikrotik'),
         pi: require('./tasks/pi'),
         pinger: require('./tasks/pinger'),
         tinkoff: require('./tasks/tinkoff'),
     },
 
-    '*/5 * * * *': {
+    '@every 5m': {
         next: require('./tasks/next'),
         request: require('./tasks/request'),
     },
 
-    '0 */1 * * *': {
+    '@every 1h': {
         apt: require('./tasks/apt'),
         st: require('./tasks/st'),
     },
@@ -31,7 +31,6 @@ cron.start();
 
 for (const [key, value] of Object.entries(tasks)) {
     for (const [name, func] of Object.entries(value)) {
-        print.log(name);
         cron.schedule(key, async () => {
             try {
                 await func();

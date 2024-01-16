@@ -19,7 +19,7 @@
 		"i18n-iso-countries": "6.8.0",
 		"oui": "11.0.75",
 		"p-map": "4.0.0",
-		"recron": "1.1.1",
+		"recron": "1.1.5",
 		"strip-ansi": "6.0.0"
 	},
 	"devDependencies": {
